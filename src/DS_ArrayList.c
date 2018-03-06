@@ -6,22 +6,6 @@
 #include <math.h>
 
 /*
- * ipow: Fast bitwise int pow.
- */
-int ipow(int base, int exp)
-{
-	int result = 1;
-
-	while (exp) {
-		if (exp & 1)
-	    		result *= base;
-		exp >>= 1;
-		base *= base;
-	}
-	return result;
-}
-
-/*
  * DS_ArrayList: Initiate an ArrayList with an itial size of 2^n spaces.
  */
 DS_ArrayList *DS_ArrayList_init(DS_ArrayList *list, Data *data, unsigned int size)

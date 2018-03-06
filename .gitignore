@@ -4,3 +4,4 @@ open
 cscope*
 *.swp
 *.swo
+a.out

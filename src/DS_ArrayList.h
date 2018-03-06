@@ -1,11 +1,5 @@
-#ifndef _data_h
-#define _data_h
-typedef struct Data {
-	char *string;
-	int len;
-} Data;
-#endif
-
+#include "DS_Struct.h"
+ 
 typedef struct dS_ArrayList {
 	struct dS_ArrayList *next;
 	Data data;

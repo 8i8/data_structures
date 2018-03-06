@@ -2,8 +2,9 @@ EXE = datastructures
 SRC = \
 	driver.c \
 	DS_LinkedList.c \
-	DS_LinkedList_test.c# \
+	DS_LinkedList_test.c \
 	DS_ArrayList.c \
+	DS_ArrayList_test.c# \
 	DS_BinarySort.c	\
 	DS_Heap.c \
 	DS_PriorityQueue.c \
@@ -35,8 +36,8 @@ distclean: clean
 $(OBJ): \
 	DS_Struct.h \
 	DS_LinkedList.h	\
-	DS_LinkedList_test.h#\
-	DS_ArrayList.h \
+	DS_LinkedList_test.h \
+	DS_ArrayList.h#\
 	DS_BinarySort.h \
 	DS_Heap.h \
 	DS_PriorityQueue.h \

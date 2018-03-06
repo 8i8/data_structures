@@ -1,5 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 #include "DS_Struct.h"
 #include "DS_LinkedList.h"
@@ -44,7 +42,7 @@ void add_test(DS_LinkedList *node, Data *data, size_t num)
 		sprintf(data->str, "%lu", i);
 		data->len = strlen(data->str);
 		if((node = DS_LinkedList_add(node, *data)) == NULL) {
-			printf("failed.\n");
+			printf(" ~ failed.\n");
 			pass = 0;
 			break;
 		}
@@ -61,7 +59,7 @@ void get_test(DS_LinkedList *node, size_t num)
 	printf("%s() ~ ", __func__);
 
 	if ((node = DS_LinkedList_get(node, num)) == NULL)
-		printf("failed.\n");
+		printf(" ~ failed.\n");
 	else {
 		print(node);
 		printf(" ~ passed.\n");
@@ -116,6 +114,16 @@ void set_test(DS_LinkedList *node, size_t index, Data *data)
 		print(node), printf(" ~ passed.\n");
 }
 
+void size_test(DS_LinkedList *node)
+{
+	size_t i = 0;
+	printf("%s() ~ ", __func__);
+	if ((i = DS_LinkedList_size(node)) == 0)
+		printf(" ~ failed.\n");
+	else
+		printf("%lu ~ passed.\n", i);
+}
+
 void clear_test(DS_LinkedList *node)
 {
 	printf("%s() ~ ", __func__);
@@ -132,12 +140,13 @@ void DS_LinkedList_test(void)
 	Data d, *data;
 	data = &d;
 
-	add_test(&head, data, 1001);   // 1000
-	get_test(&head, 500);          // 500
+	add_test(&head, data, 1000001);// 1000000
+	get_test(&head, 1000000);      // 1000000
 	output_test(&head, 10);        // 0123456789
 	insert_test(&head, data, 119); // I used to be number 120.
 	remove_test(&head, 119);       // index 120
-	set_test(&head, 119, data);
+	set_test(&head, 119, data);    // I have replased the number 120
+	size_test(&head);              // 1000001
 	clear_test(head.next);
 }
 

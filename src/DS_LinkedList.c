@@ -2,13 +2,13 @@
 #include <stdlib.h>
 
 /*
- * DS_LinkedList_Init: Initalise a linked list on the heap, creates the first
- * node and sets the size to 1, adds data.
+ * DS_LinkedList_Init: Initialise a linked list on the heap, creates the first
+ * node and sets the size to 1.
  */
-DS_LinkedList *DS_LinkedList_Init(DS_LinkedList *list)
+DS_LinkedList *DS_LinkedList_init(DS_LinkedList *list)
 {
 	if ((list = malloc(sizeof(DS_LinkedList))) == NULL) {
-		printf("%s: error: NULL pointer.", __func__);
+		printf("%s: error: memory allocation failed.", __func__);
 		return NULL;
 	}
 
@@ -17,8 +17,7 @@ DS_LinkedList *DS_LinkedList_Init(DS_LinkedList *list)
 }
 
 /*
- * DS_LinkedList_add: Create the next node in the list and add data, keep track
- * of the list size.
+ * DS_LinkedList_add: Create the next node in the list and add data.
  */
 DS_LinkedList *DS_LinkedList_add(DS_LinkedList *list, Data data)
 {
@@ -30,8 +29,10 @@ DS_LinkedList *DS_LinkedList_add(DS_LinkedList *list, Data data)
 	while (list->next != NULL)
 		list = list->next;
 
-	if ((list->next = malloc(sizeof(DS_LinkedList))) == NULL)
+	if ((list->next = malloc(sizeof(DS_LinkedList))) == NULL) {
+		printf("%s: error: memory allocation failed.", __func__);
 		return NULL;
+	}
 
 	list = list->next;
 	list->data = data;
@@ -41,7 +42,7 @@ DS_LinkedList *DS_LinkedList_add(DS_LinkedList *list, Data data)
 }
 
 /*
- * DS_LinkedList_get: Returnes the node at the given index, if that index
+ * DS_LinkedList_get: Returns the node at the given index, if that index
  * exists.
  */
 DS_LinkedList *DS_LinkedList_get(DS_LinkedList *list, size_t index)
@@ -66,6 +67,10 @@ DS_LinkedList *DS_LinkedList_get(DS_LinkedList *list, size_t index)
 	return list;
 }
 
+/*
+ * DS_LinkedList_output: Itterate over the intire list, perform given function
+ * on each node.
+ */
 int DS_LinkedList_output(DS_LinkedList *list, void *var, int(*func)(void*, void*))
 {
 	if (list == NULL) {
@@ -83,8 +88,7 @@ int DS_LinkedList_output(DS_LinkedList *list, void *var, int(*func)(void*, void*
 }
 
 /*
- * DS_LinkedList_insert: Insert a new node at the given index, add data and
- * keep track of the list size.
+ * DS_LinkedList_insert: Insert a new node at the given index, add data.
  */
 int DS_LinkedList_insert(DS_LinkedList *list, size_t index, Data data)
 {
@@ -97,8 +101,10 @@ int DS_LinkedList_insert(DS_LinkedList *list, size_t index, Data data)
 	}
 
 	DS_LinkedList *temp = list->next;
-	if((list->next = malloc(sizeof(DS_LinkedList))) == NULL)
+	if((list->next = malloc(sizeof(DS_LinkedList))) == NULL) {
+		printf("%s: error: memory allocation failed.", __func__);
 		return -1;
+	}
 
 	list = list->next;
 	list->data = data;

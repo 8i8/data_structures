@@ -5,9 +5,9 @@
  * void clear()
  * int get(int index)
  * void insert(int index, int value)
- * bool isEmpty(const List)
  * void remove(int index)
  * void set(int index, void *value)
+ * bool isEmpty(const List)
  * int size()
  */
 #include <stdio.h>
@@ -25,6 +25,10 @@ DS_LinkedList *DS_LinkedList_add(DS_LinkedList *list, Data data);
 DS_LinkedList *DS_LinkedList_get(DS_LinkedList *list, size_t index);
 
 int DS_LinkedList_insert(DS_LinkedList *list, size_t index, Data data);
+
+int DS_LinkedList_remove(DS_LinkedList *list, size_t index);
+
+DS_LinkedList *DS_LinkedList_set(DS_LinkedList *list, size_t index, Data data);
 
 int DS_LinkedList_output(DS_LinkedList *list, void *var, int(*func)(void*, void*));
 

@@ -77,16 +77,41 @@ void output_test(DS_LinkedList *node, size_t var)
 		printf(" ~ passed.\n");
 }
 
-void insert_test(DS_LinkedList *node, Data *data, size_t num)
+void insert_test(DS_LinkedList *node, Data *data, size_t index)
 {
 	printf("%s() ~ ", __func__);
-	sprintf(data->str, "%s", "I used to be a number.");
+	sprintf(data->str, "%s", "I used to be number 120");
 	data->len = strlen(data->str);
 
-	if (DS_LinkedList_insert(node, num, *data))
+	if (DS_LinkedList_insert(node, index, *data))
 		printf(" ~ insert failed.\n");
-	else if ((node = DS_LinkedList_get(node, num+1)) == NULL)
+	else if ((node = DS_LinkedList_get(node, index+1)) == NULL)
 		printf(" ~ get failed.\n");
+	else
+		print(node), printf(" ~ passed.\n");
+}
+
+void remove_test(DS_LinkedList *node, size_t index)
+{
+	printf("%s() ~ ", __func__);
+	if (DS_LinkedList_remove(node, index))
+		printf(" ~ remove failed.\n");
+	else if ((node = DS_LinkedList_get(node, index+1)) == NULL)
+		printf(" ~ get failed.\n");
+	else {
+		printf("index ");
+		print(node), printf(" ~ passed.\n");
+	}
+}
+
+void set_test(DS_LinkedList *node, size_t index, Data *data)
+{
+	printf("%s() ~ ", __func__);
+	sprintf(data->str, "%s", "I have replased the number 120");
+	data->len = strlen(data->str);
+
+	if ((node = DS_LinkedList_set(node, index, *data)) == NULL)
+		printf(" ~ failed.\n");
 	else
 		print(node), printf(" ~ passed.\n");
 }
@@ -110,7 +135,9 @@ void DS_LinkedList_test(void)
 	add_test(&head, data, 1001);   // 1000
 	get_test(&head, 500);          // 500
 	output_test(&head, 10);        // 0123456789
-	insert_test(&head, data, 120); // I used to be a number.
+	insert_test(&head, data, 119); // I used to be number 120.
+	remove_test(&head, 119);       // index 120
+	set_test(&head, 119, data);
 	clear_test(head.next);
-
 }
+

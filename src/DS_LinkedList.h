@@ -28,5 +28,5 @@ int DS_LinkedList_insert(DS_LinkedList *list, size_t index, Data data);
 
 int DS_LinkedList_output(DS_LinkedList *list, void *var, int(*func)(void*, void*));
 
-void DS_LinkedList_clear(DS_LinkedList *list);
+int DS_LinkedList_clear(DS_LinkedList *list);
 

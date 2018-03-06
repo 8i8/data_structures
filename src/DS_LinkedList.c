@@ -55,6 +55,20 @@ DS_LinkedList *DS_LinkedList_get(DS_LinkedList *list, size_t index)
 	return list;
 }
 
+int DS_LinkedList_output(DS_LinkedList *list, void *var, int(*func)(void*, void*))
+{
+	if (list == NULL)
+		return -1;
+
+	while (list->next != NULL) {
+		list = list->next;
+		if ((*func)((void*)list, (void*)var))
+			return -1;
+	}
+
+	return 0;
+}
+
 /*
  * DS_LinkedList_insert: Insert a new node at the given index, add data and
  * keep track of the list size.
@@ -73,25 +87,13 @@ int DS_LinkedList_insert(DS_LinkedList *list, size_t index, Data data)
 	return 0;
 }
 
-int DS_LinkedList_output(DS_LinkedList *list, void *var, int(*func)(void*, void*))
-{
-	if (list == NULL)
-		return -1;
-
-	while (list->next != NULL) {
-		list = list->next;
-		if ((*func)((void*)list, (void*)var))
-			return -1;
-	}
-
-	return 0;
-}
-
 /*
  * DS_LinkedList_clear: Destroy all nodes in the list.
  */
-void DS_LinkedList_clear(DS_LinkedList *list)
+int DS_LinkedList_clear(DS_LinkedList *list)
 {
+	if (list == NULL)
+		return -1;
 	DS_LinkedList *temp;
 	while (list->next != NULL) {
 		temp = list;
@@ -99,5 +101,6 @@ void DS_LinkedList_clear(DS_LinkedList *list)
 		free(temp);
 	}
 	free(list);
+	return 0;
 }
 

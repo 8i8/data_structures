@@ -1,4 +1,3 @@
-
 #ifndef _data_h
 #define _data_h
 typedef struct Data {
@@ -7,9 +6,3 @@ typedef struct Data {
 } Data;
 #endif
 
-#ifndef _var_h
-#define _var_h
-typedef struct Var {
-	int a;
-} Var;
-#endif

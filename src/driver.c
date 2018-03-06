@@ -3,7 +3,7 @@
 
 int main(void)
 {
-	//DS_LinkedList_test();
+	DS_LinkedList_test();
 	DS_ArrayList_test();
 
 	return 0;

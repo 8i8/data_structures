@@ -37,6 +37,8 @@ $(OBJ): \
 	DS_Struct.h \
 	DS_LinkedList.h	\
 	DS_LinkedList_test.h \
+	DS_ArrayList.h \
+	DS_ArrayList_test.h#\
 	DS_ArrayList.h#\
 	DS_BinarySort.h \
 	DS_Heap.h \

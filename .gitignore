@@ -1,0 +1,6 @@
+datastructures
+*.o
+open
+cscope*
+*.swp
+*.swo

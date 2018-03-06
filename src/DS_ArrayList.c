@@ -1,5 +1,6 @@
 #include "DS_ArrayList.h"
 #include <stdlib.h>
+#include <stdint.h>
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
@@ -25,7 +26,7 @@ int ipow(int base, int exp)
  */
 DS_ArrayList *DS_ArrayList_init(DS_ArrayList *list, Data *data, unsigned int size)
 {
-	int capacity = ipow(2, size);
+	size_t capacity = 1 << size;
 	Data *new;
 
 	if ((new = malloc(sizeof(Data) * capacity)) == NULL) {

@@ -1,15 +1,19 @@
 #include <string.h>
 #include "DS_Struct.h"
 #include "DS_LinkedList.h"
+#include "DS_Timer.h"
 
-int print(void *list)
+char output[255];
+char *pt_out;
+
+int print(void *list, char *tail)
 {
 	if (list == NULL)
 		return -1;
 
 	DS_LinkedList *out;
 	out = (DS_LinkedList*)list;
-	printf("%s", out->data.str);
+	printf("%s%s", out->data.str, tail);
 
 	return 0;
 }
@@ -19,118 +23,164 @@ int print_n(void *list, void *n)
 	if (list == NULL || n == NULL)
 		return -1;
 
-	static size_t i;
 	size_t *num;
 	num = n;
 	DS_LinkedList *out;
 	out = (DS_LinkedList*)list;
 
-	if (i++ < *num)
-		printf("%s", out->data.str);
+	if (pt_out - output < (int)*num)
+		pt_out += sprintf(pt_out, out->data.str, strlen(out->data.str));
 
 	return 0;
 }
 
-void add_test(DS_LinkedList *node, Data *data, size_t num)
+void linkedlist_test_add(DS_LinkedList *node, Data *data, size_t num)
 {
 	size_t i;
+	double time = 0;
 	int pass = 1;
 
-	printf("%s() ~ ", __func__);
+	printf("%s()\t ~ ", __func__);
 
+	time_start();
 	for (i = 0; i < num; i++) {
-		sprintf(data->str, "%lu", i);
+		sprintf(data->str, "n:%lu", i+1);
 		data->len = strlen(data->str);
 		if((node = DS_LinkedList_add(node, *data)) == NULL) {
+			time_stop();
 			printf(" ~ failed.\n");
 			pass = 0;
 			break;
 		}
 	}
+	time = time_stop();
 
 	if (pass) {
-		print(node);
-		printf(" ~ passed.\n");
+		printf("%fs ~ passed.\t", time);
+		print(node, "\n");
 	}
 }
 
-void get_test(DS_LinkedList *node, size_t num)
+void linkedlist_test_get(DS_LinkedList *node, size_t num)
 {
-	printf("%s() ~ ", __func__);
+	double time = 0;
+	printf("%s()\t ~ ", __func__);
 
-	if ((node = DS_LinkedList_get(node, num)) == NULL)
-		printf(" ~ failed.\n");
-	else {
-		print(node);
-		printf(" ~ passed.\n");
+	time_start();
+	if ((node = DS_LinkedList_get(node, num)) == NULL) {
+		time_stop();
+		printf(" ~ failed.\n"), time_stop();
+	} else {
+		time = time_stop();
+		printf("%fs ~ passed.\t", time);
+		print(node, "\n");
 	}
 }
 
-void output_test(DS_LinkedList *node, size_t var)
+void linkedlist_test_output(DS_LinkedList *node, size_t var)
 {
+	double time = 0;
 	printf("%s() ~ ", __func__);
-	if (DS_LinkedList_output(node, &var, print_n))
+
+	pt_out = output;
+	time_start();
+	if (DS_LinkedList_output(node, &var, print_n)) {
+		time_stop();
 		printf(" ~ failed.\n");
-	else
-		printf(" ~ passed.\n");
+	} else {
+		time = time_stop();
+		printf("%fs ~ passed.\t", time);
+		printf("%s\n", output);
+	}
 }
 
-void insert_test(DS_LinkedList *node, Data *data, size_t index)
+void linkedlist_test_insert(DS_LinkedList *node, Data *data, size_t index)
 {
+	double time = 0;
 	printf("%s() ~ ", __func__);
-	sprintf(data->str, "%s", "I used to be number 120");
+	sprintf(data->str, "%s", "I used to be a number.");
 	data->len = strlen(data->str);
 
-	if (DS_LinkedList_insert(node, index, *data))
+	time_start();
+	if ((node = DS_LinkedList_insert(node, index, *data)) == NULL) {
+		time_stop();
 		printf(" ~ insert failed.\n");
-	else if ((node = DS_LinkedList_get(node, index+1)) == NULL)
-		printf(" ~ get failed.\n");
-	else
-		print(node), printf(" ~ passed.\n");
-}
-
-void remove_test(DS_LinkedList *node, size_t index)
-{
-	printf("%s() ~ ", __func__);
-	if (DS_LinkedList_remove(node, index))
-		printf(" ~ remove failed.\n");
-	else if ((node = DS_LinkedList_get(node, index+1)) == NULL)
-		printf(" ~ get failed.\n");
-	else {
-		printf("index ");
-		print(node), printf(" ~ passed.\n");
+	} else {
+		time = time_stop();
+		printf("%fs ~ passed.\t", time);
+		print(node, " ");
+		print(node->next, " ");
+		print(node->next->next, "\n");
 	}
 }
 
-void set_test(DS_LinkedList *node, size_t index, Data *data)
+void linkedlist_test_remove(DS_LinkedList *node, size_t index)
 {
+	double time = 0;
 	printf("%s() ~ ", __func__);
-	sprintf(data->str, "%s", "I have replased the number 120");
-	data->len = strlen(data->str);
 
-	if ((node = DS_LinkedList_set(node, index, *data)) == NULL)
-		printf(" ~ failed.\n");
-	else
-		print(node), printf(" ~ passed.\n");
+	time_start();
+	if ((node = DS_LinkedList_remove(node, index)) == NULL) {
+		time_stop();
+		printf(" ~ remove failed.\n");
+	} else {
+		time = time_stop();
+		printf("%fs ~ passed.\t", time);
+		print(node, " ");
+		print(node->next, " ");
+		print(node->next->next, "\n");
+	}
 }
 
-void size_test(DS_LinkedList *node)
+void linkedlist_test_set(DS_LinkedList *node, size_t index, Data *data)
+{
+	double time = 0;
+	printf("%s()\t ~ ", __func__);
+	sprintf(data->str, "%s", "I have replaced the number 1000000");
+	data->len = strlen(data->str);
+
+	time_start();
+	if ((node = DS_LinkedList_set(node, index, *data)) == NULL) {
+		time_stop();
+		printf(" ~ failed.\n");
+	} else {
+		time = time_stop();
+		printf("%fs ~ passed.\t", time);
+		print(node, "\n");
+	}
+}
+
+void linkedlist_test_size(DS_LinkedList *node)
 {
 	size_t i = 0;
-	printf("%s() ~ ", __func__);
-	if ((i = DS_LinkedList_size(node)) == 0)
+	double time = 0;
+	printf("%s()\t ~ ", __func__);
+
+	time_start();
+	if ((i = DS_LinkedList_size(node)) == 0) {
+		time_stop();
 		printf(" ~ failed.\n");
-	else
-		printf("%lu ~ passed.\n", i);
+	} else {
+		time = time_stop();
+		printf("%fs ~ passed.\t", time);
+		printf("size = %lu\n", i);
+	}
 }
 
-void clear_test(DS_LinkedList *node)
+void linkedlist_test_clear(DS_LinkedList *node)
 {
-	printf("%s() ~ ", __func__);
-	if (DS_LinkedList_clear(node))
+	double time = 0;
+	printf("%s()\t ~ ", __func__);
+
+	time_start();
+	if (DS_LinkedList_clear(node)) {
+		time_stop();
 		printf(" ~ failed.\n");
-	else
-		printf("Use valgrind to be certain ~ passed.\n");
+	} else {
+		time = time_stop();
+		printf("%fs ~ passed.\t", time);
+		printf("\n");
+	}
 }
 
 void DS_LinkedList_test(void)
@@ -139,14 +189,21 @@ void DS_LinkedList_test(void)
 	head.next = NULL;
 	Data d, *data;
 	data = &d;
+	int i;
 
-	add_test(&head, data, 1000001);// 1000000
-	get_test(&head, 1000000);      // 1000000
-	output_test(&head, 10);        // 0123456789
-	insert_test(&head, data, 119); // I used to be number 120.
-	remove_test(&head, 119);       // index 120
-	set_test(&head, 119, data);    // I have replased the number 120
-	size_test(&head);              // 1000001
-	clear_test(head.next);
+	time_start();
+	for (i = 0; i < 1000000; )
+		i++;
+	time_stop();
+
+	linkedlist_test_add(&head, data, 1);
+	linkedlist_test_add(&head, data, 10000000);
+	linkedlist_test_get(&head, 10000000);
+	linkedlist_test_output(&head, 10);
+	linkedlist_test_insert(&head, data, 5000000);
+	linkedlist_test_remove(&head, 5000000);
+	linkedlist_test_set(&head, 5000000, data);
+	linkedlist_test_size(&head);
+	linkedlist_test_clear(head.next);
 }
 

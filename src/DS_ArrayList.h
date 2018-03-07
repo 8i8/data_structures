@@ -17,4 +17,10 @@ typedef struct DS_ArrayList {
 
 DS_ArrayList *DS_ArrayList_init(DS_ArrayList *list, Data *data, unsigned int size);
 
+Data *DS_ArrayList_get(DS_ArrayList *list, size_t index);
+
 int DS_ArrayList_add(DS_ArrayList *list, Data *data);
+
+int DS_ArrayList_insert(DS_ArrayList *list, size_t index, Data *data);
+
+int DS_ArrayList_remove(DS_ArrayList *list, size_t index);

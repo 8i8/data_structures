@@ -1,6 +1,7 @@
 EXE = datastructures
 SRC = \
 	driver.c \
+	DS_Timer.c \
 	DS_LinkedList.c \
 	DS_LinkedList_test.c \
 	DS_ArrayList.c \
@@ -15,7 +16,7 @@ CC  = gcc
 
 CFLAGS = -Wall -Wextra -pedantic
 CFLAGS += -g
-CFLAGS += -fsanitize=address -fno-omit-frame-pointer
+#CFLAGS += -fsanitize=address -fno-omit-frame-pointer
 
 vpath %.c src/
 vpath %.h src/
@@ -34,6 +35,8 @@ distclean: clean
 	rm -f datastructures a.out scratch*
 
 $(OBJ): \
+	Makefile \
+	DS_Timer.h \
 	DS_Struct.h \
 	DS_LinkedList.h	\
 	DS_LinkedList_test.h \

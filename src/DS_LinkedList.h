@@ -25,10 +25,10 @@ DS_LinkedList *DS_LinkedList_get(DS_LinkedList *list, size_t index);
 int DS_LinkedList_output(DS_LinkedList *list, void *var, int(*func)(void*, void*));
 
 /* DS_LinkedList_insert: Insert a new node at the given index, add data */
-int DS_LinkedList_insert(DS_LinkedList *list, size_t index, Data data);
+DS_LinkedList *DS_LinkedList_insert(DS_LinkedList *list, size_t index, Data data);
 
 /* DS_LinkedList_remove: Remove and free the node at the given index */
-int DS_LinkedList_remove(DS_LinkedList *list, size_t index);
+DS_LinkedList *DS_LinkedList_remove(DS_LinkedList *list, size_t index);
 
 /*  DS_LinkedList_set: Set the data at index n to be the given data */
 DS_LinkedList *DS_LinkedList_set(DS_LinkedList *list, size_t index, Data data);

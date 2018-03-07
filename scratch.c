@@ -1,12 +1,17 @@
 #include <stdio.h>
-#include <stdlib.h>
+#include "src/DS_Timer.h"
 
 int main(void)
 {
-	int a = 1;
+	size_t i;
+	double time = 0;
+	i = 10000000;
+	time_start();
+	while (--i)
+		;
+	time = time_stop();
 
-	printf("test %d", a);
-	printf("test %d", a << 16);
+	printf("%f\n", time);
 
 	return 0;
 }

@@ -48,3 +48,10 @@ double time_stop()
 	return micro *= 0.000000001;
 }
 
+void time_loop()
+{
+	int i;
+	for (i = 0; i < 1000000; )
+		i++;
+}
+

@@ -1,16 +1,20 @@
 #include "DS_LinkedList.h"
 #include <stdlib.h>
+#include <string.h>
 
 /*
  * DS_LinkedList_Init: Initialise a linked list on the heap, creates the first
- * node and sets the size to 1.
+ * node and sets the size to 1. If a stack alocated node is passed in it simply
+ * sets the next node value to NULL.
  */
-DS_LinkedList *DS_LinkedList_init(DS_LinkedList *list)
+DS_LinkedList *DS_LinkedList_init(DS_LinkedList *list) 
 {
-	if ((list = malloc(sizeof(DS_LinkedList))) == NULL) {
-		printf("%s: error: memory allocation failed.", __func__);
-		return NULL;
-	}
+	if (list == NULL) {
+		if ((list = malloc(sizeof(DS_LinkedList))) == NULL) {
+			printf("%s: error: memory allocation failed.", __func__);
+			return NULL;
+		}
+	} else
 
 	list->next = NULL;
 	return list;
@@ -54,7 +58,8 @@ DS_LinkedList *DS_LinkedList_get(DS_LinkedList *list, size_t index)
 		return NULL;
 	}
 
-	for (i = 0; i <= index && list->next != NULL; i++)
+	/* index starts at 1 to avoid the head node */
+	for (i = 1; i <= index && list->next != NULL; i++)
 		list = list->next;
 
 	if (i < index && list->next == NULL) {
@@ -93,7 +98,10 @@ DS_LinkedList *DS_LinkedList_insert(DS_LinkedList *list, size_t index, Data data
 	if (list == NULL) {
 		printf("%s: error: NULL pointer.", __func__);
 		return NULL;
-	} else if ((list = DS_LinkedList_get(list, index)) == NULL) {
+	} else if (index == 0) {
+		printf("%s: error: index out of bounds.", __func__);
+		return NULL;
+	} else if ((list = DS_LinkedList_get(list, index-1)) == NULL) {
 		printf("%s: error: index returned NULL.", __func__);
 		return NULL;
 	}
@@ -106,35 +114,36 @@ DS_LinkedList *DS_LinkedList_insert(DS_LinkedList *list, size_t index, Data data
 		return NULL;
 	}
 
-	list = list->next;
-	list->data = data;
-	list->next = temp;
+	list->next->data = data;
+	list->next->next = temp;
 
-	return list;
+	return list->next;
 }
 
 /*
  * DS_LinkedList_remove: Remove and free the node at the given index.
- * TODO work out how to solve free() for the linked list first node.
  */
 DS_LinkedList *DS_LinkedList_remove(DS_LinkedList *list, size_t index)
 {
 	if (list == NULL) {
 		printf("%s: error: NULL pointer.", __func__);
 		return NULL;
-	} else if ((index != 0) && (list = DS_LinkedList_get(list, index)) == NULL) {
+	} else if (index == 0) {
+		printf("%s: warning: Are you trying to free the lists head?", __func__);
+		return list;
+	} else if ((list = DS_LinkedList_get(list, index-1)) == NULL) {
 		printf("%s: error: index returned NULL.", __func__);
 		return NULL;
 	} else if (list->next == NULL) {
-		printf("%s: warning: index is already the end of the list.", __func__);
+		printf("%s: warning: index is the end of the list.", __func__);
 		return list;
 	}
 
-	DS_LinkedList *temp = list;
-	list = list->next;
+	DS_LinkedList *temp = list->next;
+	list->next = list->next->next;
 	free(temp);
 
-	return list;
+	return (list->next == NULL) ? list : list->next;
 }
 
 /*
@@ -189,7 +198,6 @@ int DS_LinkedList_clear(DS_LinkedList *list)
 		free(temp);
 	}
 	free(list);
-
 
 	return 0;
 }

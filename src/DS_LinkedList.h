@@ -1,8 +1,17 @@
 /*
  * DS_LinkedList
+ * TODO Can this be abstracted one level further using pointers to pointers?
+ * Avoiding some of the issues of and whilst economising access by, holding the
+ * last accessed node in an encapsulating struct. Do compilers make this
+ * optimisation automagicaly?
  */
 #include <stdio.h>
 #include "DS_Struct.h"
+
+typedef struct DS_Node {
+	struct DS_Node *next;
+	Data data;
+} DS_Node;
 
 typedef struct DS_LinkedList {
 	struct DS_LinkedList *next;

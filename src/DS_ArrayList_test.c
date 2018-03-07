@@ -64,6 +64,7 @@ void arraylist_test_get(DS_ArrayList *list, size_t index)
 void arraylist_test_insert(DS_ArrayList *list, size_t index, Data *data)
 {
 	double time = 0;
+	int i;
 	printf("%s()\t ~ ", __func__);
 	sprintf(data->str, "I was inserted here");
 	data->len = strlen(data->str);
@@ -75,15 +76,16 @@ void arraylist_test_insert(DS_ArrayList *list, size_t index, Data *data)
 	} else {
 		time = time_stop();
 		printf("%fs ~ passed.\t", time);
-		printf("%s ", list->data[index].str);
-		printf("%s ", list->data[index + 1].str);
-		printf("%s\n", list->data[index + 2].str);
+		for (i = 3; index < list->len && i; index++, i--)
+			printf("%s ", list->data[index].str);
+		putchar('\n');
 	}
 }
 
 void arraylist_test_remove(DS_ArrayList *list, size_t index)
 {
 	double time = 0;
+	int i;
 	printf("%s()\t ~ ", __func__);
 
 	time_start();
@@ -93,15 +95,20 @@ void arraylist_test_remove(DS_ArrayList *list, size_t index)
 	} else {
 		time = time_stop();
 		printf("%fs ~ passed.\t", time);
-		printf("%s ", list->data[index].str);
-		printf("%s ", list->data[index + 1].str);
-		printf("%s\n", list->data[index + 2].str);
+		for (i = 3; index < list->len && i; index++, i--)
+			printf("%s ", list->data[index].str);
+		putchar('\n');
 	}
 }
 
 void arraylist_test_free(DS_ArrayList *list)
 {
-	free(list->data);
+	double time = 0;
+	printf("%s()\t ~ ", __func__);
+	time_start();
+	DS_ArrayList_free(list);
+	time = time_stop();
+	printf("%fs ~ passed.\t", time);
 }
 
 void DS_ArrayList_test()
@@ -109,11 +116,9 @@ void DS_ArrayList_test()
 	DS_ArrayList list;
 	Data d, *data;
 	data = &d;
-	int i;
 
 	time_start();
-	for (i = 0; i < 1000000; )
-		i++;
+	time_loop();
 	time_stop();
 
 	arraylist_test_init(&list, data, 4);
@@ -121,6 +126,5 @@ void DS_ArrayList_test()
 	arraylist_test_get(&list, 9999999);
 	arraylist_test_insert(&list, 5000000, data);
 	arraylist_test_remove(&list, 5000000);
-
 	arraylist_test_free(&list);
 }

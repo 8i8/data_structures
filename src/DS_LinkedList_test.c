@@ -34,6 +34,16 @@ int print_n(void *list, void *n)
 	return 0;
 }
 
+void linkedlist_test_init(DS_LinkedList *head)
+{
+	double time = 0;
+	printf("%s()\t ~ ", __func__);
+	time_start();
+	DS_LinkedList_init(head);
+	time = time_stop();
+	printf("%fs ~ passed. Head initiated.\n", time);
+}
+
 void linkedlist_test_add(DS_LinkedList *node, Data *data, size_t num)
 {
 	size_t i;
@@ -97,6 +107,7 @@ void linkedlist_test_output(DS_LinkedList *node, size_t var)
 void linkedlist_test_insert(DS_LinkedList *node, Data *data, size_t index)
 {
 	double time = 0;
+	int i;
 	printf("%s() ~ ", __func__);
 	sprintf(data->str, "%s", "I used to be a number.");
 	data->len = strlen(data->str);
@@ -108,15 +119,16 @@ void linkedlist_test_insert(DS_LinkedList *node, Data *data, size_t index)
 	} else {
 		time = time_stop();
 		printf("%fs ~ passed.\t", time);
-		print(node, " ");
-		print(node->next, " ");
-		print(node->next->next, "\n");
+		for (i = 4; node->next != NULL && i; node = node->next, i--)
+			print(node, " ");
+		putchar('\n');
 	}
 }
 
 void linkedlist_test_remove(DS_LinkedList *node, size_t index)
 {
 	double time = 0;
+	int i;
 	printf("%s() ~ ", __func__);
 
 	time_start();
@@ -126,17 +138,18 @@ void linkedlist_test_remove(DS_LinkedList *node, size_t index)
 	} else {
 		time = time_stop();
 		printf("%fs ~ passed.\t", time);
-		print(node, " ");
-		print(node->next, " ");
-		print(node->next->next, "\n");
+		for (i = 4; node->next != NULL && i; node = node->next, i--)
+			print(node, " ");
+		putchar('\n');
 	}
 }
 
 void linkedlist_test_set(DS_LinkedList *node, size_t index, Data *data)
 {
 	double time = 0;
+	int i;
 	printf("%s()\t ~ ", __func__);
-	sprintf(data->str, "%s", "I have replaced the number 1000000");
+	sprintf(data->str, "%s", "I am now hypertextual.");
 	data->len = strlen(data->str);
 
 	time_start();
@@ -146,7 +159,9 @@ void linkedlist_test_set(DS_LinkedList *node, size_t index, Data *data)
 	} else {
 		time = time_stop();
 		printf("%fs ~ passed.\t", time);
-		print(node, "\n");
+		for (i = 4; node->next != NULL && i; node = node->next, i--)
+			print(node, " ");
+		putchar('\n');
 	}
 }
 
@@ -189,20 +204,20 @@ void DS_LinkedList_test(void)
 	head.next = NULL;
 	Data d, *data;
 	data = &d;
-	int i;
 
 	time_start();
-	for (i = 0; i < 1000000; )
-		i++;
+	time_loop();
 	time_stop();
 
+	linkedlist_test_init(&head);
 	linkedlist_test_add(&head, data, 1);
+	linkedlist_test_remove(&head, 1);
 	linkedlist_test_add(&head, data, 10000000);
 	linkedlist_test_get(&head, 10000000);
 	linkedlist_test_output(&head, 10);
 	linkedlist_test_insert(&head, data, 5000000);
-	linkedlist_test_remove(&head, 5000000);
 	linkedlist_test_set(&head, 5000000, data);
+	linkedlist_test_remove(&head, 5000000);
 	linkedlist_test_size(&head);
 	linkedlist_test_clear(head.next);
 }

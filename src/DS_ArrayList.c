@@ -111,3 +111,7 @@ Data *DS_ArrayList_get(DS_ArrayList *list, size_t index)
 	return &list->data[index];
 }
 
+void DS_ArrayList_free(DS_ArrayList *list)
+{
+	free(list->data);
+}

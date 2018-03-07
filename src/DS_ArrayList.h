@@ -24,3 +24,5 @@ int DS_ArrayList_add(DS_ArrayList *list, Data *data);
 int DS_ArrayList_insert(DS_ArrayList *list, size_t index, Data *data);
 
 int DS_ArrayList_remove(DS_ArrayList *list, size_t index);
+
+void DS_ArrayList_free(DS_ArrayList *list);

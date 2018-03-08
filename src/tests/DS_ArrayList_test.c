@@ -1,7 +1,7 @@
-#include "DS_ArrayList.h"
+#include "../data_structures/DS_ArrayList.h"
+#include "../general/DS_Timer.h"
 #include <stdlib.h>
 #include <string.h>
-#include "DS_Timer.h"
 
 void arraylist_test_init(DS_ArrayList *list, Data *data, size_t n)
 {

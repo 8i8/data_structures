@@ -47,8 +47,8 @@ DS_LinkedList *DS_LinkedList_add(DS_LinkedList *list, Data data)
 
 /*
  * DS_LinkedList_get: Returns the requested node if it exists, NULL if not.
- * The for loop itteration starts at 1 to avoid the case of the head of the
- * list being effected removing it from the count.
+ * The for loop itteration starts at 1 to avoid the case that the head of the
+ * list, assuming that it can easily be stack allocated.
  */
 DS_LinkedList *DS_LinkedList_get(DS_LinkedList *list, size_t num)
 {
@@ -59,7 +59,8 @@ DS_LinkedList *DS_LinkedList_get(DS_LinkedList *list, size_t num)
 		return NULL;
 	}
 
-	/* num starts at 1 to avoid the head node, should it be passed in */
+	/* num starts at 1 to avoid the head node, returning n from the current
+	 * node not inclusive of list. */
 	for (i = 1; i <= num && list->next != NULL; i++)
 		list = list->next;
 
@@ -73,8 +74,8 @@ DS_LinkedList *DS_LinkedList_get(DS_LinkedList *list, size_t num)
 }
 
 /*
- * DS_LinkedList_output: Iterate over the entire list, perform given function
- * on each node.
+ * DS_LinkedList_output: Iterate over the entire list, performing the given
+ * function upon each node.
  */
 int DS_LinkedList_output(DS_LinkedList *list, void *var, int(*func)(void*, void*))
 {
@@ -93,9 +94,7 @@ int DS_LinkedList_output(DS_LinkedList *list, void *var, int(*func)(void*, void*
 }
 
 /*
- * DS_LinkedList_insert: Insert a new node at the given place, add data.
- * TODO this code is broken, make an appropriate test for the three main cases,
- * insert at start, in the middle and at the end of list.
+ * DS_LinkedList_insert: Insert a new node before node n.
  */
 DS_LinkedList *DS_LinkedList_insert(DS_LinkedList *list, size_t num, Data data)
 {
@@ -105,15 +104,13 @@ DS_LinkedList *DS_LinkedList_insert(DS_LinkedList *list, size_t num, Data data)
 	} else if (num == 0) {
 		printf("%s: error: num out of bounds.", __func__);
 		return NULL;
-		/* Get node, but not number one, one is the already the next
-		 * node, the function called next 'get' deals with avoiding the case
-		 * of the first node by using 1 to start the itteration of its loop */
+		/* Get node, but not number one; You are already there */
 	} else if ((num != 1) && (list = DS_LinkedList_get(list, num - 1)) == NULL) {
-		printf("%s: error: num returned NULL.", __func__);
+		printf("%s: ", __func__);
 		return NULL;
 	}
 
-	// Deal with inserting before node 1.
+	/* We should now bw at node n - 1, insert a node here. */
 	DS_LinkedList *temp = list->next;
 
 	if((list->next = malloc(sizeof(DS_LinkedList))) == NULL) {
@@ -142,7 +139,7 @@ DS_LinkedList *DS_LinkedList_remove(DS_LinkedList *list, size_t num)
 		/* Get node, not if num is 1 it is the current node; Deal with the
 		 * case of removing the first node  */
 	} else if ((num != 1) && (list = DS_LinkedList_get(list, num - 1)) == NULL) {
-		printf("%s: error: num returned NULL.", __func__);
+		printf("%s: ", __func__);
 		return NULL;
 		/* Deal with the next node being the NULL terminator */
 	} else if (list->next == NULL) {
@@ -169,7 +166,7 @@ DS_LinkedList *DS_LinkedList_set(DS_LinkedList *list, size_t index, Data data)
 		printf("%s: error: NULL pointer.", __func__);
 		return NULL;
 	} else if ((list = DS_LinkedList_get(list, index)) == NULL) {
-		printf("%s: error: index returned NULL.", __func__);
+		printf("%s: ", __func__);
 		return NULL;
 	}
 

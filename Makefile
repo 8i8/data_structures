@@ -1,6 +1,7 @@
 EXE = datastructures
 SRC = \
 	driver.c \
+	DS_Error.c \
 	DS_Timer.c \
 	DS_Test_output.c \
 	DS_LinkedList.c \
@@ -19,8 +20,8 @@ CFLAGS = -Wall -Wextra -pedantic
 CFLAGS += -g
 CFLAGS += -fsanitize=address -fno-omit-frame-pointer
 
-vpath %.c src/
-vpath %.h src/
+vpath %.c src/data_structures/ src/general/ src/tests/
+vpath %.h src/data_structures/ src/general/ src/tests/
 
 .PHONY: all clean distclean
 
@@ -37,6 +38,7 @@ distclean: clean
 
 $(OBJ): \
 	Makefile \
+	DS_Error.h \
 	DS_Timer.h \
 	DS_Struct.h \
 	DS_Test_output.h \

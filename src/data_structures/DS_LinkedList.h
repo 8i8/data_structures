@@ -8,14 +8,9 @@
 #include <stdio.h>
 #include "DS_Struct.h"
 
-typedef struct DS_Node {
-	struct DS_Node *next;
+typedef struct _ds_LinkedList {
 	Data data;
-} DS_Node;
-
-typedef struct DS_LinkedList {
-	Data data;
-	struct DS_LinkedList *next;
+	struct _ds_LinkedList *next;
 } DS_LinkedList;
 
 /* DS_LinkedList_Init: Initialise a linked list on the heap, creates the first

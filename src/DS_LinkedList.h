@@ -14,8 +14,8 @@ typedef struct DS_Node {
 } DS_Node;
 
 typedef struct DS_LinkedList {
-	struct DS_LinkedList *next;
 	Data data;
+	struct DS_LinkedList *next;
 } DS_LinkedList;
 
 /* DS_LinkedList_Init: Initialise a linked list on the heap, creates the first
@@ -37,7 +37,7 @@ int DS_LinkedList_output(DS_LinkedList *list, void *var, int(*func)(void*, void*
 DS_LinkedList *DS_LinkedList_insert(DS_LinkedList *list, size_t index, Data data);
 
 /* DS_LinkedList_remove: Remove and free the node at the given index */
-DS_LinkedList *DS_LinkedList_remove(DS_LinkedList *list, size_t index);
+DS_LinkedList *DS_LinkedList_remove(DS_LinkedList *list, size_t num);
 
 /*  DS_LinkedList_set: Set the data at index n to be the given data */
 DS_LinkedList *DS_LinkedList_set(DS_LinkedList *list, size_t index, Data data);

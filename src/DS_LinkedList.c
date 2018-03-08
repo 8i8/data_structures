@@ -4,7 +4,7 @@
 
 /*
  * DS_LinkedList_Init: Initialise a linked list on the heap, creates the first
- * node and sets the size to 1. If a stack alocated node is passed in it simply
+ * node and sets the size to 1. If a stack allocated node is passed in it simply
  * sets the next node value to NULL.
  */
 DS_LinkedList *DS_LinkedList_init(DS_LinkedList *list) 
@@ -46,10 +46,11 @@ DS_LinkedList *DS_LinkedList_add(DS_LinkedList *list, Data data)
 }
 
 /*
- * DS_LinkedList_get: Returns the node at the given index, if that index
- * exists.
+ * DS_LinkedList_get: Returns the requested node if it exists, NULL if not.
+ * The for loop itteration starts at 1 to avoid the case of the head of the
+ * list being effected removing it from the count.
  */
-DS_LinkedList *DS_LinkedList_get(DS_LinkedList *list, size_t index)
+DS_LinkedList *DS_LinkedList_get(DS_LinkedList *list, size_t num)
 {
 	size_t i;
 
@@ -58,12 +59,13 @@ DS_LinkedList *DS_LinkedList_get(DS_LinkedList *list, size_t index)
 		return NULL;
 	}
 
-	/* index starts at 1 to avoid the head node */
-	for (i = 1; i <= index && list->next != NULL; i++)
+	/* num starts at 1 to avoid the head node, should it be passed in */
+	for (i = 1; i <= num && list->next != NULL; i++)
 		list = list->next;
 
-	if (i < index && list->next == NULL) {
-		printf("%s: error: index out of bounds.", __func__);
+	/* Stop if the requested node does not exist */
+	if (i <= num && list->next == NULL) {
+		printf("%s: error: num out of bounds.", __func__);
 		return NULL;
 	}
 
@@ -71,7 +73,7 @@ DS_LinkedList *DS_LinkedList_get(DS_LinkedList *list, size_t index)
 }
 
 /*
- * DS_LinkedList_output: Itterate over the intire list, perform given function
+ * DS_LinkedList_output: Iterate over the entire list, perform given function
  * on each node.
  */
 int DS_LinkedList_output(DS_LinkedList *list, void *var, int(*func)(void*, void*))
@@ -91,21 +93,27 @@ int DS_LinkedList_output(DS_LinkedList *list, void *var, int(*func)(void*, void*
 }
 
 /*
- * DS_LinkedList_insert: Insert a new node at the given index, add data.
+ * DS_LinkedList_insert: Insert a new node at the given place, add data.
+ * TODO this code is broken, make an appropriate test for the three main cases,
+ * insert at start, in the middle and at the end of list.
  */
-DS_LinkedList *DS_LinkedList_insert(DS_LinkedList *list, size_t index, Data data)
+DS_LinkedList *DS_LinkedList_insert(DS_LinkedList *list, size_t num, Data data)
 {
 	if (list == NULL) {
 		printf("%s: error: NULL pointer.", __func__);
 		return NULL;
-	} else if (index == 0) {
-		printf("%s: error: index out of bounds.", __func__);
+	} else if (num == 0) {
+		printf("%s: error: num out of bounds.", __func__);
 		return NULL;
-	} else if ((list = DS_LinkedList_get(list, index-1)) == NULL) {
-		printf("%s: error: index returned NULL.", __func__);
+		/* Get node, but not number one, one is the already the next
+		 * node, the function called next 'get' deals with avoiding the case
+		 * of the first node by using 1 to start the itteration of its loop */
+	} else if ((num != 1) && (list = DS_LinkedList_get(list, num - 1)) == NULL) {
+		printf("%s: error: num returned NULL.", __func__);
 		return NULL;
 	}
 
+	// Deal with inserting before node 1.
 	DS_LinkedList *temp = list->next;
 
 	if((list->next = malloc(sizeof(DS_LinkedList))) == NULL) {
@@ -123,26 +131,32 @@ DS_LinkedList *DS_LinkedList_insert(DS_LinkedList *list, size_t index, Data data
 /*
  * DS_LinkedList_remove: Remove and free the node at the given index.
  */
-DS_LinkedList *DS_LinkedList_remove(DS_LinkedList *list, size_t index)
+DS_LinkedList *DS_LinkedList_remove(DS_LinkedList *list, size_t num)
 {
 	if (list == NULL) {
 		printf("%s: error: NULL pointer.", __func__);
 		return NULL;
-	} else if (index == 0) {
-		printf("%s: warning: Are you trying to free the lists head?", __func__);
-		return list;
-	} else if ((list = DS_LinkedList_get(list, index-1)) == NULL) {
-		printf("%s: error: index returned NULL.", __func__);
+	} else if (num == 0) {
+		printf("%s: error: Are you trying to free the lists head?", __func__);
 		return NULL;
+		/* Get node, not if num is 1 it is the current node; Deal with the
+		 * case of removing the first node  */
+	} else if ((num != 1) && (list = DS_LinkedList_get(list, num - 1)) == NULL) {
+		printf("%s: error: num returned NULL.", __func__);
+		return NULL;
+		/* Deal with the next node being the NULL terminator */
 	} else if (list->next == NULL) {
-		printf("%s: warning: index is the end of the list.", __func__);
+		printf("%s: warning: num is the end of the list.", __func__);
 		return list;
 	}
 
+	/* Remove the node */
 	DS_LinkedList *temp = list->next;
 	list->next = list->next->next;
 	free(temp);
 
+	/* Return the current node and not NULL if you have just removed the last
+	 * node */
 	return (list->next == NULL) ? list : list->next;
 }
 
@@ -190,6 +204,14 @@ int DS_LinkedList_clear(DS_LinkedList *list)
 		printf("%s: error: NULL pointer.", __func__);
 		return -1;
 	}
+
+	if (list->next == NULL) {
+		printf("%s: warning: nothing to free.", __func__);
+		return 0;
+	}
+
+	/* Skip forwards one to avoid freeing the head */
+	list = list->next;
 
 	DS_LinkedList *temp;
 	while (list->next != NULL) {

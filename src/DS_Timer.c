@@ -51,7 +51,11 @@ double time_stop()
 void time_loop()
 {
 	int i;
+	time_start();
+
 	for (i = 0; i < 1000000; )
 		i++;
+
+	time_stop();
 }
 

@@ -1,7 +1,9 @@
 #include "../data_structures/DS_Struct.h"
 #include "../data_structures/DS_LinkedList.h"
 #include "../general/DS_Timer.h"
-#include "../tests/DS_Test_output.h"
+#include "../general/DS_Output.h"
+#include "../general/DS_Error.h"
+#include "../general/DS_Message.h"
 #include <string.h>
 #include <stdint.h>
 
@@ -13,14 +15,34 @@ typedef struct _var {
 	size_t width;
 } Var;
 
-void linkedlist_test_init(DS_LinkedList *head)
+void _linkedlist_stack_or_heap(DS_LinkedList *node, char *type)
 {
 	double time = 0;
-	printf("%s()\t ~ ", __func__);
+	int pass = 1;
+	DS_LinkedList *rtn = NULL;
+
 	time_start();
-	DS_LinkedList_init(head);
+	if ((rtn = DS_LinkedList_init(node)) == NULL)
+		pass--, DS_Error_set(0, "error: %s: %s", __func__, DS_Error_get());
 	time = time_stop();
-	printf("%fs ~ passed.\n", time);
+
+	if (strcmp(rtn->data.str, type))
+		pass--, DS_Error_set(0, "error: %s: list head type mismatched. ", __func__);
+
+	DS_Message_append((pass) ? "%fs passed.\n" :  "%fs failed.\n", time);
+}
+
+void linkedlist_test_init(DS_LinkedList *head)
+{
+	DS_LinkedList *node;
+	node = head;
+
+	DS_Message_set("info: %s()\t ~ ", __func__);
+
+	if (head == NULL)
+		_linkedlist_stack_or_heap(node, "HEAP");
+	else
+		_linkedlist_stack_or_heap(node, "STACK");
 }
 
 void linkedlist_test_add(DS_LinkedList *node, size_t num)
@@ -31,12 +53,12 @@ void linkedlist_test_add(DS_LinkedList *node, size_t num)
 	double time = 0;
 	int pass = 1;
 
-	printf("%s()\t ~ ", __func__);
+	DS_Message_set(0, "info: %s()\t ~ ", __func__);
 
 	time_start();
 	for (i = 0; i < num; i++)
 	{
-		sprintf(data->str, "n:%lu ", i+1);
+		DS_Message_append(data->str, "n:%lu ", i+1);
 		data->len = strlen(data->str);
 		if((node = DS_LinkedList_add(node, *data)) == NULL) {
 			time_stop();
@@ -74,7 +96,6 @@ void linkedlist_test_output(DS_LinkedList *node, size_t var)
 	double time = 0;
 	printf("%s() ~ ", __func__);
 
-	/* Set the string length position to the start of the output string */
 	DS_Out_reset();
 	time_start();
 	if (DS_LinkedList_output(node, &var, DS_Out_store)) {
@@ -83,11 +104,11 @@ void linkedlist_test_output(DS_LinkedList *node, size_t var)
 	} else {
 		time = time_stop();
 		printf("%fs ~ passed. ", time);
-		printf("%s\n", DS_Out_get_string());
+		printf("%s\n", DS_Out_msg());
 	}
 }
 
-void linkedlist_test_insert(DS_LinkedList *node, char *str, size_t index)
+void linkedlist_test_insert(DS_LinkedList *node, char *str, size_t num)
 {
 	Data d, *data;
 	data = &d;
@@ -97,7 +118,7 @@ void linkedlist_test_insert(DS_LinkedList *node, char *str, size_t index)
 	data->len = strlen(data->str);
 
 	time_start();
-	if ((node = DS_LinkedList_insert(node, index, *data)) == NULL) {
+	if ((node = DS_LinkedList_insert(node, num, *data)) == NULL) {
 		time_stop();
 		printf(" ~ failed.\n");
 	} else {
@@ -107,13 +128,13 @@ void linkedlist_test_insert(DS_LinkedList *node, char *str, size_t index)
 	}
 }
 
-void linkedlist_test_remove(DS_LinkedList *node, size_t index)
+void linkedlist_test_remove(DS_LinkedList *node, size_t num)
 {
 	double time = 0;
 	printf("%s() ~ ", __func__);
 
 	time_start();
-	if ((node = DS_LinkedList_remove(node, index)) == NULL) {
+	if ((node = DS_LinkedList_remove(node, num)) == NULL) {
 		time_stop();
 		printf(" ~ failed.\n");
 	} else {
@@ -123,21 +144,27 @@ void linkedlist_test_remove(DS_LinkedList *node, size_t index)
 	}
 }
 
-void linkedlist_test_set(DS_LinkedList *node, size_t index, Data *data)
+void linkedlist_test_set(DS_LinkedList *head, size_t num, Data *data)
 {
+	DS_LinkedList *node, *rtn_value;
+	node = head;
 	double time = 0;
 	printf("%s()\t ~ ", __func__);
 	sprintf(data->str, "%s", "I am now hypertextual.");
 	data->len = strlen(data->str);
 
 	time_start();
-	if ((node = DS_LinkedList_set(node, index, *data)) == NULL) {
+	if ((rtn_value = DS_LinkedList_set(node, num, *data)) == NULL) {
 		time_stop();
 		printf(" ~ failed.\n");
 	} else {
 		time = time_stop();
-		printf("%fs ~ passed. ", time);
-		DS_Out_print_node(node, "\n");
+		if (rtn_value != node) {
+			printf(" ~ failed.\n");
+		} else {
+			printf("%fs ~ passed. ", time);
+			DS_Out_print_node(DS_LinkedList_get(head, num), "\n");
+		}
 	}
 }
 

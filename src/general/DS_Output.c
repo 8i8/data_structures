@@ -1,11 +1,12 @@
-#include "../tests/DS_Test_output.h"
+#include "../general/DS_Output.h"
 #include <stdio.h>
 #include <string.h>
 
 #define LEN 54
 
 static char output[LEN];
-static char *pt_out;
+static char msg[LEN];
+static char *pt_msg;
 
 /* 
  * This function relies on the void* that is being passed in containing a char*
@@ -31,19 +32,23 @@ int DS_Out_store(void *node, void *n)
 	char *out;
 	out = (char*)node;
 
-	if ((pt_out - output) < (int)(LEN - strlen(out)))
-		pt_out += sprintf(pt_out, out, strlen(out));
+	if ((pt_msg - msg) < (int)(LEN - strlen(out)))
+		pt_msg += sprintf(pt_msg, out, strlen(out));
 
 	return 0;
 }
 
 void DS_Out_reset()
 {
-	pt_out = output;
+	pt_msg = msg;
+	*pt_msg = '\0';
 }
 
-char *DS_Out_get_string()
+char *DS_Out_msg()
 {
+	memcpy(output, msg, LEN);
+	pt_msg = msg;
+	*pt_msg = '\0';
 	return output;
 }
 

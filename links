@@ -1,0 +1,3 @@
+find ./ -name "*.c" | cat > cscope.files                                                                                                              
+find ./ -name "*.h" | cat >> cscope.files
+cscope -bi cscope.files

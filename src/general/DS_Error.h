@@ -3,15 +3,20 @@
 #include <stdio.h>
 #include <stdint.h>
 
-/* jyError_get:    Print error string and reset to empty string */
-char *jyError_print(void);
+/* DS_Error_set: Erase any existing message and set a new message in its
+ * place */
+void DS_Error_set(char *string, ...);
 
-/* jyError_get:    Returns error string */
-char *jyError_get(void);
+/* DS_Error_append: Append to the current message */
+void DS_Error_append(char *string, ...);
 
-/* jyError_set:    Prevent to start of error string */
-void jyError_set(uint_fast8_t reverse, char *string, ...);
+/* DS_Error_insert: Insert at the beginning of the current message */
+void DS_Error_insert(char *string, ...);
 
-/* jyError_state: Returns the stattus of the error service, 0 as all clear, 1
- * if an error is pending  */
-int jyError_state(void);
+/* DS_Error_get: Return message and reset to empty */
+char *DS_Error_get(void);
+
+/* DS_Error_state: Returns the status of the message service, 0 as all clear, 1
+ * if an message is pending */
+int DS_Error_state(void);
+

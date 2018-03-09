@@ -11,7 +11,7 @@ DS_LinkedList *DS_LinkedList_init(DS_LinkedList *list)
 {
 	if (list == NULL) {
 		if ((list = malloc(sizeof(DS_LinkedList))) == NULL) {
-			DS_Error_set(0, "%s: memory allocation failed.", __func__);
+			DS_Error_set("%s: memory allocation failed.", __func__);
 			return NULL;
 		}
 		/* TODO this code is not generic and requires the use of a head
@@ -33,7 +33,7 @@ DS_LinkedList *DS_LinkedList_init(DS_LinkedList *list)
 DS_LinkedList *DS_LinkedList_add(DS_LinkedList *list, Data data)
 {
 	if (list == NULL) {
-		DS_Error_set(0, "%s: NULL pointer.", __func__);
+		DS_Error_set("%s: NULL pointer.", __func__);
 		return NULL;
 	}
 
@@ -41,7 +41,7 @@ DS_LinkedList *DS_LinkedList_add(DS_LinkedList *list, Data data)
 		list = list->next;
 
 	if ((list->next = malloc(sizeof(DS_LinkedList))) == NULL) {
-		DS_Error_set(0, "%s: memory allocation failed.", __func__);
+		DS_Error_set("%s: memory allocation failed.", __func__);
 		return NULL;
 	}
 
@@ -62,7 +62,7 @@ DS_LinkedList *DS_LinkedList_get(DS_LinkedList *list, size_t num)
 	size_t i;
 
 	if (list == NULL) {
-		DS_Error_set(0, "%s: NULL pointer.", __func__);
+		DS_Error_set("%s: NULL pointer.", __func__);
 		return NULL;
 	}
 
@@ -73,7 +73,7 @@ DS_LinkedList *DS_LinkedList_get(DS_LinkedList *list, size_t num)
 
 	/* Stop if the requested node does not exist */
 	if (i <= num && list->next == NULL) {
-		DS_Error_set(0, "%s: num out of bounds.", __func__);
+		DS_Error_set("%s: num out of bounds.", __func__);
 		return NULL;
 	}
 
@@ -87,7 +87,7 @@ DS_LinkedList *DS_LinkedList_get(DS_LinkedList *list, size_t num)
 int DS_LinkedList_output(DS_LinkedList *list, void *var, int(*func)(void*, void*))
 {
 	if (list == NULL) {
-		DS_Error_set(0, "%s: NULL pointer.", __func__);
+		DS_Error_set("%s: NULL pointer.", __func__);
 		return -1;
 	}
 
@@ -106,14 +106,14 @@ int DS_LinkedList_output(DS_LinkedList *list, void *var, int(*func)(void*, void*
 DS_LinkedList *DS_LinkedList_insert(DS_LinkedList *list, size_t num, Data data)
 {
 	if (list == NULL) {
-		DS_Error_set(0, "%s: NULL pointer.", __func__);
+		DS_Error_set("%s: NULL pointer.", __func__);
 		return NULL;
 	} else if (num == 0) {
-		DS_Error_set(0, "%s: num out of bounds.", __func__);
+		DS_Error_set("%s: num out of bounds.", __func__);
 		return NULL;
 		/* Get node, but not number one; You are already there */
 	} else if ((num != 1) && (list = DS_LinkedList_get(list, num - 1)) == NULL) {
-		DS_Error_set(0, "%s: ", __func__);
+		DS_Error_set("%s: ", __func__);
 		return NULL;
 	}
 
@@ -121,7 +121,7 @@ DS_LinkedList *DS_LinkedList_insert(DS_LinkedList *list, size_t num, Data data)
 	DS_LinkedList *temp = list->next;
 
 	if((list->next = malloc(sizeof(DS_LinkedList))) == NULL) {
-		DS_Error_set(0, "%s: memory allocation failed.", __func__);
+		DS_Error_set("%s: memory allocation failed.", __func__);
 		list->next = temp;
 		return NULL;
 	}
@@ -138,19 +138,19 @@ DS_LinkedList *DS_LinkedList_insert(DS_LinkedList *list, size_t num, Data data)
 DS_LinkedList *DS_LinkedList_remove(DS_LinkedList *list, size_t num)
 {
 	if (list == NULL) {
-		DS_Error_set(0, "%s: NULL pointer.", __func__);
+		DS_Error_set("%s: NULL pointer.", __func__);
 		return NULL;
 	} else if (num == 0) {
-		DS_Error_set(0, "%s: Are you trying to free the lists head?", __func__);
+		DS_Error_set("%s: Are you trying to free the lists head?", __func__);
 		return NULL;
 		/* Get node, not if num is 1 it is the current node; Deal with the
 		 * case of removing the first node  */
 	} else if ((num != 1) && (list = DS_LinkedList_get(list, num - 1)) == NULL) {
-		DS_Error_set(0, "%s: ", __func__);
+		DS_Error_set("%s: ", __func__);
 		return NULL;
 		/* Deal with the next node being the NULL terminator */
 	} else if (list->next == NULL) {
-		DS_Error_set(0, "%s: warning: num is the end of the list.", __func__);
+		DS_Error_set("%s: warning: num is the end of the list.", __func__);
 		return list;
 	}
 
@@ -170,10 +170,10 @@ DS_LinkedList *DS_LinkedList_remove(DS_LinkedList *list, size_t num)
 DS_LinkedList *DS_LinkedList_set(DS_LinkedList *list, size_t index, Data data)
 {
 	if (list == NULL) { 
-		DS_Error_set(0, "%s: NULL pointer.", __func__);
+		DS_Error_set("%s: NULL pointer.", __func__);
 		return NULL;
 	} else if ((list = DS_LinkedList_get(list, index)) == NULL) {
-		DS_Error_set(0, "%s: ", __func__);
+		DS_Error_set("%s: ", __func__);
 		return NULL;
 	}
 
@@ -188,7 +188,7 @@ DS_LinkedList *DS_LinkedList_set(DS_LinkedList *list, size_t index, Data data)
 size_t DS_LinkedList_size(DS_LinkedList *list)
 {
 	if (list == NULL) {
-		DS_Error_set(0, "%s: NULL pointer.", __func__);
+		DS_Error_set("%s: NULL pointer.", __func__);
 		return 0;
 	}
 
@@ -205,12 +205,12 @@ size_t DS_LinkedList_size(DS_LinkedList *list)
 int DS_LinkedList_clear(DS_LinkedList *list)
 {
 	if (list == NULL) {
-		DS_Error_set(0, "%s: NULL pointer.", __func__);
+		DS_Error_set("%s: NULL pointer.", __func__);
 		return -1;
 	}
 
 	if (list->next == NULL) {
-		DS_Error_set(0, "%s: warning: nothing to free.", __func__);
+		DS_Error_set("%s: warning: nothing to free.", __func__);
 		return 0;
 	}
 

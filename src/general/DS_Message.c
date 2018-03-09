@@ -15,11 +15,11 @@ void DS_Message_set(char *input, ...)
 	store[0] = '\0';
 	va_list va;
 	va_start(va, input);
-	if (_ds_message_set(message, input, &va))
-		state = 1;
+	_ds_message_set(message, input, &va);
 	va_end(va);
 
 	_ds_write_to_string(0, store, message);
+	state = 1;
 }
 
 /*
@@ -29,11 +29,12 @@ void DS_Message_append(char *input, ...)
 {
 	va_list va;
 	va_start(va, input);
-	if (_ds_message_set(message, input, &va))
-		state = 1;
+	_ds_message_set(message, input, &va);
 	va_end(va);
 
+	_ds_write_to_string(0, store, " ");
 	_ds_write_to_string(0, store, message);
+	state = 1;
 }
 
 /*
@@ -43,11 +44,12 @@ void DS_Message_insert(char *input, ...)
 {
 	va_list va;
 	va_start(va, input);
-	if (_ds_message_set(message, input, &va))
-		state = 1;
+	_ds_message_set(message, input, &va);
 	va_end(va);
 
+	_ds_write_to_string(1, store, " ");
 	_ds_write_to_string(1, store, message);
+	state = 1;
 }
 
 /*
@@ -67,11 +69,16 @@ char *DS_Message_get(void)
  */
 void DS_Message_print(void)
 {
+	_ds_write_to_string(1, store, "info: ");
 	strcpy(send, store);
 	store[0] = '\0';
 	state = 0;
-	write(1, send, strlen(send + 1));
-	write(1, "\n", 1);
+#ifdef _unix_
+	write(1, send, strlen(send));
+#endif
+#ifndef _unix_
+	printf("%s", send);
+#endif
 }
 
 /*

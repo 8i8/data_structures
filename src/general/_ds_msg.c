@@ -1,5 +1,6 @@
 #include "_ds_msg.h"
 #include <stdlib.h>
+#include <ctype.h>
 
 /*
  * _place_at_front: helper function, put the input string at the beginning of
@@ -76,7 +77,7 @@ int _ds_message_set(char *message, char *input, va_list *va)
 					input++;
 					va_size_t = va_arg(*va, size_t);
 					message += sprintf(message, "%lu", va_size_t);
-				} else
+				} else if (!isspace(*(input+1)))
 					input++;
 				break;
 			default:

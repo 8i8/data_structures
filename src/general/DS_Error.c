@@ -15,11 +15,11 @@ void DS_Error_set(char *input, ...)
 	store[0] = '\0';
 	va_list va;
 	va_start(va, input);
-	_ds_message_set(error, input, &va);
+	if(_ds_message_set(error, input, &va))
+		state = 1;
 	va_end(va);
 
 	_ds_write_to_string(0, store, error);
-	state = 1;
 }
 
 /*

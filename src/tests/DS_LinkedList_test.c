@@ -64,15 +64,14 @@ void linkedlist_test_add(DS_LinkedList *node, size_t num, int msg, int err)
 		sprintf(data->str, "n:%lu ", i+1);
 		data->len = strlen(data->str);
 		if((node = DS_LinkedList_add(node, *data)) == NULL) {
-			time = time_stop();
 			DS_Message_append("%fs failed.", time);
 			pass = 0;
 			break;
 		}
 	}
+	time = time_stop();
 
 	if (pass) {
-		time = time_stop();
 		DS_Message_append("%fs passed.", time);
 		DS_Message_append("%s", node->data.str, "\n");
 	}
@@ -221,6 +220,10 @@ void linkedlist_test_clear(DS_LinkedList *node, int msg, int err)
 	_ds_check_messages(msg, err);
 }
 
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ *  
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+
 /* Stop buffer underflow when getting the first few nodes for the output
  * display; Required to print n nodes before the current node. */
 size_t _back_n_nodes(size_t i, size_t n)
@@ -239,6 +242,7 @@ void _linkedlist_test_call(void* v)
 	msg = 0;
 	err = 1;
 
+	printf("%lu\n", i);
 	linkedlist_test_insert(head, var->str, i, msg, err);
 	linkedlist_test_get(head, i, msg, err);
 	linkedlist_test_output(DS_LinkedList_get(head, _back_n_nodes(i, n)), num, msg, err);
@@ -246,38 +250,51 @@ void _linkedlist_test_call(void* v)
 	linkedlist_test_output(head, num, msg, err);
 }
 
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ *  
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+
 void _linked_list_stages(Var *var, void(*func)(void*))
 {
 	DS_LinkedList *head = &(var->head);
 	size_t num = var->num;
 
 	time_loop();
-	linkedlist_test_init(head, 0, 1);
-	linkedlist_test_add(head, num, 0 , 1);
+	//linkedlist_test_init(head, 0, 1);
+	//linkedlist_test_add(head, num, 0 , 1);
 	(*func)(var);
-	linkedlist_test_clear(head, 0, 1);
+	//linkedlist_test_clear(head, 0, 1);
 }
 
 void _linkedlist_test_itterate(Var *var, void(*func)(void*))
 {
+	DS_LinkedList *head = &(var->head);
 	size_t num = var->num;
 	size_t i;
 
-	/* Should fail */
-	var->itt = 0;
-	_linked_list_stages(var, func);
+//	/* i is 0, Should fail */
+//	var->itt = 0;
+//	_linked_list_stages(var, func);
 
-	/* Should pass */
-	for (i = 1; i < num + 2; i++){
+	linkedlist_test_init(head, 0, 1);
+	printf("1 -> %lu\n",DS_LinkedList_size(head));
+	linkedlist_test_add(head, num, 0 , 1);
+	printf("2 -> %lu\n",DS_LinkedList_size(head));
+	/* I is between 1 and the end of the list; Should pass */
+	for (i = 0; i <= num+1; i++){
 		var->itt = i;
 		_linked_list_stages(var, func);
+		if (DS_Out_print_node(DS_LinkedList_get(head, i), "\n"))
+			DS_Error_print(), putchar('\n');
 	}
+	printf("3 -> %lu\n",DS_LinkedList_size(head));
+	linkedlist_test_clear(&var->head, 1, 1);
 
 	/* Should fail */
-	for (i = num + 2; i < num + 4; i++) {
-		var->itt = i;
-		_linked_list_stages(var, func);
-	}
+//	for (i = num + 2; i < num + 4; i++) {
+//		var->itt = i;
+//		_linked_list_stages(var, func);
+//	}
 
 }
 
@@ -290,7 +307,7 @@ void DS_LinkedList_test(void)
 	size_t itt;
 	size_t width;
 */
-	Var var = {  { { { "STACK" }, 5 }, NULL },  "oOo ", 10, 0, 5 };
+	Var var = {  { { { "INIT" }, 4 }, NULL },  "oOo ", 10, 0, 5 };
 
 	_linkedlist_test_itterate(&var, _linkedlist_test_call);
 }

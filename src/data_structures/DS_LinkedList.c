@@ -53,9 +53,8 @@ DS_LinkedList *DS_LinkedList_add(DS_LinkedList *list, Data data)
 }
 
 /*
- * DS_LinkedList_get: Returns the requested node if it exists, NULL if not.
- * The for loop itteration starts at 1 to avoid the case that the head of the
- * list, assuming that it can easily be stack allocated.
+ * DS_LinkedList_get: Returns the requested node if it exists, NULL if iit does
+ * not.
  */
 DS_LinkedList *DS_LinkedList_get(DS_LinkedList *list, size_t num)
 {
@@ -66,14 +65,13 @@ DS_LinkedList *DS_LinkedList_get(DS_LinkedList *list, size_t num)
 		return NULL;
 	}
 
-	/* num starts at 1 to avoid the head node, returning n from the current
-	 * node not inclusive of list. */
-	for (i = 1; i <= num && list->next != NULL; i++)
+	// TEST case.
+	for (i = 0; i < num && list->next != NULL; i++)
 		list = list->next;
 
-	/* Stop if the requested node does not exist */
-	if (i <= num && list->next == NULL) {
-		DS_Error_set("%s: num out of bounds.", __func__);
+	// TEST case.
+	if (i < num && list->next == NULL) {
+		DS_Error_set("%s: overflow, request out of bounds.", __func__);
 		return NULL;
 	}
 

@@ -15,3 +15,6 @@ void DS_Message_print(void);
  * if an message is pending. */
 int DS_Message_state(void);
 
+/* DS_Message_reset: Set to empty, with no message  */
+void DS_Message_reset(void);
+

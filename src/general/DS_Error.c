@@ -88,3 +88,11 @@ int DS_Error_state(void)
 	return state;
 }
 
+/*
+ * DS_Error_reset: Set to empty, with no message.
+ */
+void DS_Error_reset(void)
+{
+	store[0] = '\0';
+	state = 0;
+}

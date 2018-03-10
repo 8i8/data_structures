@@ -23,3 +23,6 @@ void DS_Error_print(void);
  * if an message is pending */
 int DS_Error_state(void);
 
+/* DS_Error_reset: Set to empty, with no message  */
+void DS_Error_reset(void);
+

@@ -1,4 +1,4 @@
-#include "DS_ArrayList.h"
+#include "DS_Vector.h"
 #include <stdlib.h>
 #include <stdint.h>
 #include <stdio.h>
@@ -6,9 +6,9 @@
 #include <math.h>
 
 /*
- * DS_ArrayList: Initiate an ArrayList with an itial size of 2^n spaces.
+ * DS_Vector: Initiate an Vector with an itial size of 2^n spaces.
  */
-DS_ArrayList *DS_ArrayList_init(DS_ArrayList *list, Data *data, unsigned int size)
+DS_Vector *DS_Vector_init(DS_Vector *list, Data *data, unsigned int size)
 {
 	size_t capacity = 1 << size;
 
@@ -25,10 +25,10 @@ DS_ArrayList *DS_ArrayList_init(DS_ArrayList *list, Data *data, unsigned int siz
 }
 
 /*
- * DS_ArrayList_add: Add data struct to the end of the list, if no places
+ * DS_Vector_add: Add data struct to the end of the list, if no places
  * remain then grow the list.
  */
-int DS_ArrayList_add(DS_ArrayList *list, Data *data)
+int DS_Vector_add(DS_Vector *list, Data *data)
 {
 	if (list->len < list->capacity)
 		memcpy(&list->data[list->len++], data, sizeof(Data));
@@ -44,10 +44,10 @@ int DS_ArrayList_add(DS_ArrayList *list, Data *data)
 }
 
 /*
- * DS_ArrayList_insert: Insert a Data struct into the list at the given index,
+ * DS_Vector_insert: Insert a Data struct into the list at the given index,
  * if required, grow the list.
  */
-int DS_ArrayList_insert(DS_ArrayList *list, size_t index, Data *data)
+int DS_Vector_insert(DS_Vector *list, size_t index, Data *data)
 {
 	if (list == NULL) {
 		printf("%s: error: NULL pointer..", __func__);
@@ -78,9 +78,9 @@ int DS_ArrayList_insert(DS_ArrayList *list, size_t index, Data *data)
 }
 
 /*
- * DS_ArrayList_remove: Remove the node at index n.
+ * DS_Vector_remove: Remove the node at index n.
  */
-int DS_ArrayList_remove(DS_ArrayList *list, size_t index)
+int DS_Vector_remove(DS_Vector *list, size_t index)
 {
 	if (list == NULL) {
 		printf("%s: error: NULL pointer..", __func__);
@@ -102,7 +102,7 @@ int DS_ArrayList_remove(DS_ArrayList *list, size_t index)
 /*
  * DS_LinkedList_get: Returns the Data struct, if there is one at the given index.
  */
-Data *DS_ArrayList_get(DS_ArrayList *list, size_t index)
+Data *DS_Vector_get(DS_Vector *list, size_t index)
 {
 	if (index >= list->len) {
 		printf("%s: error: index out of bounds.", __func__);
@@ -111,7 +111,10 @@ Data *DS_ArrayList_get(DS_ArrayList *list, size_t index)
 	return &list->data[index];
 }
 
-void DS_ArrayList_free(DS_ArrayList *list)
+/*
+ * DS_Vector_free: Free allocated memory.
+ */
+void DS_Vector_free(DS_Vector *list)
 {
 	free(list->data);
 }

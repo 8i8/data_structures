@@ -90,3 +90,11 @@ int DS_Message_state(void)
 	return state;
 }
 
+/*
+ * DS_Message_reset: Set to empty, with no message.
+ */
+void DS_Message_reset(void)
+{
+	store[0] = '\0';
+	state = 0;
+}

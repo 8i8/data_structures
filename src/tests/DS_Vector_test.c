@@ -1,9 +1,9 @@
-#include "../data_structures/DS_ArrayList.h"
+#include "../data_structures/DS_Vector.h"
 #include "../general/DS_Timer.h"
 #include <stdlib.h>
 #include <string.h>
 
-void arraylist_test_init(DS_ArrayList *list, Data *data, size_t n)
+void arraylist_test_init(DS_Vector *list, Data *data, size_t n)
 {
 	double time = 0;
 	printf("%s()\t ~ ", __func__);
@@ -11,7 +11,7 @@ void arraylist_test_init(DS_ArrayList *list, Data *data, size_t n)
 	data->len = strlen(data->str);
 
 	time_start();
-	if ((list = DS_ArrayList_init(list, data, n)) == NULL)
+	if ((list = DS_Vector_init(list, data, n)) == NULL)
 		printf(" ~ failed.\n");
 	else {
 		time = time_stop();
@@ -21,7 +21,7 @@ void arraylist_test_init(DS_ArrayList *list, Data *data, size_t n)
 	}
 }
 
-void arraylist_test_add(DS_ArrayList *list, Data *data, size_t index)
+void arraylist_test_add(DS_Vector *list, Data *data, size_t index)
 {
 	size_t i;
 	double time = 0;
@@ -31,7 +31,7 @@ void arraylist_test_add(DS_ArrayList *list, Data *data, size_t index)
 	for (i = 0; i < index; i++) {
 		sprintf(data->str, "n:%lu", i+2);
 		data->len = strlen(data->str);
-		if (DS_ArrayList_add(list, data)) {
+		if (DS_Vector_add(list, data)) {
 			printf(" ~ failed.\n");
 			time_stop();
 			break;
@@ -45,14 +45,14 @@ void arraylist_test_add(DS_ArrayList *list, Data *data, size_t index)
 	}
 }
 
-void arraylist_test_get(DS_ArrayList *list, size_t index)
+void arraylist_test_get(DS_Vector *list, size_t index)
 {
 	Data *data;
 	double time = 0;
 	printf("%s()\t ~ ", __func__);
 
 	time_start();
-	if ((data = DS_ArrayList_get(list, index)) == NULL)
+	if ((data = DS_Vector_get(list, index)) == NULL)
 		printf(" ~ failed.\n");
 	else {
 		time = time_stop();
@@ -61,7 +61,7 @@ void arraylist_test_get(DS_ArrayList *list, size_t index)
 	}
 }
 
-void arraylist_test_insert(DS_ArrayList *list, size_t index, Data *data)
+void arraylist_test_insert(DS_Vector *list, size_t index, Data *data)
 {
 	double time = 0;
 	int i;
@@ -70,7 +70,7 @@ void arraylist_test_insert(DS_ArrayList *list, size_t index, Data *data)
 	data->len = strlen(data->str);
 
 	time_start();
-	if (DS_ArrayList_insert(list, index, data)) {
+	if (DS_Vector_insert(list, index, data)) {
 		printf(" ~ failed.\n");
 		time_stop();
 	} else {
@@ -82,14 +82,14 @@ void arraylist_test_insert(DS_ArrayList *list, size_t index, Data *data)
 	}
 }
 
-void arraylist_test_remove(DS_ArrayList *list, size_t index)
+void arraylist_test_remove(DS_Vector *list, size_t index)
 {
 	double time = 0;
 	int i;
 	printf("%s()\t ~ ", __func__);
 
 	time_start();
-	if (DS_ArrayList_remove(list, index)) {
+	if (DS_Vector_remove(list, index)) {
 		printf(" ~ failed.\n");
 		time_stop();
 	} else {
@@ -101,19 +101,19 @@ void arraylist_test_remove(DS_ArrayList *list, size_t index)
 	}
 }
 
-void arraylist_test_free(DS_ArrayList *list)
+void arraylist_test_free(DS_Vector *list)
 {
 	double time = 0;
 	printf("%s()\t ~ ", __func__);
 	time_start();
-	DS_ArrayList_free(list);
+	DS_Vector_free(list);
 	time = time_stop();
 	printf("%fs ~ passed.\t", time);
 }
 
-void DS_ArrayList_test()
+void DS_Vector_test()
 {
-	DS_ArrayList list;
+	DS_Vector list;
 	Data d, *data;
 	data = &d;
 

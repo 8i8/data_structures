@@ -79,10 +79,10 @@ DS_LinkedList *DS_LinkedList_get(DS_LinkedList *list, size_t num)
 }
 
 /*
- * DS_LinkedList_output: Iterate over the entire list, performing the given
+ * DS_LinkedList_do: Iterate over the entire list, performing the given
  * function upon each node.
  */
-int DS_LinkedList_output(DS_LinkedList *list, void *var, int(*func)(void*, void*))
+int DS_LinkedList_do(DS_LinkedList *list, void *var, int(*func)(void*, void*))
 {
 	if (list == NULL) {
 		DS_Error_set("%s: NULL pointer.", __func__);
@@ -140,7 +140,7 @@ DS_LinkedList *DS_LinkedList_remove(DS_LinkedList *list, size_t num)
 		return NULL;
 	} else if (num == 0) {
 		DS_Error_set("%s: Out of bounds; The head must be freed manualy.", __func__);
-		return NULL;
+		return list;
 		/* Get node, not if num is 1 it is the current node; Deal with the
 		 * case of removing the first node  */
 	} else if ((num != 1) && (list = DS_LinkedList_get(list, num - 1)) == NULL) {
@@ -148,8 +148,8 @@ DS_LinkedList *DS_LinkedList_remove(DS_LinkedList *list, size_t num)
 		return NULL;
 		/* Deal with the next node being the NULL terminator */
 	} else if (list->next == NULL) {
-		DS_Error_set("%s: warning: num is the end of the list.", __func__);
-		return list;
+		free(list);
+		return NULL;
 	}
 
 	/* Remove the node */
@@ -157,9 +157,7 @@ DS_LinkedList *DS_LinkedList_remove(DS_LinkedList *list, size_t num)
 	list->next = list->next->next;
 	free(temp);
 
-	/* Return the current node and not NULL if you have just removed the last
-	 * node */
-	return (list->next == NULL) ? list : list->next;
+	return list->next;
 }
 
 /*

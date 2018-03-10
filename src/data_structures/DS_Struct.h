@@ -4,12 +4,13 @@
  * any struct be passed through the code, but is required when running tests on
  * the suite.
  */
+#include <stdio.h>
 
 #ifndef _data_h
 #define _data_h
 typedef struct Data {
 	char str[255];
-	int len;
+	size_t len;
 } Data;
 #endif
 

@@ -24,9 +24,9 @@ DS_LinkedList *DS_LinkedList_add(DS_LinkedList *list, Data data);
  * exists */
 DS_LinkedList *DS_LinkedList_get(DS_LinkedList *list, size_t index);
 
-/* DS_LinkedList_output: Itterate over the intire list, perform given function
+/* DS_LinkedList_do: Itterate over the intire list, perform given function
  * on each node */
-int DS_LinkedList_output(DS_LinkedList *list, void *var, int(*func)(void*, void*));
+int DS_LinkedList_do(DS_LinkedList *list, void *var, int(*func)(void*, void*));
 
 /* DS_LinkedList_insert: Insert a new node at the given index, add data */
 DS_LinkedList *DS_LinkedList_insert(DS_LinkedList *list, size_t index, Data data);

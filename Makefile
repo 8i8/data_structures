@@ -8,8 +8,10 @@ SRC = \
 	DS_Output.c \
 	DS_LinkedList.c \
 	DS_LinkedList_test.c \
-	DS_ArrayList.c \
-	DS_ArrayList_test.c# \
+	DS_Vector.c \
+	DS_Vector_test.c \
+	DS_BinarySearch.c \
+	DS_BinarySearch_test.c# \
 	DS_BinarySort.c	\
 	DS_Heap.c \
 	DS_PriorityQueue.c \
@@ -48,8 +50,10 @@ $(OBJ): \
 	DS_Output.h \
 	DS_LinkedList.h	\
 	DS_LinkedList_test.h \
-	DS_ArrayList.h \
-	DS_ArrayList_test.h#\
+	DS_Vector.h \
+	DS_Vector_test.h \
+	DS_BinarySearch.h \
+	DS_BinarySearch_test.h# \
 	DS_ArrayList.h#\
 	DS_BinarySort.h \
 	DS_Heap.h \

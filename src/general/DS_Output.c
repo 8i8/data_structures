@@ -82,5 +82,7 @@ void _ds_check_messages(int msg, int err)
 			DS_Message_print();
 			putchar('\n');
 		}
+	//DS_Error_reset();
+	//DS_Message_reset();
 }
 

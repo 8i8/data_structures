@@ -6,7 +6,7 @@
  * optimisation automagicaly?
  */
 #include <stdio.h>
-#include "DS_Struct.h"
+#include "../tests/DS_Struct.h"
 
 typedef struct _ds_LinkedList {
 	Data data;

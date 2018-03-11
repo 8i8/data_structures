@@ -1,13 +1,14 @@
 #include "../data_structures/DS_Vector.h"
 #include "../general/DS_Timer.h"
+#include "../general/DS_Error.h"
 #include <stdlib.h>
 #include <string.h>
 
-void arraylist_test_init(DS_Vector *list, Data *data, size_t n)
+void vector_test_init(DS_Vector *list, Data *data, size_t n)
 {
 	double time = 0;
 	printf("%s()\t ~ ", __func__);
-	sprintf(data->str, "init OK!");
+	strcpy(data->str, "oOo");
 	data->len = strlen(data->str);
 
 	time_start();
@@ -21,7 +22,7 @@ void arraylist_test_init(DS_Vector *list, Data *data, size_t n)
 	}
 }
 
-void arraylist_test_add(DS_Vector *list, Data *data, size_t index)
+void vector_test_add(DS_Vector *list, Data *data, size_t index)
 {
 	size_t i;
 	double time = 0;
@@ -45,7 +46,7 @@ void arraylist_test_add(DS_Vector *list, Data *data, size_t index)
 	}
 }
 
-void arraylist_test_get(DS_Vector *list, size_t index)
+void vector_test_get(DS_Vector *list, size_t index)
 {
 	Data *data;
 	double time = 0;
@@ -61,12 +62,12 @@ void arraylist_test_get(DS_Vector *list, size_t index)
 	}
 }
 
-void arraylist_test_insert(DS_Vector *list, size_t index, Data *data)
+void vector_test_insert(DS_Vector *list, size_t index, Data *data)
 {
 	double time = 0;
 	int i;
 	printf("%s()\t ~ ", __func__);
-	sprintf(data->str, "I was inserted here");
+	sprintf(data->str, "oOo");
 	data->len = strlen(data->str);
 
 	time_start();
@@ -82,7 +83,7 @@ void arraylist_test_insert(DS_Vector *list, size_t index, Data *data)
 	}
 }
 
-void arraylist_test_remove(DS_Vector *list, size_t index)
+void vector_test_remove(DS_Vector *list, size_t index)
 {
 	double time = 0;
 	int i;
@@ -101,7 +102,7 @@ void arraylist_test_remove(DS_Vector *list, size_t index)
 	}
 }
 
-void arraylist_test_free(DS_Vector *list)
+void vector_test_free(DS_Vector *list)
 {
 	double time = 0;
 	printf("%s()\t ~ ", __func__);
@@ -121,10 +122,10 @@ void DS_Vector_test()
 	time_loop();
 	time_stop();
 
-	arraylist_test_init(&list, data, 4);
-	arraylist_test_add(&list, data, 9999999);
-	arraylist_test_get(&list, 9999999);
-	arraylist_test_insert(&list, 5000000, data);
-	arraylist_test_remove(&list, 5000000);
-	arraylist_test_free(&list);
+	vector_test_init(&list, data, 4);
+	vector_test_add(&list, data, 9999999);
+	vector_test_get(&list, 9999999);
+	vector_test_insert(&list, 5000000, data);
+	vector_test_remove(&list, 5000000);
+	vector_test_free(&list);
 }

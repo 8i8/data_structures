@@ -6,7 +6,7 @@
  * index_of(value)
  * toString()
  */
-#include "DS_Struct.h"
+#include "../tests/DS_Struct.h"
 #include <stdio.h>
  
 typedef struct DS_Vector {

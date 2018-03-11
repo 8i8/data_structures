@@ -1,7 +1,7 @@
 EXE = datastructures
 SRC = \
 	driver.c \
-	_ds_msg.c \
+	ds_msg.c \
 	DS_Error.c \
 	DS_Message.c \
 	DS_Timer.c \
@@ -11,7 +11,8 @@ SRC = \
 	DS_Vector.c \
 	DS_Vector_test.c \
 	DS_BinarySearch.c \
-	DS_BinarySearch_test.c# \
+	DS_BinarySearch_test.c \
+	widget.c# \
 	DS_BinarySort.c	\
 	DS_Heap.c \
 	DS_PriorityQueue.c \
@@ -20,19 +21,20 @@ SRC = \
 OBJ = $(SRC:.c=.o)
 CC  = gcc
 
-CFLAGS = -Wall -Wextra -pedantic
+CFLAGS += -Wall -Wextra -pedantic
 CFLAGS += -g
-CFLAGS += -fsanitize=address -fno-omit-frame-pointer
+#CFLAGS += -fsanitize=address -fno-omit-frame-pointer
+#LFLAGS += -lm
 
-vpath %.c src/data_structures/ src/general/ src/tests/
-vpath %.h src/data_structures/ src/general/ src/tests/
+vpath %.c src/data_structures/ src/general/ src/tests/ src/widgets
+vpath %.h src/data_structures/ src/general/ src/tests/ src/widgets
 
 .PHONY: all clean distclean
 
 all : $(EXE)
 
 $(EXE): $(OBJ)
-	$(CC) $(CFLAGS) $(OBJ) -o $(EXE)
+	$(CC) $(CFLAGS) $(OBJ) -o $(EXE) $(LFLAGS)
 
 clean:
 	rm -f $(OBJ)
@@ -42,7 +44,7 @@ distclean: clean
 
 $(OBJ): \
 	Makefile \
-	_ds_msg.h \
+	ds_msg.h \
 	DS_Error.h \
 	DS_Message.h \
 	DS_Timer.h \
@@ -53,8 +55,8 @@ $(OBJ): \
 	DS_Vector.h \
 	DS_Vector_test.h \
 	DS_BinarySearch.h \
-	DS_BinarySearch_test.h# \
-	DS_ArrayList.h#\
+	DS_BinarySearch_test.h \
+	widget.h #\
 	DS_BinarySort.h \
 	DS_Heap.h \
 	DS_PriorityQueue.h \

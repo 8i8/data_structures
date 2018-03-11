@@ -10,7 +10,7 @@
  */
 DS_Vector *DS_Vector_init(DS_Vector *list, Data *data, unsigned int size)
 {
-	size_t capacity = 1 << size;
+	size_t capacity = size << 1;
 
 	if ((list->data = malloc(sizeof(Data) * capacity)) == NULL) {
 		printf("%s: error: memory allocation failed.", __func__);
@@ -33,8 +33,12 @@ int DS_Vector_add(DS_Vector *list, Data *data)
 	if (list->len < list->capacity)
 		memcpy(&list->data[list->len++], data, sizeof(Data));
 	else {
-		list->capacity *= 2;
-		if ((list->data = realloc(list->data, (sizeof(Data) * list->capacity))) == NULL) {
+		list->capacity <<= 1;
+		if (!list->capacity || (list->data = realloc(
+						list->data,
+						(sizeof(Data) * list->capacity)
+						)) == NULL)
+		{
 			printf("%s: error: memory allocation failed.", __func__);
 			return -1;
 		}
@@ -63,8 +67,12 @@ int DS_Vector_insert(DS_Vector *list, size_t index, Data *data)
 	if (list->len < list->capacity)
 		memmove(stop+1, stop, list->len - index);
 	else {
-		list->capacity *= 2;
-		if ((list->data = realloc(list->data, (sizeof(Data) * list->capacity))) == NULL) {
+		list->capacity <<= 1;
+		if (!list->capacity && (list->data = realloc(
+						list->data,
+						(sizeof(Data) * list->capacity)
+						)) == NULL)
+		{
 			printf("%s: error: memory allocation failed.", __func__);
 			return -1;
 		}
@@ -93,8 +101,8 @@ int DS_Vector_remove(DS_Vector *list, size_t index)
 	Data *stop;
 	stop = &list->data[index];
 
-	//memmove(stop-1, stop, list->len - index - 1);
-	memcpy(stop-1, stop, list->len - index - 1);
+	memmove(stop-1, stop, list->len - index - 1);
+	//memcpy(stop-1, stop, list->len - index - 1);
 
 	return 0;
 }

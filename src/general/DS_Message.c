@@ -1,5 +1,5 @@
 #include "DS_Message.h"
-#include "_ds_msg.h"
+#include "ds_msg.h"
 
 static char message[MAX_LENGTH + 1];
 static char store[MAX_LENGTH + 1];

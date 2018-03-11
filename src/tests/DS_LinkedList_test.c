@@ -1,4 +1,4 @@
-#include "../data_structures/DS_Struct.h"
+#include "../tests/DS_Struct.h"
 #include "../data_structures/DS_LinkedList.h"
 #include "../general/DS_Timer.h"
 #include "../general/DS_Output.h"

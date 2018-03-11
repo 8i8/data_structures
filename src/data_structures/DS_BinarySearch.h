@@ -1,1 +1,2 @@
-int DS_BinarySearch(void *left, size_t width, size_t num, void *x, int (*func)(void*, void*));
+#include <stdint.h>
+unsigned DS_BinarySearch(void *left, unsigned width, unsigned num, void *x, int (*func)(void*, void*));

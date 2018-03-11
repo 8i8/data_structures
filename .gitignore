@@ -6,3 +6,6 @@ cscope*
 *.swo
 a.out
 links
+break
+watch
+scratch*

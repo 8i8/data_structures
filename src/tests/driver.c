@@ -6,10 +6,20 @@
 #include <stdio.h>
 #include <stdint.h>
 
+/*
+ * TODO test ffw and rwd for the linkedlists.
+ *
+ * TODO impliment a priority queue with a binary tree an array and a heap
+ *
+ * TODO Write Huffman compression using the queue, do so in a way that makes
+ * the algorithem used to formulate the compression is interchangable; test
+ * and time the results.
+ */
+
 int main(void)
 {
-	//DS_LinkedList_test();
-	DS_DLinkedList_test();
+	DS_LinkedList_test();
+	//DS_DLinkedList_test();
 	//DS_BinarySearch_test();
 	//DS_Vector_test();
 

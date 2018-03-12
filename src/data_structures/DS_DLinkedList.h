@@ -38,9 +38,11 @@ DS_DLinkedList *DS_DLinkedList_insert(DS_DLinkedList *list, size_t index, Data d
 /* DS_DLinkedList_remove: Remove and free the node at the given index */
 DS_DLinkedList *DS_DLinkedList_remove(DS_DLinkedList *list, size_t num);
 
-/* DS_DLinkedList_ffw: Fastforward n nodes, if node is null return an error */
-DS_DLinkedList *DS_DLinkedList_ffw(DS_DLinkedList *list, size_t num);
+//TODO untested
+/* DS_DLinkedList_fwd: Fastforward n nodes, if node is null return an error */
+DS_DLinkedList *DS_DLinkedList_fwd(DS_DLinkedList *list, size_t num);
 
+//TODO untested
 /* DS_DLinkedList_rwd: Rewind n nodes, if node is the head return an error */
 DS_DLinkedList *DS_DLinkedList_rwd(DS_DLinkedList *list, size_t num);
 

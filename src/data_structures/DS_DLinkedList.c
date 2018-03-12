@@ -168,15 +168,16 @@ DS_DLinkedList *DS_DLinkedList_remove(DS_DLinkedList *list, size_t num)
 }
 
 /*
- * DS_DLinkedList_ffw: Fastforward n nodes, if node is null return an error.
+ * DS_DLinkedList_fwd: Fastforward n nodes, if node is null return an error.
  */
-DS_DLinkedList *DS_DLinkedList_ffw(DS_DLinkedList *list, size_t num)
+DS_DLinkedList *DS_DLinkedList_fwd(DS_DLinkedList *list, size_t num)
 {
-	while(list != NULL && --num)
+	for ( ;list != NULL && num; num--)
 		list = list->next;
 
 	if (list == NULL) {
-		DS_Error_set("%s: Out of bounds, you reached the end of the list.", __func__);
+		DS_Error_set("%s: Out of bounds"
+				", you have reached the end of the list.", __func__);
 		return NULL;
 	}
 
@@ -188,11 +189,12 @@ DS_DLinkedList *DS_DLinkedList_ffw(DS_DLinkedList *list, size_t num)
  */
 DS_DLinkedList *DS_DLinkedList_rwd(DS_DLinkedList *list, size_t num)
 {
-	while(list->prev != NULL && --num)
+	for ( ;list != NULL && num; num--)
 		list = list->prev;
 
 	if (list == NULL) {
-		DS_Error_set("%s: Out of bounds. you reached the head of the list.", __func__);
+		DS_Error_set("%s: Out of bounds"
+				", you have reached the head of the list.", __func__);
 		return NULL;
 	}
 

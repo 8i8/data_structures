@@ -37,8 +37,9 @@ DS_LinkedList *DS_LinkedList_insert(DS_LinkedList *list, size_t index, Data data
 /* DS_LinkedList_remove: Remove and free the node at the given index */
 DS_LinkedList *DS_LinkedList_remove(DS_LinkedList *list, size_t num);
 
-/* DS_LinkedList_ffw: Fastforward n nodes, if node is null return an error */
-DS_LinkedList *DS_LinkedList_ffw(DS_LinkedList *list, size_t num);
+//TODO untested
+/* DS_LinkedList_fwd: Fastforward n nodes, if node is null return an error */
+DS_LinkedList *DS_LinkedList_fwd(DS_LinkedList *list, size_t num);
 
 /*  DS_LinkedList_set: Set the data at index n to be the given data */
 DS_LinkedList *DS_LinkedList_set(DS_LinkedList *list, size_t index, Data data);

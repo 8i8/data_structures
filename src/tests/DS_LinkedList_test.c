@@ -62,7 +62,7 @@ void linkedlist_test_add(DS_LinkedList *node, size_t num, int msg, int err)
 	for (i = 0; i < num; i++)
 	{
 		sprintf(data->str, "n:%lu ", i+1);
-		data->len = strlen(data->str);
+		data->len = i+1;
 		if((node = DS_LinkedList_add(node, *data)) == NULL) {
 			DS_Message_append("%fs failed.", time);
 			pass = 0;
@@ -158,6 +158,34 @@ void linkedlist_test_remove(DS_LinkedList *node, size_t num, int msg, int err)
 	_ds_check_messages(msg, err);
 }
 
+void linkedlist_test_fwd(DS_LinkedList *list, size_t pos, size_t num, int msg, int err)
+{
+	DS_LinkedList *rtn;
+	double time = 0;
+	DS_Message_set("%s()\t", __func__);
+
+	if ((rtn = DS_LinkedList_get(list, pos)) == NULL) {
+		DS_Message_append("%fs 'get' failed.");
+		return;
+	}
+
+	time_start();
+	if ((rtn = DS_LinkedList_fwd(rtn, num)) == NULL) {
+		time = time_stop();
+		DS_Message_append("%fs failed.", time);
+	} else {
+		time = time_stop();
+		if (pos == rtn->data.len - num)
+			DS_Message_append("%fs passed.", time);
+		else {
+			DS_Message_append("%fs failed.", time);
+			DS_Error_set("%s: Position error start = %lu, new = %lu.", __func__, pos, rtn->data.len);
+		}
+	}
+
+	_ds_check_messages(msg, err);
+}
+
 void linkedlist_test_set(DS_LinkedList *head, size_t num, Data *data, int msg, int err)
 {
 	DS_LinkedList *node, *rtn_value;
@@ -244,6 +272,7 @@ void _linkedlist_test_call(void* v)
 
 	printf("%lu\n", i);
 	linkedlist_test_get(head, i, msg, err);
+	linkedlist_test_fwd(head, i, 3, msg, err);
 	linkedlist_test_insert(head, var->str, i, msg, err);
 	linkedlist_test_get(head, i, msg, err);
 	linkedlist_test_output(DS_LinkedList_get(head, _back_n_nodes(i, n)), num, msg, err);

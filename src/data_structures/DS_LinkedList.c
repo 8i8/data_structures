@@ -161,6 +161,22 @@ DS_LinkedList *DS_LinkedList_remove(DS_LinkedList *list, size_t num)
 }
 
 /*
+ * DS_LinkedList_fwd: Fastforward n nodes, if node is null return an error.
+ */
+DS_LinkedList *DS_LinkedList_fwd(DS_LinkedList *list, size_t num)
+{
+	for ( ;list != NULL && num; num--)
+		list = list->next;
+
+	if (list == NULL) {
+		DS_Error_set("%s: Out of bounds, you have reached the end of the list.", __func__);
+		return NULL;
+	}
+
+	return list;
+}
+
+/*
  *  DS_LinkedList_set: Set the data at index n to be the given data.
  */
 DS_LinkedList *DS_LinkedList_set(DS_LinkedList *list, size_t index, Data data)

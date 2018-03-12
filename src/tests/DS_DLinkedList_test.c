@@ -62,7 +62,7 @@ void dlinkedlist_test_add(DS_DLinkedList *node, size_t num, int msg, int err)
 	for (i = 0; i < num; i++)
 	{
 		sprintf(data->str, "n:%lu ", i+1);
-		data->len = i+1;
+		data->num = i+1;
 		if((node = DS_DLinkedList_add(node, *data)) == NULL) {
 			DS_Message_append("%fs failed.", time);
 			pass = 0;
@@ -125,7 +125,7 @@ void dlinkedlist_test_insert(DS_DLinkedList *node, char *str, size_t num, int ms
 
 	DS_Message_set("%s()\t", __func__);
 	sprintf(data->str, "%s", str);
-	data->len = strlen(data->str);
+	data->num = strlen(data->str);
 
 	time_start();
 	if ((node = DS_DLinkedList_insert(node, num, *data)) == NULL) {
@@ -175,12 +175,12 @@ void dlinkedlist_test_fwd(DS_DLinkedList *list, size_t pos, size_t num, int msg,
 		DS_Message_append("%fs failed.", time);
 	} else {
 		time = time_stop();
-		if (pos == rtn->data.len - num)
+		if (pos == rtn->data.num - num)
 			DS_Message_append("%fs passed.", time);
 		else {
 			DS_Message_append("%fs failed.", time);
 			DS_Error_set("%s: Position error start = %lu, new = %lu.",
-					__func__, pos, rtn->data.len);
+					__func__, pos, rtn->data.num);
 		}
 	}
 
@@ -204,12 +204,12 @@ void dlinkedlist_test_rwd(DS_DLinkedList *list, size_t pos, size_t num, int msg,
 		DS_Message_append("%fs failed.", time);
 	} else {
 		time = time_stop();
-		if (pos == rtn->data.len + num)
+		if (pos == rtn->data.num + num)
 			DS_Message_append("%fs passed.", time);
 		else {
 			DS_Message_append("%fs failed.", time);
 			DS_Error_set("%s: Position error start = %lu, new = %lu.",
-					__func__, pos, rtn->data.len);
+					__func__, pos, rtn->data.num);
 		}
 	}
 
@@ -224,7 +224,7 @@ void dlinkedlist_test_set(DS_DLinkedList *head, size_t num, Data *data, int msg,
 	double time = 0;
 	DS_Message_set("%s()\t", __func__);
 	sprintf(data->str, "%s", "I am now hypertextual.");
-	data->len = strlen(data->str);
+	data->num = strlen(data->str);
 
 	time_start();
 	if ((rtn_value = DS_DLinkedList_set(node, num, *data)) == NULL) {

@@ -17,10 +17,10 @@ DS_DLinkedList *DS_DLinkedList_init(DS_DLinkedList *list)
 		/* TODO this code is not generic and requires the use of a head
 		struct with differeing type to the node to be so. */
 		strcpy(list->data.str, "HEAP");
-		list->data.len = 0;
+		list->data.num = 0;
 	} else {
 		strcpy(list->data.str, "STACK");
-		list->data.len = 0;
+		list->data.num = 0;
 	}
 
 	list->next = NULL;
@@ -192,7 +192,7 @@ DS_DLinkedList *DS_DLinkedList_rwd(DS_DLinkedList *list, size_t num)
 	for ( ;list != NULL && num; num--)
 		list = list->prev;
 
-	if (list == NULL || (list->next == NULL && list->data.len == 0)) {
+	if (list == NULL || (list->next == NULL && list->data.num == 0)) {
 		DS_Error_set("%s: Out of bounds"
 				", you have reached the head of the list.", __func__);
 		return NULL;

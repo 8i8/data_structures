@@ -10,7 +10,7 @@ void vector_test_init(DS_Vector *list, Data *data, size_t n)
 	double time = 0;
 	DS_Message_set("%s()\t", __func__);
 	strcpy(data->str, "oOo");
-	data->len = strlen(data->str);
+	data->num = strlen(data->str);
 
 	time_start();
 	if ((list = DS_Vector_init(list, data, n)) == NULL) {
@@ -34,7 +34,7 @@ void vector_test_add(DS_Vector *list, Data *data, size_t index)
 	time_start();
 	for (i = 0; i < index; i++) {
 		sprintf(data->str, "n:%lu", i+2);
-		data->len = strlen(data->str);
+		data->num = strlen(data->str);
 		if (DS_Vector_add(list, data)) {
 			time_stop();
 			DS_Message_append("%fs failed.", time);
@@ -73,7 +73,7 @@ void vector_test_insert(DS_Vector *list, size_t index, Data *data)
 	int i;
 	DS_Message_set("%s()\t", __func__);
 	strcpy(data->str, "oOo");
-	data->len = strlen(data->str);
+	data->num = strlen(data->str);
 
 	time_start();
 	if (DS_Vector_insert(list, index, data)) {

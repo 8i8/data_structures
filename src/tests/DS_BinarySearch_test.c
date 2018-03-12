@@ -12,9 +12,9 @@ int data_cmp(void *a, void *b)
 	da = (Data*)a;
 	db = (Data*)b;
 
-	if (da->len > db->len)
+	if (da->num > db->num)
 		state = 1;
-	else if (da->len < db->len)
+	else if (da->num < db->num)
 		state = -1;
 	else
 		state = 0;
@@ -28,14 +28,14 @@ int DS_BinarySearch_test(void)
 	data = malloc(LEN * sizeof test);
 	unsigned i, x;
 	x = 0;
-	test.len = LEN/2-1;
+	test.num = LEN/2-1;
 
 	for (i = 0; i < LEN; i++)
-		data[i].len = i;
+		data[i].num = i;
 
 	x = DS_BinarySearch(&data[0], sizeof test, LEN, &test, data_cmp);
 
-	printf("%lu is at index number %d\n", test.len, x);
+	printf("%lu is at index number %d\n", test.num, x);
 	free(data);
 
 	return 0;

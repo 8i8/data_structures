@@ -10,7 +10,7 @@
 #define _data_h
 typedef struct Data {
 	char str[8];
-	size_t len;
+	size_t num;
 } Data;
 #endif
 

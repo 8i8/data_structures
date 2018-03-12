@@ -17,10 +17,10 @@ DS_LinkedList *DS_LinkedList_init(DS_LinkedList *list)
 		/* TODO this code is not generic and requires the use of a head
 		struct with differeing type to the node to be so. */
 		strcpy(list->data.str, "HEAP");
-		list->data.len = 4;
+		list->data.num = 4;
 	} else {
 		strcpy(list->data.str, "STACK");
-		list->data.len = 0;
+		list->data.num = 0;
 	}
 
 	list->next = NULL;

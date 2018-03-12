@@ -7,8 +7,6 @@
 #include <stdint.h>
 
 /*
- * TODO test ffw and rwd for the linkedlists.
- *
  * TODO Assignment https://www.youtube.com/watch?v=ocO3T5cdaBg&feature=youtu.be&t=9m
  * impliment using unsorted array and sorted linked list.
  *

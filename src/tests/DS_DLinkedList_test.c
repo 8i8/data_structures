@@ -333,23 +333,17 @@ void _dlinkedlist_test_itterate(Var *var, void(*func)(void*))
 	size_t num = var->num;
 	size_t i;
 
-	/* i is 0, Should fail */
+	/* i is 0 */
 	var->itt = 0;
 	_dlinkedlist_stages(var, func);
 
-	/* I is between 1 and the end of the list; Should pass */
-	for (i = 1; i <= num; i++){
-		var->itt = i;
-		_dlinkedlist_stages(var, func);
-		//if (DS_Out_print_node(DS_DLinkedList_get(&var->head, i), "\n"))
-		//	DS_Error_print(), putchar('\n');
-	}
+	/* I is between 1 and the end of the list */
+	for (i = 1; i <= num; i++)
+		_dlinkedlist_stages(var, func), var->itt = i;
 
 	/* Should fail */
-	for (i = num + 1; i <= num + 2; i++) {
-		var->itt = i;
-		_dlinkedlist_stages(var, func);
-	}
+	for (i = num + 1; i <= num + 2; i++)
+		_dlinkedlist_stages(var, func), var->itt = i;
 
 }
 

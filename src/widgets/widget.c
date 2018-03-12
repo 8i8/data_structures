@@ -59,15 +59,15 @@ void W_Print_binary(unsigned n, unsigned width)
 } 
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- *  Bitwise operatios
+ *  Bitwise operations
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
 /*
- * getbits: Returns the the right adjusted n-bit field of x that begins at
- * position p, position 0 is the least significalt bit of the word.
+ * getbits: Returns the right adjusted n-bit field of x that begins at
+ * position p, position 0 is the least significant bit of the word.
  */
 unsigned getbits(unsigned x, unsigned p, unsigned n)
 {
-	return (x >> (p+1-n)) & ~(~0 << n);
+	return (x >> (p+1-n)) & ~(~(unsigned)0 << n);
 }
 

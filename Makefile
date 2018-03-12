@@ -28,7 +28,7 @@ CFLAGS += -g
 CFLAGS += -fsanitize=address -fno-omit-frame-pointer
 #LFLAGS += -lm
 
-vpath %.c src/data_structures/ src/general/ src/tests/ src/widgets
+vpath %.c src/ src/data_structures/ src/general/ src/tests/ src/widgets
 vpath %.h src/data_structures/ src/general/ src/tests/ src/widgets
 
 .PHONY: all clean distclean

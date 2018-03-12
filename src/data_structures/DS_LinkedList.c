@@ -20,7 +20,7 @@ DS_LinkedList *DS_LinkedList_init(DS_LinkedList *list)
 		list->data.len = 4;
 	} else {
 		strcpy(list->data.str, "STACK");
-		list->data.len = 5;
+		list->data.len = 0;
 	}
 
 	list->next = NULL;

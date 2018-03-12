@@ -8,6 +8,8 @@ SRC = \
 	DS_Output.c \
 	DS_LinkedList.c \
 	DS_LinkedList_test.c \
+	DS_DLinkedList.c \
+	DS_DLinkedList_test.c \
 	DS_Vector.c \
 	DS_Vector_test.c \
 	DS_BinarySearch.c \
@@ -23,7 +25,7 @@ CC  = gcc
 
 CFLAGS += -Wall -Wextra -pedantic
 CFLAGS += -g
-#CFLAGS += -fsanitize=address -fno-omit-frame-pointer
+CFLAGS += -fsanitize=address -fno-omit-frame-pointer
 #LFLAGS += -lm
 
 vpath %.c src/data_structures/ src/general/ src/tests/ src/widgets
@@ -52,6 +54,8 @@ $(OBJ): \
 	DS_Output.h \
 	DS_LinkedList.h	\
 	DS_LinkedList_test.h \
+	DS_DLinkedList.h \
+	DS_DLinkedList_test.h \
 	DS_Vector.h \
 	DS_Vector_test.h \
 	DS_BinarySearch.h \

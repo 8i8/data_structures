@@ -8,12 +8,15 @@
 #include <stdio.h>
 #include "../tests/DS_Struct.h"
 
-typedef struct _ds_LinkedList {
+#ifndef _ds_linkedlist_
+#define _ds_linkedlist_
+typedef struct _ds_linkedlist {
 	Data data;
-	struct _ds_LinkedList *next;
+	struct _ds_linkedlist *next;
 } DS_LinkedList;
+#endif
 
-/* DS_LinkedList_Init: Initialise a linked list on the heap, creates the first
+/* DS_LinkedList_init: Initialise a linked list on the heap, creates the first
  * node and sets the size to 1 */
 DS_LinkedList *DS_LinkedList_init(DS_LinkedList *list);
 
@@ -33,6 +36,9 @@ DS_LinkedList *DS_LinkedList_insert(DS_LinkedList *list, size_t index, Data data
 
 /* DS_LinkedList_remove: Remove and free the node at the given index */
 DS_LinkedList *DS_LinkedList_remove(DS_LinkedList *list, size_t num);
+
+/* DS_LinkedList_ffw: Fastforward n nodes, if node is null return an error */
+DS_LinkedList *DS_LinkedList_ffw(DS_LinkedList *list, size_t num);
 
 /*  DS_LinkedList_set: Set the data at index n to be the given data */
 DS_LinkedList *DS_LinkedList_set(DS_LinkedList *list, size_t index, Data data);

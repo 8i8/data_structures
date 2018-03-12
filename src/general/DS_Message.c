@@ -91,7 +91,7 @@ int DS_Message_state(void)
 }
 
 /*
- * DS_Message_reset: Set to empty, with no message.
+ * DS_Message_reset: Set to empty, no message.
  */
 void DS_Message_reset(void)
 {

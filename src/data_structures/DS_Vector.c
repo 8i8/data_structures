@@ -122,7 +122,8 @@ Data *DS_Vector_get(DS_Vector *list, size_t index)
 /*
  * DS_Vector_free: Free allocated memory.
  */
-void DS_Vector_free(DS_Vector *list)
+DS_Vector *DS_Vector_free(DS_Vector *list)
 {
 	free(list->data);
+	return NULL;
 }

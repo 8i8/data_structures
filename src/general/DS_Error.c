@@ -32,6 +32,7 @@ void DS_Error_append(char *input, ...)
 	_ds_message_set(error, input, &va);
 	va_end(va);
 
+	_ds_write_to_string(0, store, " ");
 	_ds_write_to_string(0, store, error);
 	state = 1;
 }
@@ -46,6 +47,7 @@ void DS_Error_insert(char *input, ...)
 	_ds_message_set(error, input, &va);
 	va_end(va);
 
+	_ds_write_to_string(1, store, " ");
 	_ds_write_to_string(1, store, error);
 	state = 1;
 }

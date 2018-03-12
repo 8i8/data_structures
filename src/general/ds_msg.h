@@ -9,4 +9,4 @@
 int _ds_message_set(char *message, char *input, va_list *va);
 
 /* _write_to_string: Write the input string to the stored message. */
-void _ds_write_to_string(int reverse, char *input, char *message);
+char *_ds_write_to_string(int reverse, char *input, char *message);

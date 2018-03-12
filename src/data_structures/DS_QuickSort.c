@@ -17,9 +17,9 @@ static int _swap(void *string, size_t i, size_t j, size_t width)
 	char temp[width];
 
 	//TODO Time the difference between these two pieces of code.
-	memcpy(temp, s[i * width]);
-	memcpy(s[i * width], s[j * width]);
-	memcpy(s[j * width], temp);
+	memcpy(temp, s[i * width], width);
+	memcpy(s[i * width], s[j * width], width);
+	memcpy(s[j * width], temp, width);
 
 	//char temp;
 	//char *s = string;

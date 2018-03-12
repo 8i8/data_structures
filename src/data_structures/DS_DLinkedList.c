@@ -1,16 +1,16 @@
-#include "DS_LinkedList.h"
+#include "DS_DLinkedList.h"
 #include "../general/DS_Error.h"
 #include <stdlib.h>
 #include <string.h>
 
 /*
- * DS_LinkedList_init: Initialise a linked list on the heap if NULL, else fill
+ * DS_DLinkedList_init: Initialise a linked list on the heap if NULL, else fill
  * in with relevent data for a stack allocated head.
  */
-DS_LinkedList *DS_LinkedList_init(DS_LinkedList *list) 
+DS_DLinkedList *DS_DLinkedList_init(DS_DLinkedList *list) 
 {
 	if (list == NULL) {
-		if ((list = malloc(sizeof(DS_LinkedList))) == NULL) {
+		if ((list = malloc(sizeof(DS_DLinkedList))) == NULL) {
 			DS_Error_set("%s: memory allocation failed.", __func__);
 			return NULL;
 		}
@@ -24,13 +24,14 @@ DS_LinkedList *DS_LinkedList_init(DS_LinkedList *list)
 	}
 
 	list->next = NULL;
+	list->prev = NULL;
 	return list;
 }
 
 /*
- * DS_LinkedList_add: Create the next node in the list and add data.
+ * DS_DLinkedList_add: Create the next node in the list and add data.
  */
-DS_LinkedList *DS_LinkedList_add(DS_LinkedList *list, Data data)
+DS_DLinkedList *DS_DLinkedList_add(DS_DLinkedList *list, Data data)
 {
 	if (list == NULL) {
 		DS_Error_set("%s: NULL pointer.", __func__);
@@ -40,11 +41,12 @@ DS_LinkedList *DS_LinkedList_add(DS_LinkedList *list, Data data)
 	while (list->next != NULL)
 		list = list->next;
 
-	if ((list->next = malloc(sizeof(DS_LinkedList))) == NULL) {
+	if ((list->next = malloc(sizeof(DS_DLinkedList))) == NULL) {
 		DS_Error_set("%s: memory allocation failed.", __func__);
 		return NULL;
 	}
 
+	list->next->prev = list;
 	list = list->next;
 	list->data = data;
 	list->next = NULL;
@@ -53,10 +55,10 @@ DS_LinkedList *DS_LinkedList_add(DS_LinkedList *list, Data data)
 }
 
 /*
- * DS_LinkedList_get: Returns the requested node if it exists, NULL if iit does
+ * DS_DLinkedList_get: Returns the requested node if it exists, NULL if iit does
  * not.
  */
-DS_LinkedList *DS_LinkedList_get(DS_LinkedList *list, size_t num)
+DS_DLinkedList *DS_DLinkedList_get(DS_DLinkedList *list, size_t num)
 {
 	size_t i;
 
@@ -79,10 +81,10 @@ DS_LinkedList *DS_LinkedList_get(DS_LinkedList *list, size_t num)
 }
 
 /*
- * DS_LinkedList_do: Iterate over the entire list, performing the given
+ * DS_DLinkedList_do: Iterate over the entire list, performing the given
  * function upon each node.
  */
-int DS_LinkedList_do(DS_LinkedList *list, void *var, int(*func)(void*, void*))
+int DS_DLinkedList_do(DS_DLinkedList *list, void *var, int(*func)(void*, void*))
 {
 	if (list == NULL) {
 		DS_Error_set("%s: NULL pointer.", __func__);
@@ -99,9 +101,9 @@ int DS_LinkedList_do(DS_LinkedList *list, void *var, int(*func)(void*, void*))
 }
 
 /*
- * DS_LinkedList_insert: Insert a new node before node n.
+ * DS_DLinkedList_insert: Insert a new node before node n.
  */
-DS_LinkedList *DS_LinkedList_insert(DS_LinkedList *list, size_t num, Data data)
+DS_DLinkedList *DS_DLinkedList_insert(DS_DLinkedList *list, size_t num, Data data)
 {
 	if (list == NULL) {
 		DS_Error_set("%s: NULL pointer.", __func__);
@@ -110,30 +112,33 @@ DS_LinkedList *DS_LinkedList_insert(DS_LinkedList *list, size_t num, Data data)
 		DS_Error_set("%s: num out of bounds.", __func__);
 		return NULL;
 		/* Get node, but not number one; You are already there */
-	} else if ((num != 1) && (list = DS_LinkedList_get(list, num - 1)) == NULL) {
+	} else if ((num != 1) && (list = DS_DLinkedList_get(list, num - 1)) == NULL) {
 		DS_Error_insert("%s: ", __func__);
 		return NULL;
 	}
 
 	/* We should now bw at node n - 1, insert a node here. */
-	DS_LinkedList *temp = list->next;
+	DS_DLinkedList *temp = list->next;
 
-	if((list->next = malloc(sizeof(DS_LinkedList))) == NULL) {
+	if((list->next = malloc(sizeof(DS_DLinkedList))) == NULL) {
 		DS_Error_set("%s: memory allocation failed.", __func__);
 		list->next = temp;
 		return NULL;
 	}
 
 	list->next->data = data;
+	list->next->prev = list;
 	list->next->next = temp;
+	if (temp != NULL)
+		list->next->next->prev = list->next;
 
 	return list->next;
 }
 
 /*
- * DS_LinkedList_remove: Remove and free the node at the given index.
+ * DS_DLinkedList_remove: Remove and free the node at the given index.
  */
-DS_LinkedList *DS_LinkedList_remove(DS_LinkedList *list, size_t num)
+DS_DLinkedList *DS_DLinkedList_remove(DS_DLinkedList *list, size_t num)
 {
 	if (list == NULL) {
 		DS_Error_set("%s: NULL pointer.", __func__);
@@ -143,7 +148,7 @@ DS_LinkedList *DS_LinkedList_remove(DS_LinkedList *list, size_t num)
 		return list;
 		/* Get node, not if num is 1 it is the current node; Deal with the
 		 * case of removing the first node  */
-	} else if ((num != 1) && (list = DS_LinkedList_get(list, num - 1)) == NULL) {
+	} else if ((num != 1) && (list = DS_DLinkedList_get(list, num - 1)) == NULL) {
 		DS_Error_insert("%s: ", __func__);
 		return NULL;
 		/* Deal with the next node being the NULL terminator */
@@ -153,22 +158,56 @@ DS_LinkedList *DS_LinkedList_remove(DS_LinkedList *list, size_t num)
 	}
 
 	/* Remove the node */
-	DS_LinkedList *temp = list->next;
+	DS_DLinkedList *temp = list->next;
 	list->next = list->next->next;
+	if (list->next != NULL)
+		list->next->prev = list;
 	free(temp);
 
 	return list->next;
 }
 
 /*
- *  DS_LinkedList_set: Set the data at index n to be the given data.
+ * DS_DLinkedList_ffw: Fastforward n nodes, if node is null return an error.
  */
-DS_LinkedList *DS_LinkedList_set(DS_LinkedList *list, size_t index, Data data)
+DS_DLinkedList *DS_DLinkedList_ffw(DS_DLinkedList *list, size_t num)
+{
+	while(list != NULL && --num)
+		list = list->next;
+
+	if (list == NULL) {
+		DS_Error_set("%s: Out of bounds, you reached the end of the list.", __func__);
+		return NULL;
+	}
+
+	return list;
+}
+
+/*
+ * DS_DLinkedList_rwd: Rewind n nodes, if node is the head return an error.
+ */
+DS_DLinkedList *DS_DLinkedList_rwd(DS_DLinkedList *list, size_t num)
+{
+	while(list->prev != NULL && --num)
+		list = list->prev;
+
+	if (list == NULL) {
+		DS_Error_set("%s: Out of bounds. you reached the head of the list.", __func__);
+		return NULL;
+	}
+
+	return list;
+}
+
+/*
+ *  DS_DLinkedList_set: Set the data at index n to be the given data.
+ */
+DS_DLinkedList *DS_DLinkedList_set(DS_DLinkedList *list, size_t index, Data data)
 {
 	if (list == NULL) { 
 		DS_Error_set("%s: NULL pointer.", __func__);
 		return NULL;
-	} else if ((list = DS_LinkedList_get(list, index)) == NULL) {
+	} else if ((list = DS_DLinkedList_get(list, index)) == NULL) {
 		DS_Error_set("%s: ", __func__);
 		return NULL;
 	}
@@ -179,9 +218,9 @@ DS_LinkedList *DS_LinkedList_set(DS_LinkedList *list, size_t index, Data data)
 }
 
 /*
- * DS_LinkedList_size: Returns the quantity of nodes in a linked list.
+ * DS_DLinkedList_size: Returns the quantity of nodes in a linked list.
  */
-size_t DS_LinkedList_size(DS_LinkedList *list)
+size_t DS_DLinkedList_size(DS_DLinkedList *list)
 {
 	if (list == NULL) {
 		DS_Error_set("%s: NULL pointer.", __func__);
@@ -196,9 +235,9 @@ size_t DS_LinkedList_size(DS_LinkedList *list)
 }
 
 /*
- * DS_LinkedList_clear: Destroy all nodes in the list.
+ * DS_DLinkedList_clear: Destroy all nodes in the list.
  */
-int DS_LinkedList_clear(DS_LinkedList *list)
+int DS_DLinkedList_clear(DS_DLinkedList *list)
 {
 	if (list == NULL) {
 		DS_Error_set("%s: NULL pointer.", __func__);
@@ -213,7 +252,7 @@ int DS_LinkedList_clear(DS_LinkedList *list)
 	/* Skip forwards one to avoid freeing the head */
 	list = list->next;
 
-	DS_LinkedList *temp;
+	DS_DLinkedList *temp;
 	while (list->next != NULL) {
 		temp = list;
 		list = list->next;

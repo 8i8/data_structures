@@ -34,5 +34,5 @@ int DS_Vector_remove(DS_Vector *list, size_t index);
 Data *DS_Vector_get(DS_Vector *list, size_t index);
 
 /* DS_Vector_free: Free allocated memory */
-void DS_Vector_free(DS_Vector *list);
+DS_Vector *DS_Vector_free(DS_Vector *list);
 

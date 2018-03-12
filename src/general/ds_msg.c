@@ -18,7 +18,7 @@ void _place_at_front(char *store, char *message, int len_store, int len_message)
 /*
  * _write_to_string: Write the input string to the stored message.
  */
-void _ds_write_to_string(int reverse, char *store, char *message)
+char *_ds_write_to_string(int reverse, char *store, char *message)
 {
 	int len_store, len_message;
 
@@ -34,6 +34,8 @@ void _ds_write_to_string(int reverse, char *store, char *message)
 			strcat(store, message);
 	} else
 		strcat(store, " ...");
+
+	return store;
 }
 
 /*

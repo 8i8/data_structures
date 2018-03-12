@@ -179,7 +179,8 @@ void linkedlist_test_fwd(DS_LinkedList *list, size_t pos, size_t num, int msg, i
 			DS_Message_append("%fs passed.", time);
 		else {
 			DS_Message_append("%fs failed.", time);
-			DS_Error_set("%s: Position error start = %lu, new = %lu.", __func__, pos, rtn->data.len);
+			DS_Error_set("%s: Position error start = %lu, new = %lu.",
+					__func__, pos, rtn->data.len);
 		}
 	}
 

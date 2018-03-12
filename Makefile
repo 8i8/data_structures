@@ -5,7 +5,7 @@ SRC = \
 	DS_Error.c \
 	DS_Message.c \
 	DS_Timer.c \
-	DS_Output.c \
+	DS_Test_output.c \
 	DS_LinkedList.c \
 	DS_LinkedList_test.c \
 	DS_DLinkedList.c \
@@ -51,7 +51,7 @@ $(OBJ): \
 	DS_Message.h \
 	DS_Timer.h \
 	DS_Struct.h \
-	DS_Output.h \
+	DS_Test_output.h \
 	DS_LinkedList.h	\
 	DS_LinkedList_test.h \
 	DS_DLinkedList.h \

@@ -7,6 +7,9 @@
 #include <stdint.h>
 
 /*
+ * TODO Use tripple pointer in the linked list implimention, this shold clean
+ * up the code considerably.
+ *
  * TODO Assignment https://www.youtube.com/watch?v=ocO3T5cdaBg&feature=youtu.be&t=9m
  * impliment using unsorted array and sorted linked list.
  *

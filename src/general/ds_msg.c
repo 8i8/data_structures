@@ -1,4 +1,6 @@
 #include "ds_msg.h"
+#include "DS_Message.h"
+#include "DS_Error.h"
 #include <stdlib.h>
 #include <ctype.h>
 
@@ -90,5 +92,42 @@ int _ds_message_set(char *message, char *input, va_list *va)
 	*message = '\0';
 
 	return message - head;
+}
+
+/*
+ * _ds_check_messages: INternal function to call both the message and the error
+ * service, reseting both when done; A clean way to insure that this is done at
+ * the end of every function in the test suit.
+ */
+void _ds_check_messages(int msg, int err)
+{
+	int msg_state = DS_Message_state();
+	int err_state = DS_Error_state();
+
+	if (msg && err) {
+		if (msg_state)
+			DS_Message_print();
+		if (err_state) {
+			putchar(' ');
+			DS_Error_print();
+		}
+		if (err_state || msg_state)
+			putchar('\n');
+	} else if (err) {
+		if (err_state) {
+			if (msg_state) {
+				DS_Message_print();
+				putchar(' ');
+			}
+			DS_Error_print();
+			putchar('\n');
+		}
+	} else if (msg)
+		if (msg_state) {
+			DS_Message_print();
+			putchar('\n');
+		}
+	//DS_Error_reset();
+	//DS_Message_reset();
 }
 

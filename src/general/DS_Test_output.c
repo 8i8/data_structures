@@ -1,6 +1,4 @@
-#include "DS_Output.h"
-#include "DS_Message.h"
-#include "DS_Error.h"
+#include "DS_Test_output.h"
 #include <stdio.h>
 #include <string.h>
 
@@ -52,37 +50,5 @@ char *DS_Out_msg()
 	pt_msg = msg;
 	*pt_msg = '\0';
 	return output;
-}
-
-void _ds_check_messages(int msg, int err)
-{
-	int msg_state = DS_Message_state();
-	int err_state = DS_Error_state();
-
-	if (msg && err) {
-		if (msg_state)
-			DS_Message_print();
-		if (err_state) {
-			putchar(' ');
-			DS_Error_print();
-		}
-		if (err_state || msg_state)
-			putchar('\n');
-	} else if (err) {
-		if (err_state) {
-			if (msg_state) {
-				DS_Message_print();
-				putchar(' ');
-			}
-			DS_Error_print();
-			putchar('\n');
-		}
-	} else if (msg)
-		if (msg_state) {
-			DS_Message_print();
-			putchar('\n');
-		}
-	//DS_Error_reset();
-	//DS_Message_reset();
 }
 

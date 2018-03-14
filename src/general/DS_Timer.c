@@ -10,8 +10,10 @@
  * https://www.cs.rutgers.edu/~pxk/416/notes/c-tutorials/gettime.html
  */
 /*
- * CLOCK_MONOTONIC time is the total time and CLOCK_PROCESS_CPUTIME_ID is the
- * time for the individual process.
+ * CLOCK_MONOTONIC time is the total time.
+ * CLOCK_MONOTONIC_RAW is Monotonic system-wide clock, not adjusted for
+ * frequency scaling.
+ * CLOCK_PROCESS_CPUTIME_ID is the time for the individual process.
  *
  * CLOCK_MONOTONIC
  * CLOCK_MONOTONIC_RAW
@@ -22,7 +24,7 @@
 #include <float.h>
 #include "DS_Timer.h"
 
-#define CLOCK_METHOD CLOCK_MONOTONIC_RAW
+#define CLOCK_METHOD CLOCK_PROCESS_CPUTIME_ID
 
 struct timespec start, end;
 

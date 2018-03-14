@@ -39,7 +39,7 @@ $(EXE): $(OBJ)
 	$(CC) $(CFLAGS) $(OBJ) -o $(EXE) $(LFLAGS)
 
 clean:
-	rm -f $(OBJ)
+	rm -f $(OBJ) a.out
 
 distclean: clean
 	rm -f datastructures a.out scratch*

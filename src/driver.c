@@ -7,22 +7,22 @@
 #include <stdint.h>
 
 /*
- * TODO Use tripple pointer in the linked list implimention, this shold clean
+ * TODO Use triple pointer in the linked list implementation, this should clean
  * up the code considerably.
  *
  * TODO Assignment https://www.youtube.com/watch?v=ocO3T5cdaBg&feature=youtu.be&t=9m
- * impliment using unsorted array and sorted linked list.
+ * implement using unsorted array and sorted linked list.
  *
- * TODO impliment a priority queue with a binary tree an array and a heap
+ * TODO implement a priority queue with a binary tree an array and a heap
  *
  * TODO Write Huffman compression using the queue, do so in a way that makes
- * the algorithem used to formulate the compression is interchangable; test
+ * the algorithm used to formulate the compression is interchangeable; test
  * and time the results.
  */
 
 int main(void)
 {
-	//DS_LinkedList_test();
+	DS_LinkedList_test();
 	DS_DLinkedList_test();
 	//DS_BinarySearch_test();
 	//DS_Vector_test();

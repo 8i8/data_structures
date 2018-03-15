@@ -231,7 +231,7 @@ void _linkedlist_test_call(void* v)
 	size_t i = var->itt;
 	size_t num = var->num;
 	int msg, err, n = var->width;
-	msg = 1, err = 1;
+	msg = 0, err = 1;
 
 	printf("%lu\n", i);
 	linkedlist_test_get(head, i, msg, err);

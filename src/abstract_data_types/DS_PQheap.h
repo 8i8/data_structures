@@ -13,6 +13,3 @@
  * place and then bubble that down. This way we can avoid moving every element
  * over by one place, which is far leass efficient. The Heap is (log n) time.
  */
-void func()
-{
-}

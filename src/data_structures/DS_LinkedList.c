@@ -21,14 +21,11 @@ DS_LinkedList *_ds_linkedList_new_node(Data data)
 
 /*
  * DS_LinkedList_add: Create the next node in the list and add data.
- * TODO I need to understand what is happening here the difference between
- * *list and (*list).
- * Check here if **list being NULL will work if not what needs to be changed.
  */
 DS_LinkedList **DS_LinkedList_add(DS_LinkedList **list, Data data)
 {
-	if ((*list) == NULL)
-		(*list) = _ds_linkedList_new_node(data);
+	if (*list == NULL)
+		*list = _ds_linkedList_new_node(data);
 	else {
 		while ((*list)->next != NULL)
 			list = &(*list)->next;
@@ -51,7 +48,7 @@ DS_LinkedList **DS_LinkedList_get(DS_LinkedList **list, size_t num)
 {
 	size_t i;
 
-	if (list == NULL || (*list) == NULL) {
+	if (list == NULL || *list == NULL) {
 		DS_Error_set("%s: NULL pointer.", __func__);
 		return NULL;
 	}
@@ -78,12 +75,12 @@ DS_LinkedList **DS_LinkedList_get(DS_LinkedList **list, size_t num)
  */
 int DS_LinkedList_do(DS_LinkedList **list, void *var, int(*func)(void*, void*))
 {
-	if (list == NULL || (*list) == NULL) {
+	if (list == NULL || *list == NULL) {
 		DS_Error_set("%s: NULL pointer.", __func__);
 		return -1;
 	}
 
-	while ((*list) != NULL) {
+	while (*list != NULL) {
 		if ((*func)((void*)list, (void*)var))
 			return -1;
 		list = &(*list)->next;
@@ -99,7 +96,7 @@ DS_LinkedList **DS_LinkedList_insert(DS_LinkedList **list, size_t num, Data data
 {
 	DS_LinkedList *new;
 
-	if (list == NULL || (*list) == NULL) {
+	if (list == NULL || *list == NULL) {
 		DS_Error_set("%s: NULL pointer.", __func__);
 		return NULL;
 	} else if (num == 0) {
@@ -117,8 +114,37 @@ DS_LinkedList **DS_LinkedList_insert(DS_LinkedList **list, size_t num, Data data
 		return NULL;
 	}
 
-	new->next = (*list);
-	(*list) = new;
+	new->next = *list;
+	*list = new;
+
+	return list;
+}
+
+/*
+ * DS_LinkedList_insert_conditional: Insert a new node conditionaly.
+ */
+DS_LinkedList **DS_LinkedList_insert_conditional(DS_LinkedList **list, Data data,
+						Data compare, int(*func)(void*, void*))
+{
+	DS_LinkedList *new;
+
+	if (list == NULL || *list == NULL) {
+		DS_Error_set("%s: NULL pointer.", __func__);
+		return NULL;
+	}
+
+	while (*list != NULL)
+	{
+	       if ((*func)((void*)&data, (void*)&compare))
+	       {
+			if ((new = _ds_linkedList_new_node(data)) == NULL) {
+				DS_Error_append("%s: ", __func__);
+				return NULL;
+			}
+			new->next = *list;
+			*list = new;
+	       }	       
+	}
 
 	return list;
 }
@@ -131,7 +157,7 @@ DS_LinkedList **DS_LinkedList_remove(DS_LinkedList **list, size_t num)
 {
 	DS_LinkedList *old;
 
-	if (list == NULL || (*list) == NULL) {
+	if (list == NULL || *list == NULL) {
 		DS_Error_set("%s: Null pointer.", __func__);
 		return NULL;
 	} else if (num == 0) {
@@ -158,15 +184,15 @@ DS_LinkedList **DS_LinkedList_remove(DS_LinkedList **list, size_t num)
  */
 DS_LinkedList **DS_LinkedList_fwd(DS_LinkedList **list, size_t num)
 {
-	if (list == NULL || (*list) == NULL) {
+	if (list == NULL || *list == NULL) {
 		DS_Error_set("%s: Null pointer.", __func__);
 		return NULL;
 	}
 
-	while ((*list) != NULL && num)
+	while (*list != NULL && num)
 		list = &(*list)->next, num--;
 
-	if ((*list) == NULL) {
+	if (*list == NULL) {
 		DS_Error_set("%s: Out of bounds, you have reached the end of the list.", __func__);
 		return NULL;
 	}
@@ -179,7 +205,7 @@ DS_LinkedList **DS_LinkedList_fwd(DS_LinkedList **list, size_t num)
  */
 DS_LinkedList **DS_LinkedList_set(DS_LinkedList **list, size_t num, Data data)
 {
-	if (list == NULL || (*list) == NULL) { 
+	if (list == NULL || *list == NULL) { 
 		DS_Error_set("%s: NULL pointer.", __func__);
 		return NULL;
 	} else if ((list = DS_LinkedList_get(list, num)) == NULL) {
@@ -197,13 +223,14 @@ DS_LinkedList **DS_LinkedList_set(DS_LinkedList **list, size_t num, Data data)
  */
 size_t DS_LinkedList_size(DS_LinkedList **list)
 {
-	if (list == NULL || (*list) == NULL) {
+	size_t i = 0;
+
+	if (list == NULL || *list == NULL) {
 		DS_Error_set("%s: NULL pointer.", __func__);
 		return 0;
 	}
 
-	size_t i = 0;
-	while((*list)->next != NULL)
+	while(*list != NULL)
 		list = &(*list)->next, ++i;
 
 	return i;
@@ -216,12 +243,12 @@ int DS_LinkedList_clear(DS_LinkedList **list)
 {
 	DS_LinkedList *old;
 
-	if (list == NULL || (*list) == NULL) {
+	if (list == NULL || *list == NULL) {
 		DS_Error_set("%s: NULL pointer.", __func__);
 		return -1;
 	}
 
-	while ((*list) != NULL) {
+	while (*list != NULL) {
 		old = *list;
 		*list = (*list)->next;
 		free(old);

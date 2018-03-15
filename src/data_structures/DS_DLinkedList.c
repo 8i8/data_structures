@@ -25,8 +25,8 @@ DS_DLinkedList *_ds_dlinkedList_new_node(Data data)
  */
 DS_DLinkedList **DS_DLinkedList_add(DS_DLinkedList **list, Data data)
 {
-	if ((*list) == NULL)
-		(*list) = _ds_dlinkedList_new_node(data);
+	if (*list == NULL)
+		*list = _ds_dlinkedList_new_node(data);
 	else {
 		while ((*list)->next != NULL)
 			list = &(*list)->next;
@@ -53,7 +53,7 @@ DS_DLinkedList **DS_DLinkedList_get(DS_DLinkedList **list, size_t num)
 {
 	size_t i;
 
-	if (list == NULL || (*list) == NULL) {
+	if (list == NULL || *list == NULL) {
 		DS_Error_set("%s: NULL pointer.", __func__);
 		return NULL;
 	}
@@ -80,12 +80,12 @@ DS_DLinkedList **DS_DLinkedList_get(DS_DLinkedList **list, size_t num)
  */
 int DS_DLinkedList_do(DS_DLinkedList **list, void *var, int(*func)(void*, void*))
 {
-	if (list == NULL || (*list) == NULL) {
+	if (list == NULL || *list == NULL) {
 		DS_Error_set("%s: NULL pointer.", __func__);
 		return -1;
 	}
 
-	while ((*list) != NULL) {
+	while (*list != NULL) {
 		if ((*func)((void*)list, (void*)var))
 			return -1;
 		list = &(*list)->next;
@@ -101,7 +101,7 @@ DS_DLinkedList **DS_DLinkedList_insert(DS_DLinkedList **list, size_t num, Data d
 {
 	DS_DLinkedList *new;
 
-	if (list == NULL || (*list) == NULL) {
+	if (list == NULL || *list == NULL) {
 		DS_Error_set("%s: NULL pointer.", __func__);
 		return NULL;
 	} else if (num == 0) {
@@ -119,9 +119,9 @@ DS_DLinkedList **DS_DLinkedList_insert(DS_DLinkedList **list, size_t num, Data d
 		return NULL;
 	}
 
-	new->next = (*list);
+	new->next = *list;
 	new->prev = (*list)->prev;
-	(*list) = new;
+	*list = new;
 
 	return list;
 }
@@ -133,7 +133,7 @@ DS_DLinkedList **DS_DLinkedList_remove(DS_DLinkedList **list, size_t num)
 {
 	DS_DLinkedList *old;
 
-	if (list == NULL || (*list) == NULL) {
+	if (list == NULL || *list == NULL) {
 		DS_Error_set("%s: Null pointer.", __func__);
 		return NULL;
 	} else if (num == 0) {
@@ -159,15 +159,15 @@ DS_DLinkedList **DS_DLinkedList_remove(DS_DLinkedList **list, size_t num)
  */
 DS_DLinkedList **DS_DLinkedList_fwd(DS_DLinkedList **list, size_t num)
 {
-	if (list == NULL || (*list) == NULL) {
+	if (list == NULL || *list == NULL) {
 		DS_Error_set("%s: Null pointer.", __func__);
 		return NULL;
 	}
 
-	while ((*list) != NULL && num)
+	while (*list != NULL && num)
 		list = &(*list)->next, num--;
 
-	if ((*list) == NULL) {
+	if (*list == NULL) {
 		DS_Error_set("%s: Out of bounds, you have reached the end of the list.", __func__);
 		return NULL;
 	}
@@ -180,15 +180,15 @@ DS_DLinkedList **DS_DLinkedList_fwd(DS_DLinkedList **list, size_t num)
  */
 DS_DLinkedList **DS_DLinkedList_rwd(DS_DLinkedList **list, size_t num)
 {
-	if (list == NULL || (*list) == NULL) {
+	if (list == NULL || *list == NULL) {
 		DS_Error_set("%s: Null pointer.", __func__);
 		return NULL;
 	}
 
-	while ((*list) != NULL && num)
+	while (*list != NULL && num)
 		list = &(*list)->prev, num--;
 
-	if ((*list) == NULL) {
+	if (*list == NULL) {
 		DS_Error_set("%s: Out of bounds, you have reached the first node.", __func__);
 		return NULL;
 	}
@@ -201,7 +201,7 @@ DS_DLinkedList **DS_DLinkedList_rwd(DS_DLinkedList **list, size_t num)
  */
 DS_DLinkedList **DS_DLinkedList_set(DS_DLinkedList **list, size_t num, Data data)
 {
-	if (list == NULL || (*list) == NULL) { 
+	if (list == NULL || *list == NULL) { 
 		DS_Error_set("%s: NULL pointer.", __func__);
 		return NULL;
 	} else if ((list = DS_DLinkedList_get(list, num)) == NULL) {
@@ -219,13 +219,14 @@ DS_DLinkedList **DS_DLinkedList_set(DS_DLinkedList **list, size_t num, Data data
  */
 size_t DS_DLinkedList_size(DS_DLinkedList **list)
 {
-	if (list == NULL || (*list) == NULL) {
+	size_t i = 0;
+
+	if (list == NULL || *list == NULL) {
 		DS_Error_set("%s: NULL pointer.", __func__);
 		return 0;
 	}
 
-	size_t i = 0;
-	while((*list)->next != NULL)
+	while(*list != NULL)
 		list = &(*list)->next, ++i;
 
 	return i;
@@ -238,12 +239,12 @@ int DS_DLinkedList_clear(DS_DLinkedList **list)
 {
 	DS_DLinkedList *old;
 
-	if (list == NULL || (*list) == NULL) {
+	if (list == NULL || *list == NULL) {
 		DS_Error_set("%s: NULL pointer.", __func__);
 		return -1;
 	}
 
-	while ((*list) != NULL) {
+	while (*list != NULL) {
 		old = *list;
 		*list = (*list)->next;
 		free(old);

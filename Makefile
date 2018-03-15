@@ -10,6 +10,8 @@ SRC = \
 	DS_LinkedList_test.c \
 	DS_DLinkedList.c \
 	DS_DLinkedList_test.c \
+	DS_PQLinkedList.c \
+	DS_PQLinkedList_test.c \
 	DS_Vector.c \
 	DS_Vector_test.c \
 	DS_BinarySearch.c \
@@ -28,7 +30,7 @@ CFLAGS += -g
 CFLAGS += -fsanitize=address -fno-omit-frame-pointer
 #LFLAGS += -lm
 
-vpath %.c src/ src/data_structures/ src/general/ src/tests/ src/widgets
+vpath %.c src/ src/data_structures/ src/abstract_data_types/ src/general/ src/tests/ src/widgets
 vpath %.h src/data_structures/ src/general/ src/tests/ src/widgets
 
 .PHONY: all clean distclean
@@ -56,6 +58,7 @@ $(OBJ): \
 	DS_LinkedList_test.h \
 	DS_DLinkedList.h \
 	DS_DLinkedList_test.h \
+	DS_PQLinkedList_test.h \
 	DS_Vector.h \
 	DS_Vector_test.h \
 	DS_BinarySearch.h \

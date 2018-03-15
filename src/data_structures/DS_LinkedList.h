@@ -16,11 +16,7 @@ typedef struct _ds_linkedlist {
 } DS_LinkedList;
 #endif
 
-/*
- * DS_LinkedList_new_node: Create a new node.
- */
-
-/* DS_LinkedList_add: Create the next node in the list and add data */
+/* DS_LinkedList_add: Create the next node and add data */
 DS_LinkedList **DS_LinkedList_add(DS_LinkedList **list, Data data);
 
 /* DS_LinkedList_get: Returns the node at the given index, if that index
@@ -33,6 +29,10 @@ int DS_LinkedList_do(DS_LinkedList **list, void *var, int(*func)(void*, void*));
 
 /* DS_LinkedList_insert: Insert a new node at the given index, add data */
 DS_LinkedList **DS_LinkedList_insert(DS_LinkedList **list, size_t num, Data data);
+
+/* DS_LinkedList_insert_conditional: Insert a new node conditionaly. */
+DS_LinkedList **DS_LinkedList_insert_conditional(DS_LinkedList **list, Data data,
+						Data compare, int(*func)(void*, void*));
 
 /* DS_LinkedList_remove: Remove and free the node at the given index */
 DS_LinkedList **DS_LinkedList_remove(DS_LinkedList **list, size_t num);

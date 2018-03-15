@@ -8,9 +8,14 @@
  * pq.change_priority(value, pri); alter an existing elements priority.
  * pq.clear(); empty the set.
  */
+#include "DS_PQLinkedList.h"
+#include "../data_structures/DS_LinkedList.h"
 
-typedef struct _ds_pqlinkedlist {
-	DS_LinkedList list;
-	size_t len;
-} DS_PQlinkedList;
+void DS_PQLinkedList_init()
+{
+}
 
+void DS_PQLinkedList_enqueue(Data *data)
+{
+	data->len = 5;
+}

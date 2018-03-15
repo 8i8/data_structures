@@ -103,6 +103,10 @@ void linkedlist_test_insert(DS_LinkedList **list, char *str, size_t num, int msg
 	_ds_check_messages(msg, err);
 }
 
+void linkedlist_test_insert_conditional()
+{
+}
+
 void linkedlist_test_remove(DS_LinkedList **list, size_t num, int msg, int err)
 {
 	DS_LinkedList **rtn = NULL;
@@ -231,9 +235,10 @@ void _linkedlist_test_call(void* v)
 	size_t i = var->itt;
 	size_t num = var->num;
 	int msg, err, n = var->width;
-	msg = 0, err = 1;
+	msg = 1, err = 1;
 
 	printf("%lu\n", i);
+	linkedlist_test_size(head, msg, err);
 	linkedlist_test_get(head, i, msg, err);
 	linkedlist_test_fwd(head, i, 3, msg, err);
 	linkedlist_test_insert(head, var->str, i, msg, err);

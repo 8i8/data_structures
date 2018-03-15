@@ -17,39 +17,35 @@ typedef struct _ds_dlinkedlist {
 } DS_DLinkedList;
 #endif
 
-/* DS_DLinkedList_init: Initialise a linked list on the heap, creates the first
- * node and sets the size to 1 */
-DS_DLinkedList *DS_DLinkedList_init(DS_DLinkedList *list);
-
 /* DS_DLinkedList_add: Create the next node in the list and add data */
-DS_DLinkedList *DS_DLinkedList_add(DS_DLinkedList *list, Data data);
+DS_DLinkedList **DS_DLinkedList_add(DS_DLinkedList **list, Data data);
 
 /* DS_DLinkedList_get: Returns the node at the given index, if that index
  * exists */
-DS_DLinkedList *DS_DLinkedList_get(DS_DLinkedList *list, size_t index);
+DS_DLinkedList **DS_DLinkedList_get(DS_DLinkedList **list, size_t index);
 
 /* DS_DLinkedList_do: Itterate over the intire list, perform given function
  * on each node */
-int DS_DLinkedList_do(DS_DLinkedList *list, void *var, int(*func)(void*, void*));
+int DS_DLinkedList_do(DS_DLinkedList **list, void *var, int(*func)(void*, void*));
 
 /* DS_DLinkedList_insert: Insert a new node at the given index, add data */
-DS_DLinkedList *DS_DLinkedList_insert(DS_DLinkedList *list, size_t index, Data data);
+DS_DLinkedList **DS_DLinkedList_insert(DS_DLinkedList **list, size_t index, Data data);
 
 /* DS_DLinkedList_remove: Remove and free the node at the given index */
-DS_DLinkedList *DS_DLinkedList_remove(DS_DLinkedList *list, size_t num);
+DS_DLinkedList **DS_DLinkedList_remove(DS_DLinkedList **list, size_t num);
 
 /* DS_DLinkedList_fwd: Fastforward n nodes, if node is null return an error */
-DS_DLinkedList *DS_DLinkedList_fwd(DS_DLinkedList *list, size_t num);
+DS_DLinkedList **DS_DLinkedList_fwd(DS_DLinkedList **list, size_t num);
 
 /* DS_DLinkedList_rwd: Rewind n nodes, if node is the head return an error */
-DS_DLinkedList *DS_DLinkedList_rwd(DS_DLinkedList *list, size_t num);
+DS_DLinkedList **DS_DLinkedList_rwd(DS_DLinkedList **list, size_t num);
 
 /*  DS_DLinkedList_set: Set the data at index n to be the given data */
-DS_DLinkedList *DS_DLinkedList_set(DS_DLinkedList *list, size_t index, Data data);
+DS_DLinkedList **DS_DLinkedList_set(DS_DLinkedList **list, size_t index, Data data);
 
 /* DS_DLinkedList_size: Returns the quantity of nodes in a linked list */
-size_t DS_DLinkedList_size(DS_DLinkedList *list);
+size_t DS_DLinkedList_size(DS_DLinkedList **list);
 
 /* DS_DLinkedList_clear: Destroy all nodes in the list */
-int DS_DLinkedList_clear(DS_DLinkedList *list);
+int DS_DLinkedList_clear(DS_DLinkedList **list);
 

@@ -7,9 +7,6 @@
 #include <stdint.h>
 
 /*
- * TODO Use triple pointer in the linked list implementation, this should clean
- * up the code considerably.
- *
  * TODO Assignment https://www.youtube.com/watch?v=ocO3T5cdaBg&feature=youtu.be&t=9m
  * implement using unsorted array and sorted linked list.
  *
@@ -23,7 +20,7 @@
 int main(void)
 {
 	DS_LinkedList_test();
-	//DS_DLinkedList_test();
+	DS_DLinkedList_test();
 	//DS_BinarySearch_test();
 	//DS_Vector_test();
 

@@ -3,7 +3,10 @@
 #include <stdlib.h>
 #include <string.h>
 
-DS_LinkedList *DS_LinkedList_new_node(Data data)
+/*
+ * _ds_linkedList_new_node: Internal function for creating new list nodes.
+ */
+DS_LinkedList *_ds_linkedList_new_node(Data data)
 {
 	DS_LinkedList *new_node = NULL;
 	if ((new_node = malloc(sizeof(DS_LinkedList))) == NULL) {
@@ -18,18 +21,19 @@ DS_LinkedList *DS_LinkedList_new_node(Data data)
 
 /*
  * DS_LinkedList_add: Create the next node in the list and add data.
- * TODO I need to understand what is happening here the differance between
+ * TODO I need to understand what is happening here the difference between
  * *list and (*list).
+ * Check here if **list being NULL will work if not what needs to be changed.
  */
 DS_LinkedList **DS_LinkedList_add(DS_LinkedList **list, Data data)
 {
 	if ((*list) == NULL)
-		(*list) = DS_LinkedList_new_node(data);
+		(*list) = _ds_linkedList_new_node(data);
 	else {
 		while ((*list)->next != NULL)
 			list = &(*list)->next;
 
-		if (((*list)->next = DS_LinkedList_new_node(data)) == NULL) {
+		if (((*list)->next = _ds_linkedList_new_node(data)) == NULL) {
 			DS_Error_append("%s: ", __func__);
 			return NULL;
 		}
@@ -40,7 +44,7 @@ DS_LinkedList **DS_LinkedList_add(DS_LinkedList **list, Data data)
 }
 
 /*
- * DS_LinkedList_get: Returns the requested node if it exists, NULL if iit does
+ * DS_LinkedList_get: Returns the requested node if it exists, NULL if it does
  * not.
  */
 DS_LinkedList **DS_LinkedList_get(DS_LinkedList **list, size_t num)
@@ -53,7 +57,7 @@ DS_LinkedList **DS_LinkedList_get(DS_LinkedList **list, size_t num)
 	}
 
 	if (--num == SIZE_MAX) {
-		DS_Error_set("%s: underflow, request out of bounds.", __func__);
+		DS_Error_set("%s: list 0 does not exist, count starts at 1.", __func__);
 		return NULL;
 	}
 
@@ -61,7 +65,7 @@ DS_LinkedList **DS_LinkedList_get(DS_LinkedList **list, size_t num)
 		list = &(*list)->next;
 
 	if (i < num && (*list)->next == NULL) {
-		DS_Error_set("%s: overflow, request out of bounds.", __func__);
+		DS_Error_set("%s: Out of bounds.", __func__);
 		return NULL;
 	}
 
@@ -108,10 +112,13 @@ DS_LinkedList **DS_LinkedList_insert(DS_LinkedList **list, size_t num, Data data
 	}
 
 	/* We should now be at node n - 1, insert a node here. */
-	new = DS_LinkedList_new_node(data);
+	if ((new = _ds_linkedList_new_node(data)) == NULL) {
+		DS_Error_append("%s: ", __func__);
+		return NULL;
+	}
 
-	new->next = *list;
-	*list = new;
+	new->next = (*list);
+	(*list) = new;
 
 	return list;
 }
@@ -146,7 +153,8 @@ DS_LinkedList **DS_LinkedList_remove(DS_LinkedList **list, size_t num)
 }
 
 /*
- * DS_LinkedList_fwd: Fastforward n nodes, if node is null return an error.
+ * DS_LinkedList_fwd: Move forward n nodes and return the new node, if the node
+ * is null return an error.
  */
 DS_LinkedList **DS_LinkedList_fwd(DS_LinkedList **list, size_t num)
 {

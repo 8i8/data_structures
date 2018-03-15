@@ -16,6 +16,10 @@ typedef struct _ds_linkedlist {
 } DS_LinkedList;
 #endif
 
+/*
+ * DS_LinkedList_new_node: Create a new node.
+ */
+
 /* DS_LinkedList_add: Create the next node in the list and add data */
 DS_LinkedList **DS_LinkedList_add(DS_LinkedList **list, Data data);
 

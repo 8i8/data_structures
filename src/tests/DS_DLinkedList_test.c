@@ -9,44 +9,16 @@
 #include <stdint.h>
 
 typedef struct _var {
-	DS_DLinkedList head;
+	DS_DLinkedList *head;
 	char *str;
 	size_t num;
 	size_t itt;
 	size_t width;
 } Var;
 
-void _dlinkedlist_stack_or_heap(DS_DLinkedList *list, char *type)
+void dlinkedlist_test_add(DS_DLinkedList **list, size_t num, int msg, int err)
 {
-	DS_DLinkedList *rtn = NULL;
-	double time = 0;
-
-	time_start();
-	if ((rtn = DS_DLinkedList_init(list)) == NULL)
-		DS_Error_set("%s: %s", __func__, DS_Error_get());
-	time = time_stop();
-
-	if (strcmp(rtn->data.str, type))
-		DS_Error_set("%s: list head type mismatched.", __func__);
-
-	DS_Message_append((rtn) ? "%fs passed." : "%fs failed.", time);
-}
-
-void dlinkedlist_test_init(DS_DLinkedList *list, int msg, int err)
-{
-	DS_Message_set("%s()\t", __func__);
-
-	if (list == NULL)
-		_dlinkedlist_stack_or_heap(list, "HEAP");
-	else
-		_dlinkedlist_stack_or_heap(list, "STACK");
-
-	_ds_check_messages(msg, err);
-}
-
-void dlinkedlist_test_add(DS_DLinkedList *list, size_t num, int msg, int err)
-{
-	DS_DLinkedList *rtn = NULL;
+	DS_DLinkedList **rtn = NULL;
 	Data d, *data;
 	data = &d;
 	size_t i;
@@ -63,17 +35,17 @@ void dlinkedlist_test_add(DS_DLinkedList *list, size_t num, int msg, int err)
 	}
 	time = time_stop();
 
-	if (rtn)
-		DS_Message_append("%fs passed. %s", time, rtn->data.str);
+	if (*rtn)
+		DS_Message_append("%fs passed. %s", time, (*rtn)->data.str);
 	else
 		DS_Message_append("%fs failed.", time);
 
 	_ds_check_messages(msg, err);
 }
 
-void dlinkedlist_test_get(DS_DLinkedList *list, size_t num, int msg, int err)
+void dlinkedlist_test_get(DS_DLinkedList **list, size_t num, int msg, int err)
 {
-	DS_DLinkedList *rtn = NULL;
+	DS_DLinkedList **rtn = NULL;
 	double time = 0;
 	DS_Message_set("%s()\t", __func__);
 
@@ -82,7 +54,7 @@ void dlinkedlist_test_get(DS_DLinkedList *list, size_t num, int msg, int err)
 	time = time_stop();
 
 	if (rtn)
-		DS_Message_append("%fs passed. %s", time, rtn->data.str);
+		DS_Message_append("%fs passed. %s", time, (*rtn)->data.str);
 	else
 		DS_Message_append("%fs failed.", time);
 
@@ -90,52 +62,52 @@ void dlinkedlist_test_get(DS_DLinkedList *list, size_t num, int msg, int err)
 }
 
 /* TODO add this messaging to the DS_Message code */
-void dlinkedlist_test_output(DS_DLinkedList *list, size_t var, int msg, int err)
+void dlinkedlist_test_output(DS_DLinkedList **list, size_t num, int msg, int err)
 {
 	double time = 0;
 	DS_Message_set("%s()\t", __func__);
 
 	DS_Out_reset();
 	time_start();
-	if (DS_DLinkedList_do(list, &var, DS_Out_store)) {
+	if (DS_DLinkedList_do(list, &num, DS_Out_store)) {
 		time = time_stop();
 		DS_Message_append("%fs failed.");
 	} else {
 		time = time_stop();
-		DS_Message_append("%fs passed.", time);
-		DS_Message_append("%s", DS_Out_msg());
+		DS_Message_append("%fs passed. %s", time, DS_Out_msg());
 	}
 
 	_ds_check_messages(msg, err);
 }
 
-void dlinkedlist_test_insert(DS_DLinkedList *list, char *str, size_t num, int msg, int err)
+void dlinkedlist_test_insert(DS_DLinkedList **list, char *str, size_t num, int msg, int err)
 {
-	DS_DLinkedList *rtn = NULL;
+	DS_DLinkedList **rtn = NULL;
 	Data d, *data;
 	data = &d;
 	double time = 0;
 
 	DS_Message_set("%s()\t", __func__);
 	sprintf(data->str, "%s", str);
-	data->num = strlen(data->str);
+	data->num = num;
 
 	time_start();
 	rtn = DS_DLinkedList_insert(list, num, *data);
 	time = time_stop();
 
 	if (rtn)
-		DS_Message_append("%fs passed. %s", time, rtn->data.str);
+		DS_Message_append("%fs passed. %s", time, (*rtn)->data.str);
 	else
 		DS_Message_append("%fs failed.", time);
 
 	_ds_check_messages(msg, err);
 }
 
-void dlinkedlist_test_remove(DS_DLinkedList *list, size_t num, int msg, int err)
+void dlinkedlist_test_remove(DS_DLinkedList **list, size_t num, int msg, int err)
 {
-	DS_DLinkedList *rtn = NULL;
+	DS_DLinkedList **rtn = NULL;
 	double time = 0;
+
 	DS_Message_set("%s()\t", __func__);
 
 	time_start();
@@ -143,16 +115,16 @@ void dlinkedlist_test_remove(DS_DLinkedList *list, size_t num, int msg, int err)
 	time = time_stop();
 
 	if (rtn)
-		DS_Message_append("%fs passed. %s", time, rtn->data.str);
+		DS_Message_append("%fs passed. %s", time, (*rtn)->data.str);
 	else
 		DS_Message_append("%fs failed.", time);
 
 	_ds_check_messages(msg, err);
 }
 
-void dlinkedlist_test_fwd(DS_DLinkedList *list, size_t pos, size_t num, int msg, int err)
+void dlinkedlist_test_fwd(DS_DLinkedList **list, size_t pos, size_t num, int msg, int err)
 {
-	DS_DLinkedList *rtn;
+	DS_DLinkedList **rtn;
 	double time = 0;
 	DS_Message_set("%s()\t", __func__);
 
@@ -162,26 +134,26 @@ void dlinkedlist_test_fwd(DS_DLinkedList *list, size_t pos, size_t num, int msg,
 	}
 
 	time_start();
-	if ((rtn = DS_DLinkedList_fwd(rtn, num)) == NULL) {
-		time = time_stop();
-		DS_Message_append("%fs failed.", time);
-	} else {
-		time = time_stop();
-		if (pos == rtn->data.num - num)
-			DS_Message_append("%fs passed.", time);
+	rtn = DS_DLinkedList_fwd(rtn, num);
+	time = time_stop();
+
+	if (rtn) {
+		if (pos == (*rtn)->data.num - num)
+			DS_Message_append("%fs passed. %s", time, (*rtn)->data.str);
 		else {
 			DS_Message_append("%fs failed.", time);
 			DS_Error_set("%s: Position error start = %lu, new = %lu.",
-					__func__, pos, rtn->data.num);
+					__func__, pos, (*rtn)->data.num);
 		}
-	}
+	} else
+		DS_Message_append("%fs failed.", time);
 
 	_ds_check_messages(msg, err);
 }
 
-void dlinkedlist_test_rwd(DS_DLinkedList *list, size_t pos, size_t num, int msg, int err)
+void dlinkedlist_test_rwd(DS_DLinkedList **list, size_t pos, size_t num, int msg, int err)
 {
-	DS_DLinkedList *rtn;
+	DS_DLinkedList **rtn;
 	double time = 0;
 	DS_Message_set("%s()\t", __func__);
 
@@ -195,12 +167,12 @@ void dlinkedlist_test_rwd(DS_DLinkedList *list, size_t pos, size_t num, int msg,
 	time = time_stop();
 
 	if (rtn)
-		if (pos == rtn->data.num + num)
-			DS_Message_append("%fs passed.", time);
+		if (pos == (*rtn)->data.num + num)
+			DS_Message_append("%fs passed. %s", time, (*rtn)->data.str);
 		else {
 			DS_Message_append("%fs failed.", time);
 			DS_Error_set("%s: Position error start = %lu, new = %lu.",
-					__func__, pos, rtn->data.num);
+					__func__, pos, (*rtn)->data.num);
 		}
 	else
 		DS_Message_append("%fs failed.", time);
@@ -208,10 +180,9 @@ void dlinkedlist_test_rwd(DS_DLinkedList *list, size_t pos, size_t num, int msg,
 	_ds_check_messages(msg, err);
 }
 
-
-void dlinkedlist_test_set(DS_DLinkedList *list, size_t num, Data *data, int msg, int err)
+void dlinkedlist_test_set(DS_DLinkedList **list, size_t num, Data *data, int msg, int err)
 {
-	DS_DLinkedList *rtn;
+	DS_DLinkedList **rtn;
 	double time = 0;
 	DS_Message_set("%s()\t", __func__);
 	sprintf(data->str, "%s", "oOo");
@@ -221,45 +192,44 @@ void dlinkedlist_test_set(DS_DLinkedList *list, size_t num, Data *data, int msg,
 	rtn = DS_DLinkedList_set(list, num, *data);
 	time = time_stop();
 
-	if (rtn)
+	if (rtn) {
 		if (rtn == list) {
 			DS_Message_append("%fs passed.", time);
-			DS_Message_append("%s", rtn->data.str, "\n");
-		} else {
+			DS_Message_append("%s", (*rtn)->data.str, "\n");
+		} else
 			DS_Message_append("%fs failed.", time);
-		}
-	else
+	} else
 		DS_Message_append("%fs failed.", time);
 
 	_ds_check_messages(msg, err);
 }
 
-void dlinkedlist_test_size(DS_DLinkedList *node, int msg, int err)
+void dlinkedlist_test_size(DS_DLinkedList **list, int msg, int err)
 {
 	size_t len = 0;
 	double time = 0;
 	DS_Message_set("%s()\t", __func__);
 
 	time_start();
-	len = DS_DLinkedList_size(node);
+	len = DS_DLinkedList_size(list);
 	time = time_stop();
 
 	if (len)
-		DS_Message_append("%fs passed. size = %lu\n", time);
+		DS_Message_append("%fs passed. size = %lu\n", time, len);
 	else
 		DS_Message_append("%fs failed.");
 
 	_ds_check_messages(msg, err);
 }
 
-void dlinkedlist_test_clear(DS_DLinkedList *node, int msg, int err)
+void dlinkedlist_test_clear(DS_DLinkedList **list, int msg, int err)
 {
 	double time = 0;
 	int rtn = 0;
 	DS_Message_set("%s()\t", __func__);
 
 	time_start();
-	rtn = DS_DLinkedList_clear(node);
+	rtn = DS_DLinkedList_clear(list);
 	time = time_stop();
 
 	if (rtn)
@@ -278,19 +248,19 @@ void dlinkedlist_test_clear(DS_DLinkedList *node, int msg, int err)
  * display; Required to print n nodes before the current node. */
 size_t _back_n_nodes2(size_t i, size_t n)
 {
-	return (i -= n) > (SIZE_MAX - n) ? 0 : i;
+	return (i -= n) > (SIZE_MAX - n) ? 1 : i;
 }
 
 void _dlinkedlist_test_call(void* v)
 {
 	Var *var;
 	var = (Var*)v;
-	DS_DLinkedList *head = &var->head;
+	DS_DLinkedList **head;
+	head = &(var->head);
 	size_t i = var->itt;
 	size_t num = var->num;
 	int msg, err, n = var->width;
-	msg = 0;
-	err = 1;
+	msg = 1, err = 1;
 
 	printf("%lu\n", i);
 	dlinkedlist_test_get(head, i, msg, err);
@@ -310,11 +280,10 @@ void _dlinkedlist_test_call(void* v)
 
 void _dlinkedlist_stages(Var *var, void(*func)(void*))
 {
-	DS_DLinkedList *head = &(var->head);
+	DS_DLinkedList **head = &(var->head);
 	size_t num = var->num;
 
 	time_loop();
-	dlinkedlist_test_init(head, 0, 1);
 	dlinkedlist_test_add(head, num, 0 , 1);
 	(*func)(var);
 	dlinkedlist_test_clear(head, 0, 1);
@@ -348,7 +317,8 @@ void DS_DLinkedList_test(void)
 	size_t itt;
 	size_t width;
 */
-	Var var = {  { { { "INIT" }, 4 }, NULL, NULL },  "oOo ", 10, 0, 5 };
+	//Var var = {  { { { "INIT" }, 4 }, NULL, NULL },  "oOo ", 10, 0, 5 };
+	Var var = { NULL, "oOo ", 10, 0, 5 };
 
 	_dlinkedlist_test_itterate(&var, _dlinkedlist_test_call);
 }

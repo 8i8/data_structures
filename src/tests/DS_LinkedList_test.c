@@ -35,7 +35,7 @@ void linkedlist_test_add(DS_LinkedList **list, size_t num, int msg, int err)
 	}
 	time = time_stop();
 
-	if (*list)
+	if (*rtn)
 		DS_Message_append("%fs passed. %s", time, (*rtn)->data.str);
 	else
 		DS_Message_append("%fs failed.", time);
@@ -164,12 +164,11 @@ void linkedlist_test_set(DS_LinkedList **list, size_t num, Data *data, int msg, 
 	time = time_stop();
 
 	if (rtn) {
-		if (rtn != list) {
-			DS_Message_append("%fs failed.", time);
-		} else {
+		if (rtn == list) {
 			DS_Message_append("%fs passed.", time);
 			DS_Message_append("%s", (*rtn)->data.str, "\n");
-		}
+		} else
+			DS_Message_append("%fs failed.", time);
 	} else
 		DS_Message_append("%fs failed.", time);
 
@@ -187,7 +186,7 @@ void linkedlist_test_size(DS_LinkedList **list, int msg, int err)
 	time = time_stop();
 
 	if (len)
-		DS_Message_append("%fs passed. size = %li\n", time, len);
+		DS_Message_append("%fs passed. size = %lu\n", time, len);
 	else
 		DS_Message_append("%fs failed.");
 
@@ -296,7 +295,6 @@ void _linkedlist_test_itterate(Var *var, void(*func)(void*))
  */
 void DS_LinkedList_test(void)
 {
-	//Var var = {  { { { "INIT" }, 4 }, NULL },  "oOo ", 10, 0, 5 };
 	Var var = { NULL , "oOo ", 10, 0, 5 };
 
 	_linkedlist_test_itterate(&var, _linkedlist_test_call);

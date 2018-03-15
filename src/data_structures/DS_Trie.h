@@ -11,8 +11,8 @@
 
  ============================================================================
  */
-#ifndef _DS_trie_h
-#define _DS_trie_h
+#ifndef _DS_trie_
+#define _DS_trie_
 typedef struct DS_Trie {
 	int c;
 	struct Trie **next;

@@ -6,8 +6,8 @@
  */
 #include <stdio.h>
 
-#ifndef _data_h
-#define _data_h
+#ifndef _data_
+#define _data_
 typedef struct Data {
 	char str[8];
 	size_t num;

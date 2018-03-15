@@ -29,11 +29,11 @@ int DS_Out_store(void *node, void *n)
 	if (node == NULL || n == NULL)
 		return -1;
 
-	char *out;
-	out = (char*)node;
+	char **out;
+	out = (char**)node;
 
-	if ((pt_msg - msg) < (int)(LEN - strlen(out)))
-		pt_msg += sprintf(pt_msg, out, strlen(out));
+	if ((pt_msg - msg) < (int)(LEN - strlen(*out)))
+		pt_msg += sprintf(pt_msg, *out, strlen(*out));
 
 	return 0;
 }

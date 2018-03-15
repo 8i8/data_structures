@@ -23,7 +23,7 @@
 int main(void)
 {
 	DS_LinkedList_test();
-	DS_DLinkedList_test();
+	//DS_DLinkedList_test();
 	//DS_BinarySearch_test();
 	//DS_Vector_test();
 

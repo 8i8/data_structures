@@ -298,7 +298,8 @@ void _dlinkedlist_test_call(void* v)
 	dlinkedlist_test_rwd(head, i, 3, msg, err);
 	dlinkedlist_test_insert(head, var->str, i, msg, err);
 	dlinkedlist_test_get(head, i, msg, err);
-	dlinkedlist_test_output(DS_DLinkedList_get(head, _back_n_nodes2(i, n)), num, msg, err);
+	dlinkedlist_test_output(DS_DLinkedList_get(
+				head, _back_n_nodes2(i, n)), num, msg, err);
 	dlinkedlist_test_remove(head, i, msg, err);
 	dlinkedlist_test_output(head, num, msg, err);
 }

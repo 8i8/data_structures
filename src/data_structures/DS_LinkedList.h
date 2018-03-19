@@ -19,6 +19,9 @@ typedef struct _ds_linkedlist {
 /* DS_LinkedList_add: Create the next node and add data */
 DS_LinkedList **DS_LinkedList_add(DS_LinkedList **list, Data data);
 
+/* DS_LinkedList_add_string: Create the next node in the list and add data */
+DS_LinkedList **DS_LinkedList_add_string(DS_LinkedList **list, char *str);
+
 /* DS_LinkedList_get: Returns the node at the given index, if that index
  * exists */
 DS_LinkedList **DS_LinkedList_get(DS_LinkedList **list, size_t num);
@@ -45,6 +48,9 @@ DS_LinkedList **DS_LinkedList_set(DS_LinkedList **list, size_t index, Data data)
 
 /* DS_LinkedList_size: Returns the quantity of nodes in a linked list */
 size_t DS_LinkedList_size(DS_LinkedList **list);
+
+/* DS_LinkedList_print: Print list */
+void DS_LinkedList_print(DS_LinkedList **list);
 
 /* DS_LinkedList_clear: Destroy all nodes in the list */
 int DS_LinkedList_clear(DS_LinkedList **list);

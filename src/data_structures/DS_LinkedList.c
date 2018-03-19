@@ -41,6 +41,31 @@ DS_LinkedList **DS_LinkedList_add(DS_LinkedList **list, Data data)
 }
 
 /*
+ * DS_LinkedList_add_string: Create the next node in the list and add data.
+ */
+DS_LinkedList **DS_LinkedList_add_string(DS_LinkedList **list, char *str)
+{
+	Data data;
+	strcpy(data.str, str);
+	data.num = strlen(str);
+
+	if (*list == NULL)
+		*list = _ds_linkedList_new_node(data);
+	else {
+		while ((*list)->next != NULL)
+			list = &(*list)->next;
+
+		if (((*list)->next = _ds_linkedList_new_node(data)) == NULL) {
+			DS_Error_append("%s: ", __func__);
+			return NULL;
+		}
+		list = &(*list)->next;
+	}
+
+	return list;
+}
+
+/*
  * DS_LinkedList_get: Returns the requested node if it exists, NULL if it does
  * not.
  */
@@ -234,6 +259,15 @@ size_t DS_LinkedList_size(DS_LinkedList **list)
 		list = &(*list)->next, ++i;
 
 	return i;
+}
+
+/*
+ * DS_LinkedList_print: Print list.
+ */
+void DS_LinkedList_print(DS_LinkedList **list)
+{
+	while (*list)
+		printf("%s", (*list)->data.str), list = &(*list)->next;
 }
 
 /*

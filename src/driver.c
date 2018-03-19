@@ -3,6 +3,8 @@
 #include "tests/DS_Vector_test.h"
 #include "tests/DS_BinarySearch_test.h"
 #include "widgets/widget.h"
+#include "data_structures/DS_ListSort.h"
+#include "tests/DS_ListSort_test.h"
 #include <stdio.h>
 #include <stdint.h>
 
@@ -20,15 +22,10 @@
 int main(void)
 {
 	//DS_LinkedList_test();
-	DS_DLinkedList_test();
+	//DS_DLinkedList_test();
 	//DS_BinarySearch_test();
 	//DS_Vector_test();
-
-	//unsigned a, ia = 255;
-	
-	//W_Print_binary(ia, 16), putchar('\n');
-	//a = getbits(ia, 14, 15);
-	//W_Print_binary(a, 16), putchar('\n');
+	DS_ListSort_test();
 
 	return 0;
 }

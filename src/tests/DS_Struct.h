@@ -9,7 +9,7 @@
 #ifndef _data_
 #define _data_
 typedef struct Data {
-	char str[8];
+	char str[255];
 	size_t num;
 } Data;
 #endif

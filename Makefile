@@ -10,6 +10,8 @@ SRC = \
 	DS_LinkedList_test.c \
 	DS_DLinkedList.c \
 	DS_DLinkedList_test.c \
+	DS_ListSort.c \
+	DS_ListSort_test.c \
 	DS_PQLinkedList.c \
 	DS_PQLinkedList_test.c \
 	DS_Vector.c \
@@ -56,9 +58,11 @@ $(OBJ): \
 	DS_Test_output.h \
 	DS_LinkedList.h	\
 	DS_LinkedList_test.h \
+	DS_ListSort.h \
 	DS_DLinkedList.h \
 	DS_DLinkedList_test.h \
 	DS_PQLinkedList_test.h \
+	DS_ListSort.h \
 	DS_Vector.h \
 	DS_Vector_test.h \
 	DS_BinarySearch.h \

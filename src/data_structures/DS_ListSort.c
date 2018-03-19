@@ -64,8 +64,9 @@ DS_LinkedList *_merge(
 }
 
 /*
- * Trial code to see if there is a difference using null terminated lists
- * rather than counting the merge length.
+ * _listsort_cut: Merge sort for linked lists, this version has no count to
+ * signal the end of a segmented list, the lists are cut and the NULL
+ * terminator is used to signal the end of a list.
  */
 DS_LinkedList **_listsort_cut(DS_LinkedList **list, size_t m_len, int(*comp)(void*, void*))
 {
@@ -109,7 +110,8 @@ DS_LinkedList **_listsort_cut(DS_LinkedList **list, size_t m_len, int(*comp)(voi
 }
 
 /*
- * DS_ListSort: Merge sort for linked lists.
+ * DS_ListSort: Merge sort for linked lists, long function useing count to keep
+ * track of lists.
  */
 DS_LinkedList **_listsort(DS_LinkedList **list, size_t m_len, int(*comp)(void*, void*))
 {

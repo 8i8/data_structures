@@ -2,30 +2,34 @@
  */
 #include "../data_structures/DS_ListSort.h"
 
-DS_LinkedList *_advance_and_cut(DS_LinkedList **list, size_t len)
+DS_LinkedList *_advance_and_cut(DS_LinkedList *list, size_t len)
 {
 	DS_LinkedList *fin;
 
-	for (; len && *list; len--)
-		list = &(*list)->next;
-
-	if (*list) {
-		fin = *list;
-		list = &(*list)->next;
-		fin->next = NULL;
+	for (; len && list; len--) {
+		if (len == 1)
+			fin = list;
+		list = list->next;
 	}
 
-	return *list;
+	if (list)
+		fin->next = NULL;
+
+	return list;
 }
 
 /*
  * Trial code to see if there is a difference using null terminated lists
  * rather than counting the merge length.
+ * TODO I need to understand how pointers to pointers work when passed into
+ * functions as arguments, I think that this mechanisme can be used to effect
+ * pointers within functions as if they were passed in by referance, where as a
+ * pointer its self would not be returned to the calling function.
  */
 DS_LinkedList **_listsort_cut(DS_LinkedList **list, size_t m_len, int(*comp)(void*, void*))
 {
 	size_t count;
-	DS_LinkedList *left, *l_pt, *right, *r_pt, *new, *tail, *end;
+	DS_LinkedList *left, *right, *new, *tail, *end;
 
 	/* Set the merge count to 0, this value will effect the recursion of
 	 * this function */
@@ -39,10 +43,10 @@ DS_LinkedList **_listsort_cut(DS_LinkedList **list, size_t m_len, int(*comp)(voi
 	while (left)
 	{
 		count++;
-		right = r_pt = l_pt = left;
+		right = left;
 
-		right = _advance_and_cut(&l_pt, m_len);
-		end = _advance_and_cut(&r_pt, m_len);
+		right = _advance_and_cut(left, m_len);
+		end = _advance_and_cut(right, m_len);
 
 		/* Whilst there remains any length of either the right or the
 		 * left lists, compare the two else merge the remainder */
@@ -175,6 +179,6 @@ DS_LinkedList **DS_ListSort(DS_LinkedList **list, int(*comp)(void*, void*))
 		return NULL;
 
 	/* Set the ball rolling with a merge length of one node */
-	return _listsort(list, 1, comp);
+	return _listsort_cut(list, 1, comp);
 }
 

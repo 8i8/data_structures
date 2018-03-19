@@ -1,4 +1,5 @@
 #include "../data_structures/DS_ListSort.h"
+#include "../general/DS_Timer.h"
 #include <string.h>
 
 int compare(void *left, void *right)
@@ -16,21 +17,23 @@ int compare(void *left, void *right)
 	return strcmp(str1->str, str2->str);
 }
 
+#define FUNC DS_ListSort_cut
+#define NUM 100000
+
 void DS_ListSort_test()
 {
 	DS_LinkedList *list = NULL;
+	char str[16];
+	size_t i, j;
+	j = NUM;
 
-	DS_LinkedList_add_string(&list, "2 world!\n");
-	DS_LinkedList_add_string(&list, "1 hello,\n");
-	DS_LinkedList_add_string(&list, "4 two\n");
-	DS_LinkedList_add_string(&list, "5 three\n");
-	DS_LinkedList_add_string(&list, "4 two\n");
-	DS_LinkedList_add_string(&list, "4 two\n");
-	DS_LinkedList_add_string(&list, "3 one\n");
+	for (i = 0; i < NUM; i++, j--) {
+		sprintf(str, "%010lu\n", i);
+		DS_LinkedList_add_string(&list, str);
+	}
 
-	DS_ListSort(&list, compare);
-
-	DS_LinkedList_print(&list);
+	FUNC(&list, compare);
+	//DS_LinkedList_print(&list);
 	DS_LinkedList_clear(&list);
 }
 

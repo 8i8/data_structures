@@ -55,7 +55,7 @@ void time_loop()
 	int i;
 	time_start();
 
-	for (i = 0; i < 1000000; )
+	for (i = 0; i < 10000; )
 		i++;
 
 	time_stop();

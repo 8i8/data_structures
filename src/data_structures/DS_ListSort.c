@@ -19,17 +19,58 @@ DS_LinkedList *_advance_and_cut(DS_LinkedList *list, size_t len)
 }
 
 /*
+ * _merge: Merge together two linked lists whist sorting them by the given
+ * function.
+ */
+DS_LinkedList *_merge(
+				DS_LinkedList **list,
+				DS_LinkedList **left, DS_LinkedList **right,
+				DS_LinkedList **end,  DS_LinkedList **tail,
+				int(*comp)(void*, void*))
+{
+	DS_LinkedList *new = NULL;
+
+	while (*left || *right)
+	{
+		/* Two list to compare */
+		if (*left && *right)
+			if ((comp(*left, *right)) > 0)
+				new = *right, *right = (*right)->next;
+			else
+				new = *left, *left = (*left)->next;
+
+		/* Merge the remaining node */
+		else if (*left)
+			new = *left, *left = (*left)->next;
+
+		else if (right)
+			new = *right, *right = (*right)->next;
+
+		/* If there is not yet a merged list, make one; Else
+		 * add the new node to the new lists tail */
+		if (*tail)
+			(*tail)->next = new;
+		else
+			*list = new;
+
+		*tail = new;
+	}
+
+	/* Merge done, move the left list to the start of the remaining
+	 * original list */
+	*left = *end;
+
+	return *left;
+}
+
+/*
  * Trial code to see if there is a difference using null terminated lists
  * rather than counting the merge length.
- * TODO I need to understand how pointers to pointers work when passed into
- * functions as arguments, I think that this mechanisme can be used to effect
- * pointers within functions as if they were passed in by referance, where as a
- * pointer its self would not be returned to the calling function.
  */
 DS_LinkedList **_listsort_cut(DS_LinkedList **list, size_t m_len, int(*comp)(void*, void*))
 {
 	size_t count;
-	DS_LinkedList *left, *right, *new, *tail, *end;
+	DS_LinkedList *left, *right, *tail, *end;
 
 	/* Set the merge count to 0, this value will effect the recursion of
 	 * this function */
@@ -38,8 +79,9 @@ DS_LinkedList **_listsort_cut(DS_LinkedList **list, size_t m_len, int(*comp)(voi
 	/* Set the left list to the head of the current list and then the
 	 * current list to NULL, the merged list will have a different head */
 	left = *list;
-	new = tail = *list = NULL;
+	tail = *list = NULL;
 	
+	/* Whilst there is still a list, right to left */
 	while (left)
 	{
 		count++;
@@ -49,36 +91,9 @@ DS_LinkedList **_listsort_cut(DS_LinkedList **list, size_t m_len, int(*comp)(voi
 		end = _advance_and_cut(right, m_len);
 
 		/* Whilst there remains any length of either the right or the
-		 * left lists, compare the two else merge the remainder */
-		while (left || right)
-		{
-			/* Two list to compare */
-			if (left && right)
-				if ((comp(left, right)) > 0)
-					new = right, right = right->next;
-				else
-					new = left, left = left->next;
-
-			/* Merge the remaining node */
-			else if (left)
-				new = left, left = left->next;
-
-			else if (right)
-				new = right, right = right->next;
-
-			/* If there is not yet a merged list, make one; Else
-			 * add the new node to the new lists tail */
-			if (tail)
-				tail->next = new;
-			else
-				*list = new;
-
-			tail = new;
-		}
-
-		/* Merge done, move the left list to the start of the remaining
-		 * original list */
-		left = end;
+		 * left list; compare the two and sort in order, else merge the
+		 * remainder, there shold never be more than one extra */
+		left = _merge(list, &left, &right, &end, &tail, comp);
 	}
 
 	/* Clip the end of the list to stop an infinite loop, if the last node

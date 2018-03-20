@@ -42,7 +42,7 @@ DS_LinkedList *_merge(
 			else
 				new = *left, *left = (*left)->next;
 
-		/* Merge the remaining node */
+		/* Merge the remaining nodes */
 		else if (*left)
 			new = *left, *left = (*left)->next;
 
@@ -67,8 +67,8 @@ DS_LinkedList *_merge(
 }
 
 /*
- * _listsort_cut: Merge sort for linked lists, this version has no count to
- * signal the end of a segmented list, the lists are cut and the NULL
+ * _listsort_cut: Merge sort for linked lists, this version does not use a
+ * count to signal the end of a segmented list, the lists are cut and the NULL
  * terminator is used to signal the end of a list.
  */
 DS_LinkedList **_listsort_cut(DS_LinkedList **list, size_t m_len, int(*comp)(void*, void*))

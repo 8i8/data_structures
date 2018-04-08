@@ -30,8 +30,11 @@ DS_LinkedList **DS_LinkedList_get(DS_LinkedList **list, size_t num);
  * on each node */
 int DS_LinkedList_do(DS_LinkedList **list, void *var, int(*func)(void*, void*));
 
-/* DS_LinkedList_insert: Insert a new node at the given index, add data */
-DS_LinkedList **DS_LinkedList_insert(DS_LinkedList **list, size_t num, Data data);
+/* DS_LinkedList_insert: Insert a new node at current location */
+DS_LinkedList **DS_LinkedList_insert(DS_LinkedList **list, Data data);
+
+/* DS_LinkedList_insert_at: Insert a new node before node n */
+DS_LinkedList **DS_LinkedList_insert_at(DS_LinkedList **list, size_t num, Data data);
 
 /* DS_LinkedList_insert_conditional: Insert a new node conditionaly. */
 DS_LinkedList **DS_LinkedList_insert_conditional(DS_LinkedList **list, Data data,

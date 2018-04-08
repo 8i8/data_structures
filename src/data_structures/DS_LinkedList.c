@@ -115,9 +115,31 @@ int DS_LinkedList_do(DS_LinkedList **list, void *var, int(*func)(void*, void*))
 }
 
 /*
- * DS_LinkedList_insert: Insert a new node before node n.
+ * DS_LinkedList_insert: Insert a new node at current location.
  */
-DS_LinkedList **DS_LinkedList_insert(DS_LinkedList **list, size_t num, Data data)
+DS_LinkedList **DS_LinkedList_insert(DS_LinkedList **list, Data data)
+{
+	DS_LinkedList *new;
+
+	if (list == NULL || *list == NULL) {
+		DS_Error_set("%s: NULL pointer.", __func__);
+		return NULL;
+	}
+	if ((new = _ds_linkedList_new_node(data)) == NULL) {
+		DS_Error_append("%s: ", __func__);
+		return NULL;
+	}
+
+	new->next = *list;
+	*list = new;
+
+	return list;
+}
+
+/*
+ * DS_LinkedList_insert_at: Insert a new node before node n.
+ */
+DS_LinkedList **DS_LinkedList_insert_at(DS_LinkedList **list, size_t num, Data data)
 {
 	DS_LinkedList *new;
 
@@ -144,36 +166,6 @@ DS_LinkedList **DS_LinkedList_insert(DS_LinkedList **list, size_t num, Data data
 
 	return list;
 }
-
-/*
- * DS_LinkedList_insert_conditional: Insert a new node conditionaly.
- */
-DS_LinkedList **DS_LinkedList_insert_conditional(DS_LinkedList **list, Data data,
-						Data compare, int(*func)(void*, void*))
-{
-	DS_LinkedList *new;
-
-	if (list == NULL || *list == NULL) {
-		DS_Error_set("%s: NULL pointer.", __func__);
-		return NULL;
-	}
-
-	while (*list != NULL)
-	{
-	       if ((*func)((void*)&data, (void*)&compare))
-	       {
-			if ((new = _ds_linkedList_new_node(data)) == NULL) {
-				DS_Error_append("%s: ", __func__);
-				return NULL;
-			}
-			new->next = *list;
-			*list = new;
-	       }	       
-	}
-
-	return list;
-}
-
 /*
  * DS_LinkedList_remove: Remove and free the node at the given index.
  * TODO this function needs rethinking

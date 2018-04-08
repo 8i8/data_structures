@@ -92,7 +92,7 @@ void linkedlist_test_insert(DS_LinkedList **list, char *str, size_t num, int msg
 	data->num = num;
 
 	time_start();
-	rtn = DS_LinkedList_insert(list, num, *data);
+	rtn = DS_LinkedList_insert_at(list, num, *data);
 	time = time_stop();
 
 	if (rtn)

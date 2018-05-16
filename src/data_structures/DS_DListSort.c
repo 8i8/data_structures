@@ -3,11 +3,11 @@
  * null terminator and cuts up the given list, the other one use a count method
  * to find the sub lists ends.
  */
-#include "../data_structures/DS_ListSort.h"
+#include "../data_structures/DS_DListSort.h"
 
-DS_LinkedList *_advance_and_cut(DS_LinkedList *list, size_t len)
+DS_DLinkedList *_advance_and_cut(DS_DLinkedList *list, size_t len)
 {
-	DS_LinkedList *fin;
+	DS_DLinkedList *fin;
 
 	for (; len && list; len--) {
 		if (len == 1)
@@ -25,13 +25,13 @@ DS_LinkedList *_advance_and_cut(DS_LinkedList *list, size_t len)
  * _merge: Merge together two linked lists whist sorting them by the given
  * function.
  */
-DS_LinkedList *_merge(
-				DS_LinkedList **list,
-				DS_LinkedList **left, DS_LinkedList **right,
-				DS_LinkedList **end,  DS_LinkedList **tail,
+DS_DLinkedList *_merge(
+				DS_DLinkedList **list,
+				DS_DLinkedList **left, DS_DLinkedList **right,
+				DS_DLinkedList **end,  DS_DLinkedList **tail,
 				int(*comp)(void*, void*))
 {
-	DS_LinkedList *new = NULL;
+	DS_DLinkedList *new = NULL;
 
 	while (*left || *right)
 	{
@@ -71,10 +71,10 @@ DS_LinkedList *_merge(
  * count to signal the end of a segmented list, the lists are cut and the NULL
  * terminator is used to signal the end of a list.
  */
-DS_LinkedList **_listsort_cut(DS_LinkedList **list, size_t m_len, int(*comp)(void*, void*))
+DS_DLinkedList **_listsort_cut(DS_DLinkedList **list, size_t m_len, int(*comp)(void*, void*))
 {
 	size_t count;
-	DS_LinkedList *left, *right, *tail, *end;
+	DS_DLinkedList *left, *right, *tail, *end;
 
 	/* Set the merge count to 0, this value will effect the recursion of
 	 * this function, when only one merge occurs it was the final merge. */
@@ -114,13 +114,13 @@ DS_LinkedList **_listsort_cut(DS_LinkedList **list, size_t m_len, int(*comp)(voi
 }
 
 /*
- * DS_ListSort: Merge sort for linked lists, long function using count to keep
+ * DS_DListSort: Merge sort for linked lists, long function using count to keep
  * track of lists.
  */
-DS_LinkedList **_listsort(DS_LinkedList **list, size_t m_len, int(*comp)(void*, void*))
+DS_DLinkedList **_listsort(DS_DLinkedList **list, size_t m_len, int(*comp)(void*, void*))
 {
 	size_t i, count, l_len, r_len;
-	DS_LinkedList *left, *right, *new, *tail;
+	DS_DLinkedList *left, *right, *new, *tail;
 
 	/* Set the merge count to 0, this value will effect the recursion of
 	 * this function */
@@ -193,7 +193,7 @@ DS_LinkedList **_listsort(DS_LinkedList **list, size_t m_len, int(*comp)(void*, 
 	return list;
 }
 
-DS_LinkedList **DS_ListSort(DS_LinkedList **list, int(*comp)(void*, void*))
+DS_DLinkedList **DS_DListSort(DS_DLinkedList **list, int(*comp)(void*, void*))
 {
 	/* Doh! Nothing to see here, please move along. */
 	if (list == NULL || *list == NULL || (*list)->next == NULL)
@@ -203,7 +203,7 @@ DS_LinkedList **DS_ListSort(DS_LinkedList **list, int(*comp)(void*, void*))
 	return _listsort(list, 1, comp);
 }
 
-DS_LinkedList **DS_ListSort_cut(DS_LinkedList **list, int(*comp)(void*, void*))
+DS_DLinkedList **DS_DListSort_cut(DS_DLinkedList **list, int(*comp)(void*, void*))
 {
 	/* Doh! Nothing to see here, please move along. */
 	if (list == NULL || *list == NULL || (*list)->next == NULL)

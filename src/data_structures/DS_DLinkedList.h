@@ -17,6 +17,9 @@ typedef struct _ds_dlinkedlist {
 } DS_DLinkedList;
 #endif
 
+/* DS_DLinkedList_new_node: Internal function for creating new list nodes */
+DS_DLinkedList *DS_DLinkedList_new_node(Data data);
+
 /* DS_DLinkedList_add: Create the next node in the list and add data */
 DS_DLinkedList **DS_DLinkedList_add(DS_DLinkedList **list, Data data);
 
@@ -28,8 +31,11 @@ DS_DLinkedList **DS_DLinkedList_get(DS_DLinkedList **list, size_t index);
  * on each node */
 int DS_DLinkedList_do(DS_DLinkedList **list, void *var, int(*func)(void*, void*));
 
-/* DS_DLinkedList_insert: Insert a new node at the given index, add data */
-DS_DLinkedList **DS_DLinkedList_insert(DS_DLinkedList **list, size_t index, Data data);
+/* DS_DLinkedList_insert: Insert a new node at tyhe current location */
+DS_DLinkedList **DS_DLinkedList_insert(DS_DLinkedList **list, Data data);
+
+/* DS_DLinkedList_insert_at: Insert a new node before node n */
+DS_DLinkedList **DS_DLinkedList_insert_at(DS_DLinkedList **list, size_t num, Data data);
 
 /* DS_DLinkedList_remove: Remove and free the node at the given index */
 DS_DLinkedList **DS_DLinkedList_remove(DS_DLinkedList **list, size_t num);

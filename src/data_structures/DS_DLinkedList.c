@@ -4,9 +4,9 @@
 #include <string.h>
 
 /*
- * _ds_dlinkedList_new_node: Internal function for creating new list nodes.
+ * DS_DLinkedList_new_node: Internal function for creating new list nodes.
  */
-DS_DLinkedList *_ds_dlinkedList_new_node(Data data)
+DS_DLinkedList *DS_DLinkedList_new_node(Data data)
 {
 	DS_DLinkedList *new_node = NULL;
 	if ((new_node = malloc(sizeof(DS_DLinkedList))) == NULL) {
@@ -26,12 +26,12 @@ DS_DLinkedList *_ds_dlinkedList_new_node(Data data)
 DS_DLinkedList **DS_DLinkedList_add(DS_DLinkedList **list, Data data)
 {
 	if (*list == NULL)
-		*list = _ds_dlinkedList_new_node(data);
+		*list = DS_DLinkedList_new_node(data);
 	else {
 		while ((*list)->next != NULL)
 			list = &(*list)->next;
 
-		if (((*list)->next = _ds_dlinkedList_new_node(data)) == NULL) {
+		if (((*list)->next = DS_DLinkedList_new_node(data)) == NULL) {
 			DS_Error_append("%s: ", __func__);
 			return NULL;
 		}
@@ -95,9 +95,31 @@ int DS_DLinkedList_do(DS_DLinkedList **list, void *var, int(*func)(void*, void*)
 }
 
 /*
- * DS_DLinkedList_insert: Insert a new node before node n.
+ * DS_DLinkedList_insert: Insert a new node at current location.
  */
-DS_DLinkedList **DS_DLinkedList_insert(DS_DLinkedList **list, size_t num, Data data)
+DS_DLinkedList **DS_DLinkedList_insert(DS_DLinkedList **list, Data data)
+{
+	DS_DLinkedList *new;
+
+	if (list == NULL || *list == NULL) {
+		DS_Error_set("%s: NULL pointer.", __func__);
+		return NULL;
+	}
+	if ((new = DS_DLinkedList_new_node(data)) == NULL) {
+		DS_Error_append("%s: ", __func__);
+		return NULL;
+	}
+
+	new->next = *list;
+	*list = new;
+
+	return list;
+}
+
+/*
+ * DS_DLinkedList_insert_at: Insert a new node before node n.
+ */
+DS_DLinkedList **DS_DLinkedList_insert_at(DS_DLinkedList **list, size_t num, Data data)
 {
 	DS_DLinkedList *new;
 
@@ -114,7 +136,7 @@ DS_DLinkedList **DS_DLinkedList_insert(DS_DLinkedList **list, size_t num, Data d
 	}
 
 	/* We should now be at node n - 1, insert a node here. */
-	if ((new = _ds_dlinkedList_new_node(data)) == NULL) {
+	if ((new = DS_DLinkedList_new_node(data)) == NULL) {
 		DS_Error_append("%s: ", __func__);
 		return NULL;
 	}

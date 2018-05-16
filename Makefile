@@ -1,10 +1,25 @@
-EXE = compression
-SRC = huffman.c \
-	  char_frequency.c \
-	  DS_LinkedList.c \
-	  DS_Error.c \
-	  DS_Message.c \
-	  ds_msg.c
+EXE = datastructures
+SRC = \
+	driver.c \
+	ds_msg.c \
+	DS_Error.c \
+	DS_Message.c \
+	DS_Timer.c \
+	DS_Test_output.c \
+	DS_LinkedList.c \
+	DS_LinkedList_test.c \
+	DS_DLinkedList.c \
+	DS_DLinkedList_test.c \
+	DS_Vector.c \
+	DS_Vector_test.c \
+	DS_BinarySearch.c \
+	DS_BinarySearch_test.c \
+	widget.c# \
+	DS_BinarySort.c	\
+	DS_Heap.c \
+	DS_PriorityQueue.c \
+	DS_QuickSort.c \
+	DS_Trie.c
 OBJ = $(SRC:.c=.o)
 CC  = gcc
 
@@ -13,8 +28,8 @@ CFLAGS += -g
 CFLAGS += -fsanitize=address -fno-omit-frame-pointer
 #LFLAGS += -lm
 
-vpath %.c src/data_structures/ src/huffman_compression/ src/general/
-vpath %.h src/data_structures/ src/huffman_compression/ src/general/
+vpath %.c src/ src/data_structures/ src/general/ src/tests/ src/widgets
+vpath %.h src/data_structures/ src/general/ src/tests/ src/widgets
 
 .PHONY: all clean distclean
 
@@ -24,15 +39,30 @@ $(EXE): $(OBJ)
 	$(CC) $(CFLAGS) $(OBJ) -o $(EXE) $(LFLAGS)
 
 clean:
-	rm -f *.o a.out
+	rm -f $(OBJ) a.out
 
 distclean: clean
-	rm -f compression a.out scratch*
+	rm -f datastructures a.out scratch*
 
 $(OBJ): \
 	Makefile \
-	char_frequency.h \
-	DS_LinkedList.h \
+	ds_msg.h \
 	DS_Error.h \
 	DS_Message.h \
-	ds_msg.h
+	DS_Timer.h \
+	DS_Struct.h \
+	DS_Test_output.h \
+	DS_LinkedList.h	\
+	DS_LinkedList_test.h \
+	DS_DLinkedList.h \
+	DS_DLinkedList_test.h \
+	DS_Vector.h \
+	DS_Vector_test.h \
+	DS_BinarySearch.h \
+	DS_BinarySearch_test.h \
+	widget.h #\
+	DS_BinarySort.h \
+	DS_Heap.h \
+	DS_PriorityQueue.h \
+	DS_QuickSort.h \
+	DS_Trie.h

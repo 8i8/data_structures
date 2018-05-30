@@ -2,6 +2,7 @@
 #include "tests/DS_DLinkedList_test.h"
 #include "tests/DS_Vector_test.h"
 #include "tests/DS_BinarySearch_test.h"
+#include "tests/DS_Qsort_test.h"
 #include "widgets/widget.h"
 #include "data_structures/DS_ListSort.h"
 #include "tests/DS_ListSort_test.h"
@@ -19,12 +20,13 @@
  * and time the results.
  */
 
-int main(void)
+int main(int argc, char *argv[])
 {
-	DS_LinkedList_test();
-	DS_DLinkedList_test();
-	DS_BinarySearch_test();
-	DS_Vector_test();
+	DS_Qsort_test();
+	//DS_LinkedList_test();
+	//DS_DLinkedList_test();
+	//DS_BinarySearch_test();
+	//DS_Vector_test();
 	
 	//DS_ListSort_test();
 

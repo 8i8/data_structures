@@ -17,8 +17,6 @@ int compare(void *left, void *right)
 	return strcmp(str1->str, str2->str);
 }
 
-#define FUNC DS_ListSort_cut
-//#define FUNC DS_ListSort
 #define NUM 1000
 
 void DS_ListSort_test()
@@ -33,7 +31,8 @@ void DS_ListSort_test()
 		DS_LinkedList_add_string(&list, str);
 	}
 
-	FUNC(&list, compare);
+	//DS_ListSort(&list, compare);
+	DS_ListSort_cut(&list, compare);
 	DS_LinkedList_print(&list);
 	DS_LinkedList_clear(&list);
 }

@@ -14,3 +14,17 @@ typedef struct Data {
 } Data;
 #endif
 
+/*
+ * This struct is used in arrays of structs that have one contiguous memory
+ * location.
+ */
+#ifndef _test_
+#define _test_
+typedef struct {
+	size_t len;
+	size_t num;
+	size_t num2;
+	char str[];
+} Test;
+#endif
+

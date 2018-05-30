@@ -14,7 +14,12 @@ SRC = \
 	DS_Vector_test.c \
 	DS_BinarySearch.c \
 	DS_BinarySearch_test.c \
-	widget.c# \
+	DS_Qsort.c \
+	DS_Qsort_test.c \
+	DS_Stack_ptr.c \
+	widget.c \
+	WI_histogram.c \
+	random_data.c #\
 	DS_BinarySort.c	\
 	DS_Heap.c \
 	DS_PriorityQueue.c \
@@ -60,7 +65,12 @@ $(OBJ): \
 	DS_Vector_test.h \
 	DS_BinarySearch.h \
 	DS_BinarySearch_test.h \
-	widget.h #\
+	DS_Qsort.h \
+	DS_Qsort_test.h \
+	DS_Stack_ptr.h \
+	widget.h \
+	WI_histogram.h \
+	random_data.h #\
 	DS_BinarySort.h \
 	DS_Heap.h \
 	DS_PriorityQueue.h \

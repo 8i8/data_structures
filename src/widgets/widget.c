@@ -44,10 +44,10 @@ unsigned _print_binary(unsigned n, unsigned len)
 
 /*
  * W_Print_binary: Displays a binary representation of the given integer, the
- * width argument denotes the number of bits to be displayed after the most
+ * width argument gives the number of bits to be displayed after the most
  * significant bit, including that which denotes the requested integer.
  */
-void W_Print_binary(unsigned n, unsigned width)
+void BI_Print_binary(unsigned n, unsigned width)
 {
 	stack = ptr = malloc(len + 1);
 	width = _print_binary(n, width);
@@ -66,7 +66,7 @@ void W_Print_binary(unsigned n, unsigned width)
  * getbits: Returns the right adjusted n-bit field of x that begins at
  * position p, position 0 is the least significant bit of the word.
  */
-unsigned getbits(unsigned x, unsigned p, unsigned n)
+unsigned BI_getbits(unsigned x, unsigned p, unsigned n)
 {
 	return (x >> (p+1-n)) & ~(~(unsigned)0 << n);
 }

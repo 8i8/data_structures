@@ -20,7 +20,7 @@
  * and time the results.
  */
 
-int main(int argc, char *argv[])
+int main(void)
 {
 	DS_Qsort_test();
 	//DS_LinkedList_test();

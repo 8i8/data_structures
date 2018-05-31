@@ -5,6 +5,7 @@
 #include <assert.h>
 #include "../tests/DS_Struct.h"
 #include "../data_structures/DS_Qsort.h"
+#include "../general/DS_Error.h"
 #include "../widgets/random_data.h"
 
 typedef int (*comp)(const void *, const void *);
@@ -12,8 +13,8 @@ typedef int (*comp)(const void *, const void *);
 int strscmp(const void* v1, const void* v2);
 int intscmp(const void* v1, const void* v2);
 
-#define WIDTH	120		/* Maximum width of an object */
-#define LEN	100000 		/* Maximum number of objects */
+#define WIDTH	80	/* Maximum width of an object */
+#define LEN	10	/* Maximum number of objects */
 
 void print_list(void *list, size_t len, size_t width);
 
@@ -22,12 +23,12 @@ size_t set_size(int range)
 	return rand() % range+1;
 }
 
-void set_structs(void *mem, size_t len, size_t width)
+void set_structs(void *list, size_t len, size_t width)
 {
 	size_t i, o_size;
-	Test *obj = mem;
+	Test *obj = list;
 	char *ptr;
-	ptr = mem;
+	ptr = list;
 	o_size = sizeof(Test);
 
 	for (i = 0; i < len; i++) {
@@ -41,11 +42,29 @@ void set_structs(void *mem, size_t len, size_t width)
 	}
 }
 
-int check_increment(void *list, comp fn)
+int check_increment(void *list, size_t len, size_t width, comp fn)
+{
+	char *obj, *last;
+	obj = list;
+	size_t i;
+	int t;
+
+	for (i = 0; i < len; i++, obj += width) {
+		if (i > 0) {
+			t = fn (obj, last);
+			if (t < 0) {
+				DS_Error_set("%s(): qsort error, sort failed.", __func__);
+				return 1;
+			}
+		}
+		last = obj;
+	}
+	return 0;
+}
 
 void DS_Qsort_test()
 {
-	size_t width, len;
+	size_t width, len, count;
 	char* mem;
 	Test *list;
 
@@ -57,12 +76,22 @@ void DS_Qsort_test()
 
 	srand(time(NULL));
 
-	set_structs(mem, len, width);
+	count = 10;
+	while (count--)
+	{
 
-	//print_list(list, len, width);
-	DS_Qsort(list, len, width, strscmp);
-	//putchar('\n');
-	//print_list(list, len, width);
+		set_structs(mem, len, width);
+
+		print_list(list, len, width);
+		DS_Qsort(list, len, width, intscmp);
+		if (check_increment(list, len, width, intscmp)) {
+			printf("%s\n", DS_Error_get());
+			break;
+		}
+		putchar('\n');
+		print_list(list, len, width);
+		printf("\n~~~\n");
+	}
 
 	free(mem);
 }

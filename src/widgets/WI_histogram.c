@@ -70,7 +70,7 @@ void draw(
 		size_t len, size_t width, size_t max,
 		int colour)
 {
-	char *sw, c;
+	char c;
 	Test *l, *r;
         l = left, r = right;
 

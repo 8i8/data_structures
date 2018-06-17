@@ -125,10 +125,11 @@ void _func_example(void *word, void *var)
 	int *n = var;
 	char *str = word;
 #ifndef __unix__
-	printf("%s %d\n", str, *n);
+	printf("%s %d\n", str);
 #endif
 #ifdef __unix__
-	write(2, str, *n);
+	write(1, str, *n);
+	write(1, "\n", 1);
 #endif
 }
 

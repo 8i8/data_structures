@@ -6,6 +6,7 @@
 #include "widgets/widget.h"
 #include "data_structures/DS_ListSort.h"
 #include "tests/DS_ListSort_test.h"
+#include "tests/DS_Trie_test.h"
 #include <stdio.h>
 #include <stdint.h>
 
@@ -22,7 +23,8 @@
 
 int main(void)
 {
-	DS_Qsort_test();
+	DS_Trie_test();
+	//DS_Qsort_test();
 	//DS_LinkedList_test();
 	//DS_DLinkedList_test();
 	//DS_BinarySearch_test();

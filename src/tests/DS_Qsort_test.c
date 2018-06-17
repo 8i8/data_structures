@@ -13,8 +13,8 @@ typedef int (*comp)(const void *, const void *);
 int strscmp(const void* v1, const void* v2);
 int intscmp(const void* v1, const void* v2);
 
-#define WIDTH	80	/* Maximum width of an object */
-#define LEN	10	/* Maximum number of objects */
+#define WIDTH	1000	/* Maximum width of an object */
+#define LEN	1000	/* Maximum number of objects */
 
 void print_list(void *list, size_t len, size_t width);
 
@@ -53,7 +53,7 @@ int check_increment(void *list, size_t len, size_t width, comp fn)
 		if (i > 0) {
 			t = fn (obj, last);
 			if (t < 0) {
-				DS_Error_set("%s(): qsort error, sort failed.", __func__);
+				printf("%s(): qsort error, sort failed.", __func__);
 				return 1;
 			}
 		}
@@ -68,32 +68,27 @@ void DS_Qsort_test()
 	char* mem;
 	Test *list;
 
-	width = WIDTH;
-	len = LEN;
-	mem = malloc(width * len);
-
-	list = (Test*)mem;
-
 	srand(time(NULL));
 
-	count = 10;
+	count = 100;
 	while (count--)
 	{
+		width = rand() % WIDTH + sizeof(Test);
+		len = rand() % LEN + 1;
+		mem = malloc(width * len);
+		list = (Test*)mem;
 
 		set_structs(mem, len, width);
 
-		print_list(list, len, width);
 		DS_Qsort(list, len, width, intscmp);
 		if (check_increment(list, len, width, intscmp)) {
 			printf("%s\n", DS_Error_get());
+			free(mem);
 			break;
 		}
-		putchar('\n');
-		print_list(list, len, width);
-		printf("\n~~~\n");
-	}
 
-	free(mem);
+		free(mem);
+	}
 }
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

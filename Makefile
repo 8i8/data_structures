@@ -19,12 +19,10 @@ SRC = \
 	DS_Stack_ptr.c \
 	widget.c \
 	WI_histogram.c \
-	random_data.c #\
-	DS_BinarySort.c	\
-	DS_Heap.c \
-	DS_PriorityQueue.c \
-	DS_QuickSort.c \
-	DS_Trie.c
+	random_data.c \
+	DS_Trie.c \
+	DS_Trie_test.c \
+	DS_Heap.c
 OBJ = $(SRC:.c=.o)
 CC  = gcc
 
@@ -70,9 +68,6 @@ $(OBJ): \
 	DS_Stack_ptr.h \
 	widget.h \
 	WI_histogram.h \
-	random_data.h #\
-	DS_BinarySort.h \
-	DS_Heap.h \
-	DS_PriorityQueue.h \
-	DS_QuickSort.h \
-	DS_Trie.h
+	random_data.h \
+	DS_Trie.h \
+	DS_Heap.h

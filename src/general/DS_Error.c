@@ -73,10 +73,10 @@ void DS_Error_print(void)
 	strcpy(send, store);
 	store[0] = '\0';
 	state = 0;
-#ifdef _unix_
+#ifdef __unix__
 	write(1, send, strlen(send));
 #endif
-#ifndef _unix_
+#ifndef __unix__
 	printf("%s", send);
 #endif
 }

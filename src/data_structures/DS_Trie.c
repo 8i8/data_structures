@@ -4,6 +4,47 @@
 #include <unistd.h>
 
 #define UCHAR 127 /* Length of character index for c_list */
+#define STR_BUF_INIT 8
+
+#ifndef _string_
+typedef struct {
+	char *str;
+	char *ptr;
+	size_t buf;
+} String;
+#endif
+
+String *GE_string_init(String *Str)
+{
+	Str = malloc(sizeof(*Str));
+	Str->buf = STR_BUF_INIT;
+	Str->ptr = Str->str = calloc(Str->buf, 1);
+
+	return Str;
+}
+
+/*
+ * _string_len: Buffer for simple string struct.
+ */
+String *GE_string_len(String *Str, size_t len)
+{
+	if (Str->buf > len-1) {
+		Str->buf <<= 1;
+		Str->ptr = Str->str = realloc(Str->str, Str->buf);
+		Str->ptr += len;
+	}
+		
+	return Str;
+}
+
+/*
+ * GE_string_free: Destroy string.
+ */
+void GE_string_free(String *Str)
+{
+	free(Str->str);
+	free(Str);
+}
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  *  Create and fill
@@ -120,15 +161,16 @@ DS_Trie **DS_Trie_init(DS_Trie **trie)
  * _func_print: Printout the content of the tree from char root to current
  * node.
  */
-void _func_example(void *word, void *var)
+void _func_example(void *input, void *var)
 {
 	int *n = var;
-	char *str = word;
+	String *Str = input;
+	*(Str->ptr+1) = '\0';
 #ifndef __unix__
-	printf("%s %d\n", str);
+	printf("%s %d\n", Str->str);
 #endif
 #ifdef __unix__
-	write(1, str, *n);
+	write(1, Str->str, *n);
 	write(1, "\n", 1);
 #endif
 }
@@ -140,28 +182,27 @@ void _func_example(void *word, void *var)
 // TODO the string also needs to be made into a flexible buffer.
 static void _output_word(
 				DS_Trie *word,
-				char *buf,
-				char *pt_buf,
+				String *Str,
 				void (*func)(void*, void*),
 				int count)
 {
-	int i, *len;
-	*pt_buf++ = word->c;
-	len = &count;
+	int i;
+	*Str->ptr++ = word->c;
+	Str = GE_string_len(Str, count);
 
 	if (word->next != NULL)
 		for (i = 0; i < UCHAR; i++)
-			if (word->next[i] != NULL)
+			if (word->next[i] != NULL) {
 				_output_word(
 						word->next[i],
-						buf,
-						pt_buf--,
+						Str,
 						func,
 						++count);
-	if (word->word_end) {
-		*(pt_buf+1) = '\0';
-		(*func)((void*)buf, len);
-	}
+				count--;
+			}
+
+	if (word->word_end)
+		(*func)((void*)Str, &count);
 }
 
 /*
@@ -170,15 +211,14 @@ static void _output_word(
  */
 static void _output_list(
 				DS_Trie **list,
-				char *buf,
-				char *pt_buf,
+				String *Str,
 				void (*func)(void*, void*))
 {
 	int i, count;
 	count = 1;
 	for (i = 0; i < UCHAR; i++)
 		if (list[i] != NULL)
-			_output_word(list[i], buf, pt_buf, func, count);
+			_output_word(list[i], Str, func, count);
 }
 
 /* 
@@ -187,23 +227,24 @@ static void _output_list(
  */
 void DS_Trie_output(DS_Trie **list, void (*func)(void*, void*))
 {
-	char *pt, buf[UCHAR] = {'\0'};
-	pt = buf;
+	String *Str = NULL;
+	Str = GE_string_init(Str);
 
-	_output_list(list, pt, pt, func);
+	_output_list(list, Str, func);
+
+	GE_string_free(Str);
 }
 
 static void _trie_step_compaire(
 				DS_Trie **list,
-				char *out,
-				char *pt_out,
+				String *Str,
 				void (*func)(void*, void*))
 {
 	int i, count;
 	count = 1;
 	for (i = 0; i < UCHAR; i++)
 		if (list[i] != NULL)
-			_output_word(list[i], out, pt_out, func, count);
+			_output_word(list[i], Str, func, count);
 }
 
 /*
@@ -214,10 +255,12 @@ void DS_Trie_step_compaire(
 				DS_Trie **list,
 				void (*func)(void*, void*))
 {
-	char *pt, out[UCHAR] = {'\0'};
-	pt = out;
+	String *Str = NULL;
+	Str = GE_string_init(Str);
 
-	_trie_step_compaire(list, pt, pt, func);
+	_trie_step_compaire(list, Str, func);
+
+	GE_string_free(Str);
 }
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

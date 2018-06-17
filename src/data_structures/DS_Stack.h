@@ -6,7 +6,7 @@ typedef struct _stack {
 	int alloc_length;
 } Stack;
 
-void DS_Stack_new(stack *s, int elem_size);
-void DS_Stack_dispose(stack *s);
-void DS_Stack_push(stack *s, void *elem_addr);
-void DS_Stack_pop(stack *s, void *elem_addr);
+void DS_Stack_new(Stack *s, int elem_size);
+void DS_Stack_dispose(Stack *s);
+void DS_Stack_push(Stack *s, void *elem_addr);
+void DS_Stack_pop(Stack *s, void *elem_addr);

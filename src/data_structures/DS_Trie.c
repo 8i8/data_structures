@@ -124,12 +124,11 @@ int _func_print_trie(void *input, void *var)
 {
 	int *n = var;
 	String *Str = input;
-	*(Str->str+*n) = '\0';
-#ifdef __unixI__
+#ifdef __unix__
 	write(1, Str->str, *n);
 	write(1, "\n", 1);
 #else
-	printf("%s %d\n", Str->str, *n);
+	printf("%s\n", Str->str);
 #endif
 	return 0;
 }
@@ -137,7 +136,6 @@ int _func_print_trie(void *input, void *var)
 /*
  * _output_word: Recursive function that will perform it's given task on
  * arriving at each word ending.
- * TODO NOW the recursive aspect is not working when a word branches.
  */
 static int _output_word(
 				DS_Trie *trie,
@@ -150,7 +148,7 @@ static int _output_word(
 	*Str->ptr++ = trie->c;
 
 	if (trie->end)
-		 (*func)((void*)Str, &count);
+		*Str->ptr = '\0', (*func)((void*)Str, &count);
 
 	if (trie->next != NULL)
 		for (i = 0; i < UCHAR; i++)
@@ -170,8 +168,6 @@ static int _output_word(
 /*
  * _output_list: Iterates over every node in the array, performing the
  * recursive function on each element.
- * TODO NOW there is a problem in the counting of this function and its
- * helpers.
  */
 static void _output_list(
 				DS_Trie **trie,

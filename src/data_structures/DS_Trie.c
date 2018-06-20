@@ -1,51 +1,10 @@
 #include "DS_Trie.h"
+#include "../general/GE_string.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 
 #define UCHAR 127 /* Length of character index for c_list */
-#define STR_BUF_INIT 8
-
-#ifndef _string_
-typedef struct {
-	char *str;
-	char *ptr;
-	size_t buf;
-} String;
-#endif
-
-String *GE_string_init(String *Str)
-{
-	Str = malloc(sizeof(*Str));
-	Str->buf = STR_BUF_INIT;
-	Str->ptr = Str->str = calloc(Str->buf, 1);
-
-	return Str;
-}
-
-/*
- * _string_len: Buffer for simple string struct.
- */
-String *GE_string_len(String *Str, size_t len)
-{
-	if (Str->buf > len-1) {
-		Str->buf <<= 1;
-		Str->ptr = Str->str = realloc(Str->str, Str->buf);
-		Str->ptr += len;
-	}
-		
-	return Str;
-}
-
-/*
- * GE_string_free: Destroy string.
- */
-void GE_string_free(String *Str)
-{
-	free(Str->str);
-	free(Str);
-}
-
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  *  Create and fill
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
@@ -76,7 +35,7 @@ static DS_Trie *_new_c_node(char c)
 		return NULL;
 	new_node->c = c;
 	new_node->next = NULL;
-	new_node->word_end = 0;
+	new_node->end = 0;
 
 	return new_node;
 }
@@ -104,7 +63,7 @@ static DS_Trie *_add_word(DS_Trie *c_node, char *str)
 		c_node = c_node->next[(unsigned)*str];
 	}
 
-	c_node->word_end = 1;
+	c_node->end = 1;
 
 	return ptr;
 }
@@ -161,106 +120,125 @@ DS_Trie **DS_Trie_init(DS_Trie **trie)
  * _func_print: Printout the content of the tree from char root to current
  * node.
  */
-void _func_example(void *input, void *var)
+int _func_print_trie(void *input, void *var)
 {
 	int *n = var;
 	String *Str = input;
-	*(Str->ptr+1) = '\0';
-#ifndef __unix__
-	printf("%s %d\n", Str->str);
-#endif
-#ifdef __unix__
+	*(Str->str+*n) = '\0';
+#ifdef __unixI__
 	write(1, Str->str, *n);
 	write(1, "\n", 1);
+#else
+	printf("%s %d\n", Str->str, *n);
 #endif
+	return 0;
 }
 
 /*
  * _output_word: Recursive function that will perform it's given task on
  * arriving at each word ending.
+ * TODO NOW the recursive aspect is not working when a word branches.
  */
-// TODO the string also needs to be made into a flexible buffer.
-static void _output_word(
-				DS_Trie *word,
+static int _output_word(
+				DS_Trie *trie,
 				String *Str,
-				void (*func)(void*, void*),
+				int (*func)(void*, void*),
 				int count)
 {
 	int i;
-	*Str->ptr++ = word->c;
 	Str = GE_string_len(Str, count);
+	*Str->ptr++ = trie->c;
 
-	if (word->next != NULL)
+	if (trie->end)
+		 (*func)((void*)Str, &count);
+
+	if (trie->next != NULL)
 		for (i = 0; i < UCHAR; i++)
-			if (word->next[i] != NULL) {
-				_output_word(
-						word->next[i],
+			if (trie->next[i] != NULL) {
+				count = _output_word(
+						trie->next[i],
 						Str,
 						func,
 						++count);
 				count--;
+				Str->ptr--;
 			}
 
-	if (word->word_end)
-		(*func)((void*)Str, &count);
+	return count;
 }
 
 /*
  * _output_list: Iterates over every node in the array, performing the
  * recursive function on each element.
+ * TODO NOW there is a problem in the counting of this function and its
+ * helpers.
  */
 static void _output_list(
-				DS_Trie **list,
+				DS_Trie **trie,
 				String *Str,
-				void (*func)(void*, void*))
+				int (*func)(void*, void*))
 {
-	int i, count;
-	count = 1;
+	int i, count = 0;
+
 	for (i = 0; i < UCHAR; i++)
-		if (list[i] != NULL)
-			_output_word(list[i], Str, func, count);
+		if (trie[i] != NULL) {
+			*Str->ptr = trie[i]->c;
+			count = _output_word(trie[i], Str, func, ++count);
+			count--;
+			Str->ptr = Str->str;
+		}
 }
 
 /* 
- * DS_Trie_output: Iterate over all word_ endings in the trie perform the
- * given function on arriving at a words end marker.
+ * DS_Trie_print_list: Output content of trie to the terminal.
  */
-void DS_Trie_output(DS_Trie **list, void (*func)(void*, void*))
+DS_Trie **DS_Trie_print_list(DS_Trie **trie, int (*func)(void*, void*))
 {
 	String *Str = NULL;
 	Str = GE_string_init(Str);
 
-	_output_list(list, Str, func);
+	_output_list(trie, Str, func);
 
 	GE_string_free(Str);
-}
 
-static void _trie_step_compaire(
-				DS_Trie **list,
-				String *Str,
-				void (*func)(void*, void*))
-{
-	int i, count;
-	count = 1;
-	for (i = 0; i < UCHAR; i++)
-		if (list[i] != NULL)
-			_output_word(list[i], Str, func, count);
+	return trie;
 }
 
 /*
- * DS_Trie_step_compare: Compare a string with trie char by char, return 0 if
- * the string is found and the number of char that are identical if not found.
+ * _check_token: If the given token is found in the trie set the given state
+ * with the given flag. Return 0 if the token is not found.
  */
-void DS_Trie_step_compaire(
-				DS_Trie **list,
-				void (*func)(void*, void*))
+static int _check_token(
+				DS_Trie *trie,
+				String *Str)
+{
+	if (trie->end)
+		return 1;
+
+	if (trie->next && trie->next[(unsigned int)*Str->ptr])
+		return _check_token(trie->next[(unsigned int)*Str->ptr++], Str);
+	else
+		return 0;
+}
+
+/* 
+ * DS_Trie_is_token: Iterate over the given string to assertain whether or not
+ * it is present in the trie.
+ */
+int DS_Trie_is_token(DS_Trie **trie, char *token)
 {
 	String *Str = NULL;
+	int res = 0;
 	Str = GE_string_init(Str);
+	GE_string_set(Str, token);
 
-	_trie_step_compaire(list, Str, func);
+	/* Is the first character in the tries hash? */
+	if (trie[(unsigned int)*Str->ptr])
+		res = _check_token(trie[(unsigned int)*Str->ptr++], Str);
 
 	GE_string_free(Str);
+
+	return res;
 }
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

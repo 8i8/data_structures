@@ -22,7 +22,8 @@ SRC = \
 	random_data.c \
 	DS_Trie.c \
 	DS_Trie_test.c \
-	DS_Heap.c
+	DS_Heap.c \
+	GE_string.c
 OBJ = $(SRC:.c=.o)
 CC  = gcc
 
@@ -70,4 +71,5 @@ $(OBJ): \
 	WI_histogram.h \
 	random_data.h \
 	DS_Trie.h \
-	DS_Heap.h
+	DS_Heap.h \
+	GE_string.h

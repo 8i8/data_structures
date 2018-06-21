@@ -3,9 +3,9 @@
  * null terminator and cuts up the given list, the other one use a count method
  * to find the sub lists ends.
  */
-#include "../data_structures/DS_ListSort.h"
+#include "../data_structures/DS_mergesort.h"
 
-DS_LinkedList *_advance_and_cut(DS_LinkedList *list, size_t len)
+static DS_LinkedList *_advance_and_cut(DS_LinkedList *list, size_t len)
 {
 	DS_LinkedList *fin;
 
@@ -25,7 +25,7 @@ DS_LinkedList *_advance_and_cut(DS_LinkedList *list, size_t len)
  * _merge: Merge together two linked lists whist sorting them by the given
  * function.
  */
-DS_LinkedList *_merge(
+static DS_LinkedList *_merge(
 				DS_LinkedList **list,
 				DS_LinkedList **left, DS_LinkedList **right,
 				DS_LinkedList **end,  DS_LinkedList **tail,
@@ -67,11 +67,11 @@ DS_LinkedList *_merge(
 }
 
 /*
- * _listsort_cut: Merge sort for linked lists, this version does not use a
+ * _mergesort_cut: Merge sort for linked lists, this version does not use a
  * count to signal the end of a segmented list, the lists are cut and the NULL
  * terminator is used to signal the end of a list.
  */
-DS_LinkedList **_listsort_cut(DS_LinkedList **list, size_t m_len, int(*comp)(void*, void*))
+static DS_LinkedList **_mergesort_cut(DS_LinkedList **list, size_t m_len, int(*comp)(void*, void*))
 {
 	size_t count;
 	DS_LinkedList *left, *right, *tail, *end;
@@ -108,16 +108,16 @@ DS_LinkedList **_listsort_cut(DS_LinkedList **list, size_t m_len, int(*comp)(voi
 	/* If more than one merge has been made, continue. If only one merge or
 	 * fewer have been counted; The sort is finished */
 	if (count > 1)
-		list = _listsort_cut(list, m_len * 2, comp);
+		list = _mergesort_cut(list, m_len * 2, comp);
 
 	return list;
 }
 
 /*
- * DS_ListSort: Merge sort for linked lists, long function using count to keep
+ * DS_mergesort: Merge sort for linked lists, long function using count to keep
  * track of lists.
  */
-DS_LinkedList **_listsort(DS_LinkedList **list, size_t m_len, int(*comp)(void*, void*))
+static DS_LinkedList **_mergesort(DS_LinkedList **list, size_t m_len, int(*comp)(void*, void*))
 {
 	size_t i, count, l_len, r_len;
 	DS_LinkedList *left, *right, *new, *tail;
@@ -188,27 +188,28 @@ DS_LinkedList **_listsort(DS_LinkedList **list, size_t m_len, int(*comp)(void*, 
 	/* If more than one merge has been made, continue. If only one merge or
 	 * fewer have been counted, then the sort is finished */
 	if (count > 1)
-		list = _listsort(list, m_len * 2, comp);
+		list = _mergesort(list, m_len * 2, comp);
 
 	return list;
 }
 
-DS_LinkedList **DS_ListSort(DS_LinkedList **list, int(*comp)(void*, void*))
+DS_LinkedList **DS_mergesort(DS_LinkedList **list, int(*comp)(void*, void*))
 {
 	/* Doh! Nothing to see here, please move along. */
 	if (list == NULL || *list == NULL || (*list)->next == NULL)
 		return NULL;
 
 	/* Set the ball rolling with a merge length of one node */
-	return _listsort(list, 1, comp);
+	return _mergesort(list, 1, comp);
 }
 
-DS_LinkedList **DS_ListSort_cut(DS_LinkedList **list, int(*comp)(void*, void*))
+DS_LinkedList **DS_mergesort_cut(DS_LinkedList **list, int(*comp)(void*, void*))
 {
 	/* Doh! Nothing to see here, please move along. */
 	if (list == NULL || *list == NULL || (*list)->next == NULL)
 		return NULL;
 
 	/* Set the ball rolling with a merge length of one node */
-	return _listsort_cut(list, 1, comp);
+	return _mergesort_cut(list, 1, comp);
 }
+

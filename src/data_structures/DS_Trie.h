@@ -1,23 +1,12 @@
 #include <stdio.h>
 
-#define LIST  1
-#define CHECK 2
-
 #ifndef _ds_trie_
 #define _ds_trie_
 typedef struct _ds_Trie {
-	char c;
+	int c;
 	struct _ds_Trie **next;
 	int end;
 } DS_Trie;
-#endif
-
-#ifndef _ds_trie_state_
-#define _ds_trie_state_
-typedef struct _ds_state {
-	int *state;
-	int *flag;
-} DS_State;
 #endif
 
 /*

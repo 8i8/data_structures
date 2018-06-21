@@ -1,4 +1,4 @@
-#include "../data_structures/DS_ListSort.h"
+#include "../data_structures/DS_mergesort.h"
 #include "../general/DS_Timer.h"
 #include <string.h>
 
@@ -19,7 +19,7 @@ int compare(void *left, void *right)
 
 #define NUM 1000
 
-void DS_ListSort_test()
+void DS_mergesort_test()
 {
 	DS_LinkedList *list = NULL;
 	char str[16];
@@ -31,8 +31,8 @@ void DS_ListSort_test()
 		DS_LinkedList_add_string(&list, str);
 	}
 
-	//DS_ListSort(&list, compare);
-	DS_ListSort_cut(&list, compare);
+	//DS_mergesort(&list, compare);
+	DS_mergesort_cut(&list, compare);
 	DS_LinkedList_print(&list);
 	DS_LinkedList_clear(&list);
 }

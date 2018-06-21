@@ -67,11 +67,11 @@ DS_DLinkedList *_merge(
 }
 
 /*
- * _listsort_cut: Merge sort for linked lists, this version does not use a
+ * _mergesort_cut: Merge sort for linked lists, this version does not use a
  * count to signal the end of a segmented list, the lists are cut and the NULL
  * terminator is used to signal the end of a list.
  */
-DS_DLinkedList **_listsort_cut(DS_DLinkedList **list, size_t m_len, int(*comp)(void*, void*))
+DS_DLinkedList **_mergesort_cut(DS_DLinkedList **list, size_t m_len, int(*comp)(void*, void*))
 {
 	size_t count;
 	DS_DLinkedList *left, *right, *tail, *end;
@@ -108,7 +108,7 @@ DS_DLinkedList **_listsort_cut(DS_DLinkedList **list, size_t m_len, int(*comp)(v
 	/* If more than one merge has been made, continue. If only one merge or
 	 * fewer have been counted; The sort is finished */
 	if (count > 1)
-		list = _listsort_cut(list, m_len * 2, comp);
+		list = _mergesort_cut(list, m_len * 2, comp);
 
 	return list;
 }
@@ -117,7 +117,7 @@ DS_DLinkedList **_listsort_cut(DS_DLinkedList **list, size_t m_len, int(*comp)(v
  * DS_DListSort: Merge sort for linked lists, long function using count to keep
  * track of lists.
  */
-DS_DLinkedList **_listsort(DS_DLinkedList **list, size_t m_len, int(*comp)(void*, void*))
+DS_DLinkedList **_mergesort(DS_DLinkedList **list, size_t m_len, int(*comp)(void*, void*))
 {
 	size_t i, count, l_len, r_len;
 	DS_DLinkedList *left, *right, *new, *tail;
@@ -188,7 +188,7 @@ DS_DLinkedList **_listsort(DS_DLinkedList **list, size_t m_len, int(*comp)(void*
 	/* If more than one merge has been made, continue. If only one merge or
 	 * fewer have been counted, then the sort is finished */
 	if (count > 1)
-		list = _listsort(list, m_len * 2, comp);
+		list = _mergesort(list, m_len * 2, comp);
 
 	return list;
 }
@@ -200,7 +200,7 @@ DS_DLinkedList **DS_DListSort(DS_DLinkedList **list, int(*comp)(void*, void*))
 		return NULL;
 
 	/* Set the ball rolling with a merge length of one node */
-	return _listsort(list, 1, comp);
+	return _mergesort(list, 1, comp);
 }
 
 DS_DLinkedList **DS_DListSort_cut(DS_DLinkedList **list, int(*comp)(void*, void*))
@@ -210,5 +210,5 @@ DS_DLinkedList **DS_DListSort_cut(DS_DLinkedList **list, int(*comp)(void*, void*
 		return NULL;
 
 	/* Set the ball rolling with a merge length of one node */
-	return _listsort_cut(list, 1, comp);
+	return _mergesort_cut(list, 1, comp);
 }

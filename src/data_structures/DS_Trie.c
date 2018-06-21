@@ -137,7 +137,7 @@ int _func_print_trie(void *input, void *var)
  * _output_word: Recursive function that will perform it's given task on
  * arriving at each word ending.
  */
-static int _output_word(
+static void _output_word(
 				DS_Trie *trie,
 				String *Str,
 				int (*func)(void*, void*),
@@ -153,7 +153,7 @@ static int _output_word(
 	if (trie->next != NULL)
 		for (i = 0; i < UCHAR; i++)
 			if (trie->next[i] != NULL) {
-				count = _output_word(
+				_output_word(
 						trie->next[i],
 						Str,
 						func,
@@ -161,8 +161,6 @@ static int _output_word(
 				count--;
 				Str->ptr--;
 			}
-
-	return count;
 }
 
 /*
@@ -179,7 +177,7 @@ static void _output_list(
 	for (i = 0; i < UCHAR; i++)
 		if (trie[i] != NULL) {
 			*Str->ptr = trie[i]->c;
-			count = _output_word(trie[i], Str, func, ++count);
+			_output_word(trie[i], Str, func, ++count);
 			count--;
 			Str->ptr = Str->str;
 		}

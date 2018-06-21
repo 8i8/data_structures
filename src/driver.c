@@ -4,8 +4,8 @@
 #include "tests/DS_BinarySearch_test.h"
 #include "tests/DS_Qsort_test.h"
 #include "widgets/widget.h"
-#include "data_structures/DS_ListSort.h"
-#include "tests/DS_ListSort_test.h"
+#include "data_structures/DS_mergesort.h"
+#include "tests/DS_mergesort_test.h"
 #include "tests/DS_Trie_test.h"
 #include <stdio.h>
 #include <stdint.h>
@@ -30,7 +30,7 @@ int main(void)
 	//DS_BinarySearch_test();
 	//DS_Vector_test();
 	
-	//DS_ListSort_test();
+	//DS_mergesort_test();
 
 	return 0;
 }

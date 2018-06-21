@@ -1,6 +1,6 @@
 #include "../data_structures/DS_Vector.h"
 #include "../general/DS_Timer.h"
-#include "../general/DS_Error.h"
+#include <ge/DS_Error.h>
 #include "../general/DS_Message.h"
 #include <stdlib.h>
 #include <string.h>

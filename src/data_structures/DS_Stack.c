@@ -1,4 +1,4 @@
-#include "DS_Stack.h"
+#include <ds/DS_Stack.h>
 #include <assert.h>
 #include <stdlib.h>
 #include <string.h>

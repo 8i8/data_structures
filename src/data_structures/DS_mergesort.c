@@ -3,7 +3,7 @@
  * null terminator and cuts up the given list, the other one use a count method
  * to find the sub lists ends.
  */
-#include "../data_structures/DS_mergesort.h"
+#include <ds/DS_mergesort.h>
 
 static DS_LinkedList *_advance_and_cut(DS_LinkedList *list, size_t len)
 {

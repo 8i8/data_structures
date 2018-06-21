@@ -1,6 +1,6 @@
-#include "ds_msg.h"
-#include "DS_Message.h"
-#include "DS_Error.h"
+#include <ge/ds_msg.h>
+#include <ds/DS_Message.h>
+#include <ds/DS_Error.h>
 #include <stdlib.h>
 #include <ctype.h>
 

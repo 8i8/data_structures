@@ -3,7 +3,7 @@
 #include "../general/DS_Timer.h"
 #include "../general/DS_Test_output.h"
 #include "../general/ds_msg.h"
-#include "../general/DS_Error.h"
+#include <ge/DS_Error.h>
 #include "../general/DS_Message.h"
 #include <string.h>
 #include <stdint.h>

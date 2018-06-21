@@ -22,7 +22,7 @@
 #include <time.h>
 #include <limits.h>
 #include <float.h>
-#include "DS_Timer.h"
+#include <ge/DS_Timer.h>
 
 #define CLOCK_METHOD CLOCK_PROCESS_CPUTIME_ID
 

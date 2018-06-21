@@ -1,4 +1,4 @@
-#include "DS_BinarySearch.h"
+#include <ds/DS_BinarySearch.h>
 #include <stdio.h>
 
 unsigned DS_BinarySearch(void *left, unsigned width, unsigned num, void *x, int (*func)(void*, void*))

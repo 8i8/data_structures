@@ -3,7 +3,7 @@
  * null terminator and cuts up the given list, the other one use a count method
  * to find the sub lists ends.
  */
-#include "../data_structures/DS_DListSort.h"
+#include <ds/DS_DListSort.h>
 
 DS_DLinkedList *_advance_and_cut(DS_DLinkedList *list, size_t len)
 {

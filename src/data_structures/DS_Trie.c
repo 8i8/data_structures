@@ -1,5 +1,5 @@
-#include "DS_Trie.h"
-#include "../general/GE_string.h"
+#include <ds/DS_Trie.h>
+#include <ge/GE_string.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>

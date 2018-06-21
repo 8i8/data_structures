@@ -5,7 +5,7 @@
 #include <assert.h>
 #include "../tests/DS_Struct.h"
 #include "../data_structures/DS_Qsort.h"
-#include "../general/DS_Error.h"
+#include <ge/DS_Error.h>
 #include "../widgets/random_data.h"
 
 typedef int (*comp)(const void *, const void *);

@@ -1,4 +1,4 @@
-#include "../data_structures/DS_mergesort.h"
+#include <ds/DS_mergesort.h>
 #include "../general/DS_Timer.h"
 #include <string.h>
 

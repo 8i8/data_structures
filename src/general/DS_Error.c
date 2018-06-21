@@ -1,5 +1,5 @@
-#include "DS_Error.h"
-#include "ds_msg.h"
+#include <ge/DS_Error.h>
+#include <ge/ds_msg.h>
 
 static char error[MAX_LENGTH + 1];
 static char store[MAX_LENGTH + 1];

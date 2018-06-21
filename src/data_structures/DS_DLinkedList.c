@@ -1,5 +1,5 @@
-#include "DS_DLinkedList.h"
-#include "../general/DS_Error.h"
+#include <ds/DS_DLinkedList.h>
+#include <ge/DS_Error.h>
 #include <stdlib.h>
 #include <string.h>
 

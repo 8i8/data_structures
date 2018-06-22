@@ -1,12 +1,12 @@
-#include "DS_LinkedList_test.h"
-#include "DS_DLinkedList_test.h"
+#include "DS_linked_list_test.h"
+#include "DS_linked_list_d_test.h"
 #include "DS_Vector_test.h"
-#include "DS_BinarySearch_test.h"
-#include "DS_Qsort_test.h"
-#include "DS_mergesort_test.h"
-#include "DS_Trie_test.h"
-#include <wi/widget.h>
-#include <ds/DS_mergesort.h>
+#include "DS_binary_search_test.h"
+#include "DS_qsort_test.h"
+#include "DS_merge_sort_test.h"
+#include "DS_trie_test.h"
+#include <data/widget.h>
+#include <data/DS_merge_sort.h>
 #include <stdio.h>
 #include <stdint.h>
 
@@ -23,14 +23,14 @@
 
 int main(void)
 {
-	DS_Trie_test();
-	//DS_Qsort_test();
-	//DS_LinkedList_test();
-	//DS_DLinkedList_test();
-	//DS_BinarySearch_test();
+	DS_trie_test();
+	//DS_qsort_test();
+	//DS_linked_list_test();
+	//DS_linked_list_d_test();
+	//DS_binary_search_test();
 	//DS_Vector_test();
 	
-	//DS_mergesort_test();
+	//DS_merge_sort_test();
 
 	return 0;
 }

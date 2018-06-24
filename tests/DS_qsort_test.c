@@ -3,10 +3,10 @@
 #include <stdlib.h>
 #include <time.h>
 #include <assert.h>
-#include "../tests/DS_struct.h"
-#include "../data_structures/DS_qsort.h"
-#include <data/DS_error.h>
-#include "../widgets/random_data.h"
+#include <data/DS_struct.h>
+#include <data/DS_qsort.h>
+#include <data/GE_error.h>
+#include <data/WI_random_data.h>
 
 typedef int (*comp)(const void *, const void *);
 

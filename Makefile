@@ -1,11 +1,11 @@
 CFLAGS += -Wall -Wextra -I./include/
-SRC = $(wildcard src/*.c)
+SRCS = $(wildcard src/*.c)
 TSRCS = $(wildcard tests/*.c)
-OBJ = $(SRC:.c=.o,)
-TEST_OBJ = $(TSRCS:.c=)
+OBJ = $(SRCS:.c=.o)
+TEST_OBJ = $(TSRCS:.c=.o)
+TESTEXE = test
 LIBNAME = data_structures
 STATLIB = lib$(LIBNAME).a
-DESTDIR ?= ../
 
 .PHONY: uninstall
 
@@ -23,6 +23,7 @@ static_link:
 	$(AR) -cvq $(STATLIB) $(OBJ)
 
 create_test: $(TEST_OBJ)
+	$(CC) $(CFLAGS) -o $(TESTEXE) $(TEST_OBJ) $(LDLIBS)
 
 cleanobj:
 	$(RM) $(OBJ)
@@ -31,9 +32,9 @@ clean:
 	$(MAKE) cleanobj
 	$(RM) $(STATLIB)
 	$(RM) $(TEST_OBJ)
+	$(RM) $(TESTEXE)
 	$(RM) uninstall
-	$(RM) log* *-tests-* testing.bc some.bc
 
 test:
 	$(MAKE) all
-	./tests/myscript.sh
+	./test

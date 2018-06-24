@@ -5,12 +5,12 @@
  * typedef __clockid_t clockid_t;
  * extern int clock_gettime (clockid_t __clock_id, struct timespec *__tp) __THROW;
  *
- * https://linux.die.net/man/3/clock_getres
- * http://pubs.opengroup.org/onlinepubs/9699919799/functions/clock_gettime.html
- * https://www.cs.rutgers.edu/~pxk/416/notes/c-tutorials/gettime.html
+ * https://linux.h>die.h>net/man/3/clock_getres
+ * http://pubs.h>opengroup.h>org/onlinepubs/9699919799/functions/clock_gettime.html
+ * https://www.h>cs.h>rutgers.edu/~pxk/416/notes/c-tutorials/gettime.html
  */
 /*
- * CLOCK_MONOTONIC time is the total time.
+ * CLOCK_MONOTONIC time is the total time.h>
  * CLOCK_MONOTONIC_RAW is Monotonic system-wide clock, not adjusted for
  * frequency scaling.
  * CLOCK_PROCESS_CPUTIME_ID is the time for the individual process.
@@ -22,7 +22,7 @@
 #include <time.h>
 #include <limits.h>
 #include <float.h>
-#include <data/DS_timer.h>
+#include <data/GE_timer.h>
 
 #define CLOCK_METHOD CLOCK_PROCESS_CPUTIME_ID
 

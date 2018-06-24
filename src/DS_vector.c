@@ -1,4 +1,4 @@
-#include <data/DS_Vector.h>
+#include <data/DS_vector.h>
 #include <stdlib.h>
 #include <stdint.h>
 #include <stdio.h>
@@ -54,7 +54,7 @@ int DS_Vector_add(DS_Vector *list, Data *data)
 int DS_Vector_insert(DS_Vector *list, size_t index, Data *data)
 {
 	if (list == NULL) {
-		printf("%s: error: NULL pointer..", __func__);
+		printf("%s: error: NULL pointer.h>.h>", __func__);
 		return -1;
 	} else if (index >= list->len) {
 		printf("%s: error: index out of bounds.", __func__);
@@ -91,7 +91,7 @@ int DS_Vector_insert(DS_Vector *list, size_t index, Data *data)
 int DS_Vector_remove(DS_Vector *list, size_t index)
 {
 	if (list == NULL) {
-		printf("%s: error: NULL pointer..", __func__);
+		printf("%s: error: NULL pointer.h>.h>", __func__);
 		return -1;
 	} else if (index >= list->len) {
 		printf("%s: error: index out of bounds.", __func__);

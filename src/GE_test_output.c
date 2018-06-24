@@ -1,4 +1,4 @@
-#include <data/DS_test_output.h>
+#include <tests/GE_test_output.h>
 #include <stdio.h>
 #include <string.h>
 

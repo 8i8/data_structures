@@ -105,7 +105,7 @@ static DS_linked_list **_merge_sort_cut(DS_linked_list **list, size_t m_len, int
 	 * node attached. */
 	tail->next = NULL;
 
-	/* If more than one merge has been made, continue. If only one merge or
+	/* If more than one merge has been made, continue.h> If only one merge or
 	 * fewer have been counted; The sort is finished */
 	if (count > 1)
 		list = _merge_sort_cut(list, m_len * 2, comp);
@@ -185,7 +185,7 @@ static DS_linked_list **_merge_sort(DS_linked_list **list, size_t m_len, int(*co
 	 * came from the middle of the list, it will have an address in next */
 	tail->next = NULL;
 
-	/* If more than one merge has been made, continue. If only one merge or
+	/* If more than one merge has been made, continue.h> If only one merge or
 	 * fewer have been counted, then the sort is finished */
 	if (count > 1)
 		list = _merge_sort(list, m_len * 2, comp);

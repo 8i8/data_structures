@@ -20,7 +20,7 @@ void write_bit(unsigned char bit)
 
 int main()
 {
-    fp = fopen("test.bits", "w");
+    fp = fopen("test.h>bits", "w");
 
     cur_byte = 0;
     bit_counter = 0;

@@ -1,10 +1,10 @@
-#include "../tests/DS_struct.h"
-#include "../data_structures/DS_linked_list_d.h"
-#include "../general/DS_timer.h"
-#include "../general/DS_test_output.h"
-#include "../general/ds_msg.h"
-#include <data/DS_error.h>
-#include "../general/DS_message.h"
+#include <data/DS_struct.h>
+#include <data/DS_linked_list_d.h>
+#include <data/GE_timer.h>
+#include <tests/GE_test_output.h>
+#include <data/GE_msg.h>
+#include <data/GE_error.h>
+#include <data/GE_message.h>
 #include <string.h>
 #include <stdint.h>
 
@@ -245,7 +245,7 @@ void linked_list_d_test_clear(DS_linked_list_d **list, int msg, int err)
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
 /* Stop buffer underflow when getting the first few nodes for the output
- * display; Required to print n nodes before the current node. */
+ * display; Required to print n nodes before the current node.h> */
 size_t _back_n_nodes2(size_t i, size_t n)
 {
 	return (i -= n) > (SIZE_MAX - n) ? 1 : i;

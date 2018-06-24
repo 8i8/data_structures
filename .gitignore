@@ -13,3 +13,6 @@ scratch*
 *.kra~
 notes
 debug
+lib-data_structures.a
+test
+libdata_structures.a

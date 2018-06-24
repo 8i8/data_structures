@@ -33,9 +33,9 @@ void _write_word(unsigned in)
  */
 unsigned _print_binary(unsigned n, unsigned len)
 {
-	if (n < 2) {
+	if (n < 2)
 		_write_word(n);
-	} else if (n > 1) {
+	else if (n > 1) {
 		len = _print_binary(n / 2, (len) ? len - 1 : 0);
 		_write_word(n % 2);
 	}
@@ -47,7 +47,7 @@ unsigned _print_binary(unsigned n, unsigned len)
  * width argument gives the number of bits to be displayed after the most
  * significant bit, including that which denotes the requested integer.
  */
-void BI_Print_binary(unsigned n, unsigned width)
+void WI_Print_binary(unsigned n, unsigned width)
 {
 	stack = ptr = malloc(len + 1);
 	width = _print_binary(n, width);
@@ -66,7 +66,7 @@ void BI_Print_binary(unsigned n, unsigned width)
  * getbits: Returns the right adjusted n-bit field of x that begins at
  * position p, position 0 is the least significant bit of the word.
  */
-unsigned BI_getbits(unsigned x, unsigned p, unsigned n)
+unsigned WI_getbits(unsigned x, unsigned p, unsigned n)
 {
 	return (x >> (p+1-n)) & ~(~(unsigned)0 << n);
 }

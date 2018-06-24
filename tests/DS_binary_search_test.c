@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "../data_structures/DS_binary_search.h"
-#include "DS_struct.h"
+#include <data/DS_binary_search.h>
+#include <data/DS_struct.h>
 
 #define LEN 100000000
 

@@ -1,6 +1,6 @@
-#include <data/ds_msg.h>
-#include <data/DS_message.h>
-#include <data/DS_error.h>
+#include <data/GE_msg.h>
+#include <data/GE_message.h>
+#include <data/GE_error.h>
 #include <stdlib.h>
 #include <ctype.h>
 
@@ -127,7 +127,5 @@ void _ds_check_messages(int msg, int err)
 			DS_message_print();
 			putchar('\n');
 		}
-	//DS_error_reset();
-	//DS_message_reset();
 }
 

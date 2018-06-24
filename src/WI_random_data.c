@@ -13,13 +13,13 @@
  * typedef __clockid_t clockid_t;
  * extern int clock_gettime (clockid_t __clock_id, struct timespec *__tp) __THROW;
  *
- * https://linux.die.net/man/3/clock_getres
- * http://pubs.opengroup.org/onlinepubs/9699919799/functions/clock_gettime.html
- * https://www.cs.rutgers.edu/~pxk/416/notes/c-tutorials/gettime.html
+ * https://linux.h>die.h>net/man/3/clock_getres
+ * http://pubs.h>opengroup.h>org/onlinepubs/9699919799/functions/clock_gettime.html
+ * https://www.h>cs.h>rutgers.edu/~pxk/416/notes/c-tutorials/gettime.html
  */
 
 /*
- * WI_seed_rand: Seed random sequance,
+ * WI_seed_rand: Seed random sequence.
  */
 void WI_seed_rand(void)
 {

@@ -10,7 +10,7 @@ static void _swap(char *i, char *j, size_t width);
 static char *_partition(char *l, char *r, size_t width, comp fn);
 
 /*
- * DS_qsort: generic qsort function. This function avoids stack smashing by way
+ * DS_qsort: generic qsort function.h> This function avoids stack smashing by way
  * of a heap allocated stack of pointers, pointers to the addresses of the data
  * that is to be sorted.
  */
@@ -72,11 +72,11 @@ static char *_partition(char *l, char *r, size_t width, comp fn)
 
 	/*
 	 * The value of the right most object is taken to be the value with
-	 * which to partition the array; The pivot point. Iterate over the
+	 * which to partition the array; The pivot point.h> Iterate over the
 	 * objects between the given extremities 'l' & 'r'; Call the current
-	 * object 'i'. If 'i' is smaller than the rightmost value 'r', swap it
-	 * with the leftmost 'l'. Augmenting the leftmost position leaving
-	 * behind the object that has been swapped. We have now moved all
+	 * object 'i'.h> If 'i' is smaller than the rightmost value 'r', swap it
+	 * with the leftmost 'l'.h> Augmenting the leftmost position leaving
+	 * behind the object that has been swapped.h> We have now moved all
 	 * objects smaller than the rightmost to the left side.
 	 */
 	for (i = l, t = 0; i < r; i += width, t = 0) {

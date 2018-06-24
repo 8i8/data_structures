@@ -1,5 +1,5 @@
 #include <data/DS_linked_list.h>
-#include <data/DS_error.h>
+#include <data/GE_error.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -168,7 +168,6 @@ DS_linked_list **DS_linked_list_insert_at(DS_linked_list **list, size_t num, Dat
 }
 /*
  * DS_linked_list_remove: Remove and free the node at the given index.
- * TODO this function needs rethinking
  */
 DS_linked_list **DS_linked_list_remove(DS_linked_list **list, size_t num)
 {

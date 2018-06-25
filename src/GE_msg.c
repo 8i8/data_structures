@@ -1,6 +1,6 @@
-#include <data/GE_msg.h>
-#include <data/GE_message.h>
-#include <data/GE_error.h>
+#include "GE_msg.h"
+#include "GE_message.h"
+#include "GE_error.h"
 #include <stdlib.h>
 #include <ctype.h>
 

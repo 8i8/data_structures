@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <unistd.h>
-#include <data/DS_struct.h>
-#include <data/WI_histogram.h>
+#include "DS_struct.h"
+#include "WI_histogram.h"
 
 /*
  * Clear the screen.

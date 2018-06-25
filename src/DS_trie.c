@@ -1,5 +1,5 @@
-#include <data/DS_trie.h>
-#include <data/GE_string.h>
+#include "DS_trie.h"
+#include "GE_string.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>

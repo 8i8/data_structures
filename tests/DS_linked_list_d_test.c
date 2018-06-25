@@ -1,10 +1,10 @@
-#include <data/DS_struct.h>
-#include <data/DS_linked_list_d.h>
-#include <data/GE_timer.h>
-#include <tests/GE_test_output.h>
-#include <data/GE_msg.h>
-#include <data/GE_error.h>
-#include <data/GE_message.h>
+#include "DS_struct.h"
+#include "DS_linked_list_d.h"
+#include "GE_timer.h"
+#include "GE_test_output.h"
+#include "GE_msg.h"
+#include "GE_error.h"
+#include "GE_message.h"
 #include <string.h>
 #include <stdint.h>
 

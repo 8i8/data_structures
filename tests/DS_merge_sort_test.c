@@ -1,5 +1,5 @@
-#include <data/DS_merge_sort.h>
-#include <data/GE_timer.h>
+#include "DS_merge_sort.h"
+#include "GE_timer.h"
 #include <string.h>
 
 int compare(void *left, void *right)

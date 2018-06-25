@@ -1,4 +1,4 @@
-#include <data/DS_binary_search.h>
+#include "DS_binary_search.h"
 #include <stdio.h>
 
 int DS_binary_search(

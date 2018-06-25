@@ -1,4 +1,4 @@
-#include <tests/GE_test_output.h>
+#include "GE_test_output.h"
 #include <stdio.h>
 #include <string.h>
 

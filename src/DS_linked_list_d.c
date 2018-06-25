@@ -1,5 +1,5 @@
-#include <data/DS_linked_list_d.h>
-#include <data/GE_error.h>
+#include "DS_linked_list_d.h"
+#include "GE_error.h"
 #include <stdlib.h>
 #include <string.h>
 

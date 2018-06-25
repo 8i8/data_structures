@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <data/DS_trie.h>
+#include "DS_trie.h"
 
 int DS_trie_test(void)
 {

@@ -2,7 +2,7 @@
  * DS_linked_list
  */
 #include <stdio.h>
-#include <data/DS_struct.h>
+#include "DS_struct.h"
 
 #ifndef _ds_linked_list_
 #define _ds_linked_list_

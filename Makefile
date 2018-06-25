@@ -1,4 +1,4 @@
-CFLAGS += -Wall -Wextra -I./include/
+CFLAGS += -Wall -Wextra -Isrc
 SRCS = $(wildcard src/*.c)
 TSRCS = $(wildcard tests/*.c)
 OBJ = $(SRCS:.c=.o)

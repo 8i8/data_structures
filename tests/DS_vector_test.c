@@ -1,7 +1,7 @@
-#include <data/DS_vector.h>
-#include <data/GE_timer.h>
-#include <data/GE_error.h>
-#include <data/GE_message.h>
+#include "DS_vector.h"
+#include "GE_timer.h"
+#include "GE_error.h"
+#include "GE_message.h"
 #include <stdlib.h>
 #include <string.h>
 

@@ -1,5 +1,5 @@
-#include <data/GE_message.h>
-#include <data/GE_msg.h>
+#include "GE_message.h"
+#include "GE_msg.h"
 
 static char message[MAX_LENGTH + 1];
 static char store[MAX_LENGTH + 1];

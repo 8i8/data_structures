@@ -1,5 +1,5 @@
-#include <data/GE_error.h>
-#include <data/GE_msg.h>
+#include "GE_error.h"
+#include "GE_msg.h"
 
 static char error[MAX_LENGTH + 1];
 static char store[MAX_LENGTH + 1];

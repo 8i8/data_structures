@@ -16,3 +16,6 @@ debug
 lib-data_structures.a
 test
 libdata_structures.a
+.projectile
+TAGS
+Makefile.bac

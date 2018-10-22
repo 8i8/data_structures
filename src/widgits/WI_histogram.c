@@ -14,7 +14,7 @@ void clearScreen()
 /*
  * Print out an array of int's.
  */
-void pArray(void *data, size_t len, size_t width)
+void print_array(void *data, size_t len, size_t width)
 {
 	size_t i;
 	char *v = data;
@@ -76,7 +76,7 @@ void draw(
 
 	clearScreen();
 	histogram(data, len, width, max, left, right, colour);
-	pArray(data, len, width);
+	print_array(data, len, width);
 	if (WORD)
 		printf("\033[37mleft: v[%lu]=%lu,\tright v[%lu]=%lu\n",
 				l->num, l->num2, r->num, r->num2);

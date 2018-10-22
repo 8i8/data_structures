@@ -71,7 +71,10 @@ static DS_linked_list *_merge(
  * count to signal the end of a segmented list, the lists are cut and the NULL
  * terminator is used to signal the end of a list.
  */
-static DS_linked_list **_merge_sort_cut(DS_linked_list **list, size_t m_len, int(*comp)(void*, void*))
+static DS_linked_list **_merge_sort_cut(
+		DS_linked_list **list,
+		size_t m_len,
+		int(*comp)(void*, void*))
 {
 	size_t count;
 	DS_linked_list *left, *right, *tail, *end;
@@ -84,7 +87,7 @@ static DS_linked_list **_merge_sort_cut(DS_linked_list **list, size_t m_len, int
 	 * current list to NULL; The merged list will have a different head. */
 	left = *list;
 	tail = *list = NULL;
-	
+
 	/* Whilst there is still a list, keep working the list; Right to left */
 	while (left)
 	{
@@ -130,7 +133,7 @@ static DS_linked_list **_merge_sort(DS_linked_list **list, size_t m_len, int(*co
 	 * current list to NULL, the merged list will have a different head */
 	left = *list;
 	new = tail = *list = NULL;
-	
+
 	while (left)
 	{
 		count++;

@@ -18,7 +18,7 @@ void write_bit(unsigned char bit)
     cur_byte |= bit;
 }
 
-int main()
+int write_bit_test()
 {
     fp = fopen("test.h>bits", "w");
 

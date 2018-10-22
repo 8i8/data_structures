@@ -26,7 +26,7 @@ int DS_binary_search(
 			high = mid - 1;
 
 		mid = low + high / 2;
-	}	
+	}
 
 	if (comp == 0)
 		return mid;

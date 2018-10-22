@@ -1,40 +1,35 @@
-CFLAGS += -Wall -Wextra -Isrc
-SRCS = $(wildcard src/*.c)
-TSRCS = $(wildcard tests/*.c)
+SRCS = $(wildcard src/*/*.c)
+SRCS += $(wildcard tests/*.c)
+HDRS = $(wildcard include/*.h)
+HDRS += $(wildcard tests/*.h)
 OBJ = $(SRCS:.c=.o)
-TEST_OBJ = $(TSRCS:.c=.o)
-TESTEXE = test
-LIBNAME = data_structures
-STATLIB = lib$(LIBNAME).a
+CC = gcc
 
-.PHONY: uninstall
+CFLAGS += -Wall -Wextra -pedantic
+#CFLAGS += -Werror
+CFLAGS += -g
+CFLAGS += -fsanitize=address
+CFLAGS += -fno-omit-frame-pointer
+CFLAGS += -fsanitize=undefined
+CFLAGS += -fsanitize=float-divide-by-zero
+CFLAGS += -fno-sanitize-recover
+CFLAGS += -I./include
 
-PREFIX ?= /$(LIBNAME)/
-LDLIBS += -L. -l$(LIBNAME)
+#LFLAGS += -lm
 
-all:
-	$(MAKE) static
-	$(MAKE) create_test
+.PHONY: clean distclean
 
-static: $(OBJ)
-	$(MAKE) static_link
+ifndef VERBOSE
+.SILENT:
+endif
 
-static_link:
-	$(AR) -cvq $(STATLIB) $(OBJ)
-
-create_test: $(TEST_OBJ)
-	$(CC) $(CFLAGS) -o $(TESTEXE) $(TEST_OBJ) $(LDLIBS)
-
-cleanobj:
-	$(RM) $(OBJ)
+test: $(OBJ)
+	$(CC) $(CFLAGS) -o $@ $^ $(LFLAGS)
 
 clean:
-	$(MAKE) cleanobj
-	$(RM) $(STATLIB)
-	$(RM) $(TEST_OBJ)
-	$(RM) $(TESTEXE)
-	$(RM) uninstall
+	$(RM) $(OBJ)
 
-test:
-	$(MAKE) all
-	./test
+distclean: clean
+	rm -f compress a.out scratch*
+
+$(OBJ): Makefile

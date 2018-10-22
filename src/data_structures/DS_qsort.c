@@ -6,7 +6,7 @@
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
 typedef int (*comp)(const void *, const void *);
-static void _swap(char *i, char *j, size_t width);
+static void swap(char *i, char *j, size_t width);
 static char *_partition(char *l, char *r, size_t width, comp fn);
 
 /*
@@ -81,24 +81,24 @@ static char *_partition(char *l, char *r, size_t width, comp fn)
 	 */
 	for (i = l, t = 0; i < r; i += width, t = 0) {
 		if ((t = (fn)(i, r)) < 0) {
-			_swap(l, i, width);
+			swap(l, i, width);
 			l += width;
 		} else if (t == 0) {
 			/* If the comparison returns 0, swap only if l and i
 			 * are not the same object; This check avoids a lot of
 			 * unessasary swapping. */
 			if (l != i)
-				_swap(l, i, width);
+				swap(l, i, width);
 			l += width;
 		}
 	}
-	/* 
+	/*
 	 * Swap the rightmost object and the current left, it is now
 	 * positioned with all the objects smaller than it to its left and
 	 * greater to its right, becoming the pivot point; Return its
 	 * position.
 	 */
-	_swap(l, r, width);
+	swap(l, r, width);
 
 	return l;
 }
@@ -106,7 +106,7 @@ static char *_partition(char *l, char *r, size_t width, comp fn)
 /*
  * Swap for 'width' places.
  */
-static void _swap(char *l, char *r, size_t width)
+static void swap(char *l, char *r, size_t width)
 {
 	char tmp[256];
 	size_t len;

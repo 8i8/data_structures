@@ -166,6 +166,7 @@ DS_linked_list **DS_linked_list_insert_at(DS_linked_list **list, size_t num, Dat
 
 	return list;
 }
+
 /*
  * DS_linked_list_remove: Remove and free the node at the given index.
  */
@@ -209,7 +210,9 @@ DS_linked_list **DS_linked_list_fwd(DS_linked_list **list, size_t num)
 		list = &(*list)->next, num--;
 
 	if (*list == NULL) {
-		DS_error_set("%s: Out of bounds, you have reached the end of the list.", __func__);
+		DS_error_set("%s: Out of bounds, "
+				"you have reached the end of the list.",
+				__func__);
 		return NULL;
 	}
 

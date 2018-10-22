@@ -8,7 +8,7 @@ static char output[LEN];
 static char msg[LEN];
 static char *pt_msg;
 
-/* 
+/*
  * This function relies on the void* that is being passed in containing a char*
  * in the first memory space of whatever is being sent.
  */

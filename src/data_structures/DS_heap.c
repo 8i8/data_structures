@@ -6,6 +6,30 @@
 #define MIN(a, b) ((a)<(b) ? (a) : (b))
 static int unit = sizeof(H_data);
 
+/*
+ * DS_heap_init: Initialise a heap priority queue that returns the greatest
+ * value first.
+ */
+DS_heap *DS_heap_init(DS_heap *heap, int(*comp)(const void*, const void*))
+{
+	heap->comp = comp;
+	heap->heap = calloc(INIT, unit);
+	heap->end = INIT;
+	heap->max = 1;
+	heap->cur_id = 1;
+	heap->len = 0;
+	return heap;
+}
+
+/*
+ * DS_heap_function: Change the sort funtion the heap struct.
+ */
+DS_heap *DS_heap_function(DS_heap *heap, int(*comp)(const void*, const void*))
+{
+	heap->comp = comp;
+	return heap;
+}
+
 void swap(void* h1, void* h2, unsigned len)
 {
 	char *d1 = (char*)h1;
@@ -30,11 +54,10 @@ void swap(void* h1, void* h2, unsigned len)
  */
 void heap_bubble_up(
 					DS_heap *h,
-					unsigned id,
-					int(*comp)(const void*, const void*))
+					unsigned id)
 {
 	unsigned half = id/2;
-	while (id > 1 && comp(&h->heap[id], &h->heap[half]) > 0) {
+	while (id > 1 && h->comp(&h->heap[id], &h->heap[half]) > 0) {
 		swap(&h->heap[id], &h->heap[half], unit);
 		id = half;
 		half = id/2;
@@ -42,35 +65,22 @@ void heap_bubble_up(
 }
 
 /*
- * DS_heap_init: Initialise a heap priority queue that returns the greatest
- * value first.
- */
-DS_heap *DS_heap_init(DS_heap *heap)
-{
-	heap->heap = calloc(INIT, unit);
-	heap->len = INIT;
-	heap->max = 1;
-	heap->cur_id = 1;
-	return heap;
-}
-
-/*
  * DS_heap_add: Add data to a heap structure.
  */
 int DS_heap_add(
 					DS_heap *h,
-					const H_data data,
-					int(*comp)(const void*, const void*))
+					const H_data data)
 {
 	unsigned id = h->cur_id;
 
-	if (id > h->len)
+	if (id > h->end)
 		return 1;
 
 	memcpy(&h->heap[id], &data, unit);
 	h->heap[id].set |= 1;
 	h->cur_id++;
-	heap_bubble_up(h, id, comp);
+	h->len++;
+	heap_bubble_up(h, id);
 
 	return 0;
 }
@@ -105,7 +115,7 @@ static struct index set_indexes(struct index id)
  * DS_heap_pop: Pop the value from the root of the heap, cascade the heap up to
  * fill the available space, ejecting the zombie node.
  */
-H_data DS_heap_pop(DS_heap *h, int(*comp)(const void*, const void*))
+H_data DS_heap_pop(DS_heap *h)
 {
 	H_data pop;
 	struct index id = { 1, 2, 0, 0 };
@@ -120,7 +130,7 @@ H_data DS_heap_pop(DS_heap *h, int(*comp)(const void*, const void*))
 		{
 			int n;
 			/* Compare, then do the necessary */
-			if ((n = comp(&h->heap[id.next], &h->heap[id.next+1])) >= 0)
+			if ((n = h->comp(&h->heap[id.next], &h->heap[id.next+1])) >= 0)
 				memcpy(&h->heap[id.cur], &h->heap[id.next], unit);
 			else
 				memcpy(&h->heap[id.cur], &h->heap[++id.next], unit);
@@ -140,6 +150,7 @@ H_data DS_heap_pop(DS_heap *h, int(*comp)(const void*, const void*))
 
 	erase(&h->heap[id.cur], unit);
 	h->cur_id--;
+	h->len--;
 
 	return pop;
 }

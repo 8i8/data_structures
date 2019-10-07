@@ -52,13 +52,13 @@ String *GE_string_set(String *Str, char *str)
 String *GE_string_add(String *Str, char c)
 {
 	Str->len++;
-	if (Str->len >= Str->buf) {
+	if (Str->len > Str->buf) {
 		Str->buf <<= 1;
 		Str->ptr = Str->str = realloc(Str->str, Str->buf+1);
 		Str->ptr += Str->len;
 	}
 	*Str->ptr++ = c;
-	Str->ptr = '\0';
+	*Str->ptr = '\0';
 	return Str;
 }
 

@@ -19,3 +19,4 @@ libdata_structures.a
 .projectile
 TAGS
 Makefile.bac
+.clang_complete

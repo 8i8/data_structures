@@ -19,7 +19,7 @@ int DS_trie_test(void)
 	trie = DS_trie_add_word(trie, "Helios");
 	trie = DS_trie_add_word(trie, "Ylkasdjflnxcvklhasd klasdf asdkljasdf asfdl;;ldfgocivubm akfgou");
 
-	DS_trie_print_list(trie, _func_print_trie);
+	DS_trie_print_list(trie, func_print_trie);
 
 	if (state)
 		printf("false.\n");

@@ -1,5 +1,5 @@
 
-typedef struct _stack {
+typedef struct stack {
 	void *elems;
 	int elem_size;
 	int log_length;

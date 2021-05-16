@@ -4,9 +4,9 @@
 #include <string.h>
 
 /*
- * _ds_linked_list_new_node: Internal function for creating new list nodes.
+ * ds_linked_list_new_node: Internal function for creating new list nodes.
  */
-DS_linked_list *_ds_linked_list_new_node(Data data)
+DS_linked_list *ds_linked_list_new_node(Data data)
 {
 	DS_linked_list *new_node = NULL;
 	if ((new_node = malloc(sizeof(DS_linked_list))) == NULL) {
@@ -25,12 +25,12 @@ DS_linked_list *_ds_linked_list_new_node(Data data)
 DS_linked_list **DS_linked_list_add(DS_linked_list **list, Data data)
 {
 	if (*list == NULL)
-		*list = _ds_linked_list_new_node(data);
+		*list = ds_linked_list_new_node(data);
 	else {
 		while ((*list)->next != NULL)
 			list = &(*list)->next;
 
-		if (((*list)->next = _ds_linked_list_new_node(data)) == NULL) {
+		if (((*list)->next = ds_linked_list_new_node(data)) == NULL) {
 			DS_error_append("%s: ", __func__);
 			return NULL;
 		}
@@ -50,12 +50,12 @@ DS_linked_list **DS_linked_list_add_string(DS_linked_list **list, char *str)
 	data.num = strlen(str);
 
 	if (*list == NULL)
-		*list = _ds_linked_list_new_node(data);
+		*list = ds_linked_list_new_node(data);
 	else {
 		while ((*list)->next != NULL)
 			list = &(*list)->next;
 
-		if (((*list)->next = _ds_linked_list_new_node(data)) == NULL) {
+		if (((*list)->next = ds_linked_list_new_node(data)) == NULL) {
 			DS_error_append("%s: ", __func__);
 			return NULL;
 		}
@@ -125,7 +125,7 @@ DS_linked_list **DS_linked_list_insert(DS_linked_list **list, Data data)
 		DS_error_set("%s: NULL pointer.", __func__);
 		return NULL;
 	}
-	if ((new = _ds_linked_list_new_node(data)) == NULL) {
+	if ((new = ds_linked_list_new_node(data)) == NULL) {
 		DS_error_append("%s: ", __func__);
 		return NULL;
 	}
@@ -156,7 +156,7 @@ DS_linked_list **DS_linked_list_insert_at(DS_linked_list **list, size_t num, Dat
 	}
 
 	/* We should now be at node n - 1, insert a node here. */
-	if ((new = _ds_linked_list_new_node(data)) == NULL) {
+	if ((new = ds_linked_list_new_node(data)) == NULL) {
 		DS_error_append("%s: ", __func__);
 		return NULL;
 	}

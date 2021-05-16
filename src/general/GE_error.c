@@ -15,11 +15,11 @@ void DS_error_set(char *input, ...)
 	store[0] = '\0';
 	va_list va;
 	va_start(va, input);
-	if(_ds_message_set(error, input, &va))
+	if(ds_message_set(error, input, &va))
 		state = 1;
 	va_end(va);
 
-	_ds_write_to_string(0, store, error);
+	ds_write_to_string(0, store, error);
 }
 
 /*
@@ -29,11 +29,11 @@ void DS_error_append(char *input, ...)
 {
 	va_list va;
 	va_start(va, input);
-	_ds_message_set(error, input, &va);
+	ds_message_set(error, input, &va);
 	va_end(va);
 
-	_ds_write_to_string(0, store, " ");
-	_ds_write_to_string(0, store, error);
+	ds_write_to_string(0, store, " ");
+	ds_write_to_string(0, store, error);
 	state = 1;
 }
 
@@ -44,11 +44,11 @@ void DS_error_insert(char *input, ...)
 {
 	va_list va;
 	va_start(va, input);
-	_ds_message_set(error, input, &va);
+	ds_message_set(error, input, &va);
 	va_end(va);
 
-	_ds_write_to_string(1, store, " ");
-	_ds_write_to_string(1, store, error);
+	ds_write_to_string(1, store, " ");
+	ds_write_to_string(1, store, error);
 	state = 1;
 }
 
@@ -69,7 +69,7 @@ char *DS_error_get(void)
  */
 void DS_error_print(void)
 {
-	_ds_write_to_string(1, store, "error: ");
+	ds_write_to_string(1, store, "error: ");
 	strcpy(send, store);
 	store[0] = '\0';
 	state = 0;

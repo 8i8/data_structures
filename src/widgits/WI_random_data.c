@@ -60,7 +60,7 @@ char *WI_gen_word(char *str, size_t len)
 	return ptr;
 }
 
-int _word_len(size_t len)
+int word_len(size_t len)
 {
 	assert(len > 0);
 	return rand() % ((len > 15) ? 15 : len) + 1;
@@ -76,7 +76,7 @@ char *WI_gen_sentance(char *str, size_t len)
 	char *ptr;
 	ptr = str;
 
-	for (i = 0; i < len && (((w_len = _word_len(len - i)) + i) < len); i += w_len)
+	for (i = 0; i < len && (((w_len = word_len(len - i)) + i) < len); i += w_len)
 		if (w_len)
 			ptr = WI_gen_word(ptr, w_len);
 

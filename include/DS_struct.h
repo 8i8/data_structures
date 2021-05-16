@@ -6,8 +6,8 @@
  */
 #include <stdio.h>
 
-#ifndef _data_
-#define _data_
+#ifndef data_
+#define data_
 typedef struct Data {
 	char str[16];
 	size_t num;
@@ -18,8 +18,8 @@ typedef struct Data {
  * This struct is used in arrays of structs that have one contiguous memory
  * location.
  */
-#ifndef _test_
-#define _test_
+#ifndef test_
+#define test_
 typedef struct {
 	size_t len;
 	size_t num;

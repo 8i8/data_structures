@@ -8,7 +8,7 @@
 #include <string.h>
 #include <stdint.h>
 
-typedef struct _var {
+typedef struct var {
 	DS_linked_list *head;
 	char *str;
 	size_t num;
@@ -40,7 +40,7 @@ void linked_list_test_add(DS_linked_list **list, size_t num, int msg, int err)
 	else
 		DS_message_append("%fs failed.", time);
 
-	_ds_check_messages(msg, err);
+	ds_check_messages(msg, err);
 }
 
 void linked_list_test_get(DS_linked_list **list, size_t num, int msg, int err)
@@ -58,7 +58,7 @@ void linked_list_test_get(DS_linked_list **list, size_t num, int msg, int err)
 	else
 		DS_message_append("%fs failed.", time);
 
-	_ds_check_messages(msg, err);
+	ds_check_messages(msg, err);
 }
 
 /* TODO add this messaging to the DS_message code */
@@ -77,7 +77,7 @@ void linked_list_test_output(DS_linked_list **list, size_t num, int msg, int err
 		DS_message_append("%fs passed. %s", time, DS_Out_msg());
 	}
 
-	_ds_check_messages(msg, err);
+	ds_check_messages(msg, err);
 }
 
 void linked_list_test_insert(DS_linked_list **list, char *str, size_t num, int msg, int err)
@@ -100,7 +100,7 @@ void linked_list_test_insert(DS_linked_list **list, char *str, size_t num, int m
 	else
 		DS_message_append("%fs failed.", time);
 
-	_ds_check_messages(msg, err);
+	ds_check_messages(msg, err);
 }
 
 void linked_list_test_insert_conditional()
@@ -123,7 +123,7 @@ void linked_list_test_remove(DS_linked_list **list, size_t num, int msg, int err
 	else
 		DS_message_append("%fs failed.", time);
 
-	_ds_check_messages(msg, err);
+	ds_check_messages(msg, err);
 }
 
 void linked_list_test_fwd(DS_linked_list **list, size_t pos, size_t num, int msg, int err)
@@ -152,7 +152,7 @@ void linked_list_test_fwd(DS_linked_list **list, size_t pos, size_t num, int msg
 	else
 		DS_message_append("%fs failed.", time);
 
-	_ds_check_messages(msg, err);
+	ds_check_messages(msg, err);
 }
 
 void linked_list_test_set(DS_linked_list **list, size_t num, Data *data, int msg, int err)
@@ -176,7 +176,7 @@ void linked_list_test_set(DS_linked_list **list, size_t num, Data *data, int msg
 	} else
 		DS_message_append("%fs failed.", time);
 
-	_ds_check_messages(msg, err);
+	ds_check_messages(msg, err);
 }
 
 void linked_list_test_size(DS_linked_list **list, int msg, int err)
@@ -194,7 +194,7 @@ void linked_list_test_size(DS_linked_list **list, int msg, int err)
 	else
 		DS_message_append("%fs failed.");
 
-	_ds_check_messages(msg, err);
+	ds_check_messages(msg, err);
 }
 
 void linked_list_test_clear(DS_linked_list **list, int msg, int err)
@@ -212,7 +212,7 @@ void linked_list_test_clear(DS_linked_list **list, int msg, int err)
 	else
 		DS_message_append("%fs passed.", time);
 
-	_ds_check_messages(msg, err);
+	ds_check_messages(msg, err);
 }
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -221,12 +221,12 @@ void linked_list_test_clear(DS_linked_list **list, int msg, int err)
 
 /* Stop buffer underflow when getting the first few nodes for the output
  * display; Required to print n nodes before the current node.h> */
-size_t _back_n_nodes(size_t i, size_t n)
+size_t back_n_nodes(size_t i, size_t n)
 {
 	return (i -= n) > (SIZE_MAX - n) ? 1 : i;
 }
 
-void _linked_list_test_call(void* v)
+void linked_list_test_call(void* v)
 {
 	Var *var;
 	var = (Var*)v;
@@ -244,7 +244,7 @@ void _linked_list_test_call(void* v)
 	linked_list_test_insert(head, var->str, i, msg, err);
 	linked_list_test_get(head, i, msg, err);
 	linked_list_test_output(DS_linked_list_get(
-				head, _back_n_nodes(i, n)), num, msg, err);
+				head, back_n_nodes(i, n)), num, msg, err);
 	linked_list_test_remove(head, i, msg, err);
 	linked_list_test_output(head, num, msg, err);
 }
@@ -253,7 +253,7 @@ void _linked_list_test_call(void* v)
  *  
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
-void _linked_list_stages(Var *var, void(*func)(void*))
+void linked_list_stages(Var *var, void(*func)(void*))
 {
 	DS_linked_list **head = &var->head;
 	size_t num = var->num;
@@ -264,21 +264,21 @@ void _linked_list_stages(Var *var, void(*func)(void*))
 	linked_list_test_clear(head, 0, 0);
 }
 
-void _linked_list_test_itterate(Var *var, void(*func)(void*))
+void linked_list_test_itterate(Var *var, void(*func)(void*))
 {
 	size_t num = var->num;
 
 	/* i is 0, Should fail */
 	var->itt = 0;
-	_linked_list_stages(var, func);
+	linked_list_stages(var, func);
 
 	/* I is between 1 and the end of the list; Should pass */
 	for (var->itt = 1; var->itt <= num; var->itt++)
-		_linked_list_stages(var, func);
+		linked_list_stages(var, func);
 
 	/* Should fail */
 	for (var->itt = num + 1; var->itt <= num + 2; var->itt++)
-		_linked_list_stages(var, func);
+		linked_list_stages(var, func);
 }
 
 /*
@@ -302,6 +302,6 @@ void DS_linked_list_test(void)
 {
 	Var var = { NULL , "oOo ", 10, 0, 5 };
 
-	_linked_list_test_itterate(&var, _linked_list_test_call);
+	linked_list_test_itterate(&var, linked_list_test_call);
 }
 

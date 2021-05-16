@@ -17,7 +17,7 @@ String *GE_string_init(String *Str)
 }
 
 /*
- * _string_len: Buffer for simple string struct.
+ * GE_string_len: Buffer for simple string struct.
  */
 String *GE_string_len(String *Str, size_t len)
 {

@@ -4,11 +4,11 @@
 #include <stdio.h>
 #include "DS_struct.h"
 
-#ifndef _ds_linked_list_
-#define _ds_linked_list_
-typedef struct _ds_linked_list {
+#ifndef ds_linked_list_
+#define ds_linked_list_
+typedef struct ds_linked_list {
 	Data data;
-	struct _ds_linked_list *next;
+	struct ds_linked_list *next;
 } DS_linked_list;
 #endif
 

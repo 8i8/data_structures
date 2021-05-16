@@ -1,7 +1,7 @@
 #include <stdio.h>
 
-#ifndef _string_
-#define _string_
+#ifndef string_
+#define string_
 typedef struct {
 	char *str;
 	char *ptr;
@@ -13,12 +13,12 @@ typedef struct {
 #define STR_BUF_INIT 8
 
 /*
- * GD_string_init: Innitiate a sinple string struct that has a growth function.
+ * GE_string_init: Innitiate a sinple string struct that has a growth function.
  */
 String *GE_string_init(String *Str);
 
 /*
- * _string_len: Buffer for simple string struct.
+ * GE_string_len: Buffer for simple string struct.
  */
 String *GE_string_len(String *Str, size_t len);
 

@@ -7,7 +7,7 @@
 
 typedef int (*comp)(const void *, const void *);
 static void swap(char *i, char *j, size_t width);
-static char *_partition(char *l, char *r, size_t width, comp fn);
+static char *partition(char *l, char *r, size_t width, comp fn);
 
 /*
  * DS_qsort: generic qsort function.h> This function avoids stack smashing by way
@@ -44,7 +44,7 @@ void DS_qsort(void *base, size_t nel, size_t width, comp fn)
 		/* Sort, greater and less than the rightmost objects value,
 		 * returning the rightmost object sorted into its correct
 		 * position as the pivot point */
-		p = _partition(l, r, width, fn);
+		p = partition(l, r, width, fn);
 
 		if (p-width > l) {
 			DS_stack_ptr_push(buf, l);
@@ -61,11 +61,11 @@ void DS_qsort(void *base, size_t nel, size_t width, comp fn)
 }
 
 /*
- * _partition: Divides and sorts the given array, l and r are the extremities of
+ * partition: Divides and sorts the given array, l and r are the extremities of
  * the worked section of the array and the width is the size of each array item
  * in bytes.
  */
-static char *_partition(char *l, char *r, size_t width, comp fn)
+static char *partition(char *l, char *r, size_t width, comp fn)
 {
 	char *i;
 	int t;

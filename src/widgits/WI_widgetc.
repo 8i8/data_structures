@@ -9,7 +9,7 @@
 static unsigned len = 16;
 static char *ptr, *stack;
 
-void _expand_buffer()
+void expand_buffer()
 {
 	int pos;
 	len <<= 1;
@@ -19,25 +19,25 @@ void _expand_buffer()
 	ptr = stack + pos;
 }
 
-void _write_word(unsigned in)
+void write_word(unsigned in)
 {
 	*ptr++ = in + '0';
 	*ptr = '\0';
 	
 	if (ptr - stack >= len)
-		_expand_buffer();
+		expand_buffer();
 }
 
 /*
  * print_binary: Print the binary representation of an integer.
  */
-unsigned _print_binary(unsigned n, unsigned len)
+unsigned print_binary(unsigned n, unsigned len)
 {
 	if (n < 2) {
-		_write_word(n);
+		write_word(n);
 	} else if (n > 1) {
-		len = _print_binary(n / 2, (len) ? len - 1 : 0);
-		_write_word(n % 2);
+		len = print_binary(n / 2, (len) ? len - 1 : 0);
+		write_word(n % 2);
 	}
 	return len;
 }
@@ -50,7 +50,7 @@ unsigned _print_binary(unsigned n, unsigned len)
 void BI_Print_binary(unsigned n, unsigned width)
 {
 	stack = ptr = malloc(len + 1);
-	width = _print_binary(n, width);
+	width = print_binary(n, width);
 	if (width > 1)
 		while (width)
 			putchar('0'), width--;

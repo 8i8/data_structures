@@ -5,10 +5,10 @@
 #include <ctype.h>
 
 /*
- * _place_at_front: helper function, put the input string at the beginning of
+ * place_at_front: helper function, put the input string at the beginning of
  * the message.
  */
-void _place_at_front(char *store, char *message, int len_store, int len_message)
+void place_at_front(char *store, char *message, int len_store, int len_message)
 {
 	char transfer[MAX_LENGTH];
 
@@ -18,9 +18,9 @@ void _place_at_front(char *store, char *message, int len_store, int len_message)
 }
 
 /*
- * _write_to_string: Write the input string to the stored message.
+ * ds_write_to_string: Write the input string to the stored message.
  */
-char *_ds_write_to_string(int reverse, char *store, char *message)
+char *ds_write_to_string(int reverse, char *store, char *message)
 {
 	int len_store, len_message;
 
@@ -31,7 +31,7 @@ char *_ds_write_to_string(int reverse, char *store, char *message)
 	 * and one for a space between the phrases. */
 	if (MAX_LENGTH - len_store > len_message + 5) {
 		if (reverse)
-			_place_at_front(store, message, len_store, len_message);
+			place_at_front(store, message, len_store, len_message);
 		else
 			strcat(store, message);
 	} else
@@ -41,9 +41,9 @@ char *_ds_write_to_string(int reverse, char *store, char *message)
 }
 
 /*
- * DS_message_set: Compile a message and store it for further handling.
+ * ds_message_set: Compile a message and store it for further handling.
  */
-int _ds_message_set(char *message, char *input, va_list *va)
+int ds_message_set(char *message, char *input, va_list *va)
 {
 	char *head, *va_str;
 	int va_num;
@@ -95,11 +95,11 @@ int _ds_message_set(char *message, char *input, va_list *va)
 }
 
 /*
- * _ds_check_messages: INternal function to call both the message and the error
+ * ds_check_messages: INternal function to call both the message and the error
  * service, reseting both when done; A clean way to insure that this is done at
  * the end of every function in the test suit.
  */
-void _ds_check_messages(int msg, int err)
+void ds_check_messages(int msg, int err)
 {
 	int msg_state = DS_message_state();
 	int err_state = DS_error_state();

@@ -1,10 +1,10 @@
 #include <stdio.h>
 
-#ifndef _ds_trie_
-#define _ds_trie_
-typedef struct _ds_Trie {
+#ifndef ds_trie_
+#define ds_trie_
+typedef struct ds_Trie {
 	int c;
-	struct _ds_Trie **next;
+	struct ds_Trie **next;
 	int end;
 } DS_trie;
 #endif
@@ -28,7 +28,7 @@ int DS_trie_is_token(DS_trie **trie, char *token);
 /* Dispose of trie */
 void DS_trie_free(DS_trie **trie);
 
-/* _func_print: Printout the content of the tree from char root to current
+/* func_print: Printout the content of the tree from char root to current
  * node */
-int _func_print_trie(void *trie, void *var);
+int func_print_trie(void *trie, void *var);
 

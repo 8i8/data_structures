@@ -1,8 +1,8 @@
 #include <stdlib.h>
 
-#ifndef _stack_ptr_
-#define _stack_ptr_
-typedef struct _stack_ptr {
+#ifndef stack_ptr_
+#define stack_ptr_
+typedef struct stack_ptr {
 	char **buf;
 	size_t ptr;
 	size_t len;

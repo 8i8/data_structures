@@ -1,15 +1,15 @@
 #include "DS_struct.h"
 
-#ifndef _heap_data_
-#define _heap_data_
+#ifndef heap_data_
+#define heap_data_
 typedef struct heap_data {
 	Data data;
 	unsigned set:1;
 } H_data;
 #endif
 
-#ifndef _ds_heap_
-#define _ds_heap_
+#ifndef ds_heap_
+#define ds_heap_
 typedef struct ds_heap {
 	H_data *heap;
 	unsigned cur_id;

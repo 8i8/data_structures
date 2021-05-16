@@ -3,7 +3,7 @@ SRCS += $(wildcard tests/*.c)
 HDRS = $(wildcard include/*.h)
 HDRS += $(wildcard tests/*.h)
 OBJ = $(SRCS:.c=.o)
-CC = clang
+CC = gcc
 
 CFLAGS += -Wall -Wextra -pedantic
 #CFLAGS += -Werror

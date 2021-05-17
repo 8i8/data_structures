@@ -1,13 +1,13 @@
+#ifndef DS_TRIE
+#define DS_TRIE
+
 #include <stdio.h>
 
-#ifndef ds_trie_
-#define ds_trie_
 typedef struct ds_Trie {
 	int c;
 	struct ds_Trie **next;
 	int end;
 } DS_trie;
-#endif
 
 /* Create a new trie */
 DS_trie **DS_trie_init(DS_trie **trie);
@@ -32,3 +32,4 @@ void DS_trie_free(DS_trie **trie);
  * node */
 int func_print_trie(void *trie, void *var);
 
+#endif

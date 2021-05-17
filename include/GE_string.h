@@ -1,14 +1,14 @@
+#ifndef GE_STRING
+#define GE_STRING
+
 #include <stdio.h>
 
-#ifndef string_
-#define string_
 typedef struct {
 	char *str;
 	char *ptr;
 	size_t len;
 	size_t buf;
 } String;
-#endif
 
 #define STR_BUF_INIT 8
 
@@ -39,3 +39,5 @@ String *GE_string_add(String *Str, char c);
  * GE_string_free: Destroy string.
  */
 void GE_string_free(String *Str);
+
+#endif

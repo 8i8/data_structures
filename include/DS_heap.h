@@ -1,15 +1,12 @@
 #include "DS_struct.h"
 
-#ifndef heap_data_
-#define heap_data_
+#ifndef DS_HEAP
+#define DS_HEAP
 typedef struct heap_data {
 	Data data;
 	unsigned set:1;
 } H_data;
-#endif
 
-#ifndef ds_heap_
-#define ds_heap_
 typedef struct ds_heap {
 	H_data *heap;
 	unsigned cur_id;
@@ -18,7 +15,6 @@ typedef struct ds_heap {
 	short max;
 	int (*comp)(const void*, const void*);
 } DS_heap;
-#endif
 
 /* DS_heap_max_init: Initalise a heap priority queue that returns the greatest
  * value first */
@@ -35,3 +31,5 @@ int DS_heap_add(DS_heap *h, const H_data data);
 H_data DS_heap_pop(DS_heap *h);
 
 void DS_heap_free(DS_heap *h);
+
+#endif

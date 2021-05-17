@@ -1,17 +1,17 @@
 /*
  * DS_linked_list_d
  */
+#ifndef DS_LINKED_LIST_D
+#define DS_LINKED_LIST_D
+
 #include <stdio.h>
 #include "DS_struct.h"
 
-#ifndef ds_linked_list_d_
-#define ds_linked_list_d_
 typedef struct ds_linked_list_d {
 	Data data;
 	struct ds_linked_list_d *prev;
 	struct ds_linked_list_d *next;
 } DS_linked_list_d;
-#endif
 
 /* DS_linked_list_d_new_node: Internal function for creating new list nodes */
 DS_linked_list_d *DS_linked_list_d_new_node(Data data);
@@ -51,3 +51,4 @@ size_t DS_linked_list_d_size(DS_linked_list_d **list);
 /* DS_linked_list_d_clear: Destroy all nodes in the list */
 int DS_linked_list_d_clear(DS_linked_list_d **list);
 
+#endif

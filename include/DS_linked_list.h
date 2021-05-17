@@ -1,16 +1,16 @@
 /*
  * DS_linked_list
  */
+#ifndef DS_LINKED_LIST
+#define DS_LINKED_LIST
+
 #include <stdio.h>
 #include "DS_struct.h"
 
-#ifndef ds_linked_list_
-#define ds_linked_list_
 typedef struct ds_linked_list {
 	Data data;
 	struct ds_linked_list *next;
 } DS_linked_list;
-#endif
 
 /* DS_linked_list_add: Create the next node and add data */
 DS_linked_list **DS_linked_list_add(DS_linked_list **list, Data data);
@@ -54,3 +54,4 @@ void DS_linked_list_print(DS_linked_list **list);
 /* DS_linked_list_clear: Destroy all nodes in the list */
 int DS_linked_list_clear(DS_linked_list **list);
 
+#endif

@@ -1,3 +1,5 @@
+#ifndef DS_VECTOR
+#define DS_VECTOR
 /*
  * add(value)
  * get(index)
@@ -36,3 +38,4 @@ Data *DS_Vector_get(DS_Vector *list, size_t index);
 /* DS_Vector_free: Free allocated memory */
 DS_Vector *DS_Vector_free(DS_Vector *list);
 
+#endif
